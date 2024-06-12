@@ -1,0 +1,40 @@
+{
+  "name": "portal",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "ag-grid-react": "^31.3.2",
+    "react": "19.0.0-rc-a26e3f403e-20240611",
+    "react-dom": "19.0.0-rc-a26e3f403e-20240611",
+    "react-scripts": "5.0.1"
+  },
+  "devDependencies": {
+    "@craco/craco": "^7.1.0",
+    "dotenv-cli": "^7.4.2"
+  },
+  "scripts": {
+    "start": "dotenv -e ../.env -e .env -- craco start",
+    "build": "dotenv -e ../.env -e .env -- craco build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 2 chrome version",
+      "last 2 firefox version",
+      "last 2 safari version"
+    ]
+  },
+  "volta": {
+    "extends": "../package.json"
+  }
+}
