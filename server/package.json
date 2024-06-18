@@ -1,0 +1,22 @@
+{
+  "name": "@arasnet/server",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "postinstall": "dotenv -e .env -- node db",
+    "start": "dotenv -e ../.env -e .env -- node --experimental-json-modules index.js",
+    "debug": "dotenv -e ../.env -e .env -- node --experimental-json-modules --inspect index.js"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "json-server": "^0.17.4",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "devDependencies": {
+    "dotenv-cli": "^7.4.2"
+  },
+  "volta": {
+    "extends": "../package.json"
+  }
+}
