@@ -17,6 +17,7 @@ import AuthService from "./services/auth-service"
 
 const SERVER_URL = process.env.REACT_APP_SERVER_URL
 
+const Consultations = lazy(() => import("./pages/consultations"))
 const Dashboard = lazy(() => import("./pages/dashboard"))
 const Landing = lazy(() => import("./pages/landing"))
 const Login = lazy(() => import("./pages/login"))
@@ -56,6 +57,7 @@ const router = createBrowserRouter(
       <Route path="landing" element={<Landing />} />
 
       <Route path="dashboard" element={<Dashboard />} />
+      <Route path="consultations" element={<Consultations />} />
 
       <Route path="logout" element={<Logout />} />
       <Route path="login" element={<Login />} />

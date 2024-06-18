@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "ag-grid-react": "^31.3.2",
+    "@ag-grid-community/core": "^31.3.2",
+    "@ag-grid-community/infinite-row-model": "^31.3.2",
+    "@ag-grid-community/react": "^31.3.2",
+    "@ag-grid-community/styles": "^31.3.2",
     "axios": "^1.7.2",
     "i18next": "^23.11.5",
     "i18next-icu": "^2.3.0",
