@@ -67,7 +67,7 @@ function mockConsultation(_, index) {
             : faker.date.soon(),
     location: ["bucuresti", "cluj"][Math.floor(Math.random() * 2)],
     createdAt: new Date().toISOString(),
-    status: ["PENDING", "CONFIRMED", "CANCELED"][Math.floor(Math.random() * 3)],
+    status: ["pending", "confirmed", "canceled"][Math.floor(Math.random() * 3)],
   }
 }
 //#endregion
