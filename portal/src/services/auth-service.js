@@ -5,9 +5,7 @@ const authKey = storageKeys.APP_AUTH_JWT
 
 const getToken = () => StorageService.getItem({ id: authKey })
 
-const getAuthHeader = () => ({
-  authorization: `Bearer ${getToken()}`,
-})
+const getAuthHeader = () => `Bearer ${getToken()}`
 
 const saveToken = (token) =>
   StorageService.setItem({ id: authKey, data: token })

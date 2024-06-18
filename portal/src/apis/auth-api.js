@@ -16,9 +16,7 @@ const login = async (account) => {
 
 const resign = async () => {
   try {
-    const { token } = await axios.get(`${SERVER_URL}/auth`, {
-      headers: AuthService.getAuthHeader(),
-    })
+    const { token } = await axios.get(`${SERVER_URL}/auth`)
 
     return token
   } catch (error) {

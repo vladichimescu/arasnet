@@ -16,9 +16,7 @@ const register = async (account) => {
 
 const info = async () => {
   try {
-    const { user } = await axios.get(`${SERVER_URL}/user`, {
-      headers: AuthService.getAuthHeader(),
-    })
+    const { user } = await axios.get(`${SERVER_URL}/user`)
 
     return user
   } catch (error) {
