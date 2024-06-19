@@ -6,6 +6,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom"
+import { ToastContainer } from "react-toastify"
 
 import AuthProvider from "./components/auth-provider"
 import ErrorBoundary from "./components/error-boundary"
@@ -44,6 +45,12 @@ root.render(
     <ErrorBoundary>
       <Suspense fallback={<Loading />}>
         <AuthProvider>
+          <ToastContainer
+            autoClose={3500}
+            closeOnClick={true}
+            position="top-center"
+            hideProgressBar
+          />
           <RouterProvider router={router} />
         </AuthProvider>
       </Suspense>
