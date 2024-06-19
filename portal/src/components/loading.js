@@ -1,4 +1,5 @@
-import React from "react"
+import NProgress from "nprogress"
+import React, { useEffect } from "react"
 
 const styles = {
   fullPage: {
@@ -19,6 +20,14 @@ const styles = {
 }
 
 function Loading() {
+  useEffect(() => {
+    NProgress.start()
+
+    return () => {
+      NProgress.done()
+    }
+  }, [])
+
   return (
     <div style={styles.fullPage}>
       <div style={styles.center}>Loading</div>

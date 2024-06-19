@@ -1,4 +1,5 @@
 import axios from "axios"
+import NProgress from "nprogress"
 
 import AuthService from "../services/auth-service"
 
@@ -8,17 +9,30 @@ const api = axios.create({
   baseURL: process.env.REACT_APP_SERVER_URL,
 })
 
-api.interceptors.request.use((config) => {
-  config.headers.authorization = AuthService.getAuthHeader()
+api.interceptors.request.use(
+  (config) => {
+    NProgress.start()
 
-  return config
-})
+    config.headers.authorization = AuthService.getAuthHeader()
+
+    return config
+  },
+  (error) => {
+    NProgress.done()
+
+    throw error
+  }
+)
 
 let isResigning = false
 let stalledRequestConfigs = []
 
 api.interceptors.response.use(
-  ({ data }) => data,
+  ({ data }) => {
+    NProgress.done()
+
+    return data
+  },
   async ({ response: { status, data = {} } = {}, config: requestConfig }) => {
     if (status === 401) {
       if (data.code === "authentication_expired") {
@@ -56,6 +70,8 @@ api.interceptors.response.use(
     } else {
       // TODO: Handle other errors
     }
+
+    NProgress.done()
 
     throw data
   }
