@@ -3,8 +3,9 @@ import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
 import { AgGridReact } from "@ag-grid-community/react"
 import "@ag-grid-community/styles/ag-grid.css"
 import "@ag-grid-community/styles/ag-theme-quartz.css"
-import axios from "axios"
 import React from "react"
+
+import ConsultationsApi from "../apis/consultations-api"
 
 ModuleRegistry.registerModules([InfiniteRowModelModule])
 
@@ -65,38 +66,28 @@ const columnDefs = [
 const dataSource = {
   getRows: (params) => {
     const {
-      startRow,
-      endRow,
+      startRow: _start,
+      endRow: _end,
       successCallback,
       failCallback,
-      filterModel: { phone: { filter: phoneNumber } = {} },
-      sortModel: [{ colId = "", sort = "" } = {}],
+      filterModel: { phone: { filter: phone_like } = {} },
+      sortModel: [{ colId: _sort = "", sort: _order = "" } = {}],
     } = params
 
-    axios
-      .get("consultations", {
-        params: {
-          _start: startRow,
-          _end: endRow,
-          _sort: colId,
-          _order: sort,
-          phone_like: phoneNumber,
-        },
-      })
-      .then(
-        (data) => {
-          if (data.length === pageSize) {
-            successCallback(data)
-          } else if (data.length === 0) {
-            successCallback(data, startRow)
-          } else {
-            successCallback(data, startRow + data.length)
-          }
-        },
-        () => {
-          failCallback()
-        }
-      )
+    ConsultationsApi.read({
+      _start,
+      _end,
+      _sort,
+      _order,
+      phone_like,
+    }).then(
+      (data) =>
+        successCallback(
+          data,
+          data.length !== pageSize ? _start + data.length : null
+        ),
+      failCallback
+    )
   },
 }
 
