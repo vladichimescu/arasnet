@@ -36,19 +36,6 @@ function AuthProvider(props) {
 
       return user
     },
-    resign: async () => {
-      try {
-        const token = await AuthApi.resign()
-        AuthService.saveToken(token)
-        return token
-      } catch (err) {
-        AuthService.removeToken()
-
-        setIsLogged(false)
-
-        throw err
-      }
-    },
   }
 
   return <Context.Provider value={state} {...props} />

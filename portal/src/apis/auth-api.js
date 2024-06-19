@@ -1,27 +1,15 @@
-import axios from "axios"
+import api from "./api"
 
-import AuthService from "../services/auth-service"
+const authApiPath = "auth"
 
-const SERVER_URL = process.env.REACT_APP_SERVER_URL
-
-const login = async (account) => {
-  try {
-    const { token } = await axios.post(`${SERVER_URL}/auth`, account)
-
-    return token
-  } catch (error) {
-    throw error
-  }
+async function login(account) {
+  const { token } = await api.post(authApiPath, account)
+  return token
 }
 
-const resign = async () => {
-  try {
-    const { token } = await axios.get(`${SERVER_URL}/auth`)
-
-    return token
-  } catch (error) {
-    throw error
-  }
+async function resign() {
+  const { token } = await api.get(authApiPath)
+  return token
 }
 
 const AuthApi = {

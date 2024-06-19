@@ -1,27 +1,15 @@
-import axios from "axios"
+import api from "./api"
 
-import AuthService from "../services/auth-service"
+const employeesApiPath = "user"
 
-const SERVER_URL = process.env.REACT_APP_SERVER_URL
-
-const register = async (account) => {
-  try {
-    const { user } = await axios.post(`${SERVER_URL}/user`, account)
-
-    return user
-  } catch (error) {
-    throw error
-  }
+async function register(account) {
+  const { user } = await api.post(employeesApiPath, account)
+  return user
 }
 
-const info = async () => {
-  try {
-    const { user } = await axios.get(`${SERVER_URL}/user`)
-
-    return user
-  } catch (error) {
-    throw error
-  }
+async function info() {
+  const { user } = await api.get(employeesApiPath)
+  return user
 }
 
 const EmployeesApi = {

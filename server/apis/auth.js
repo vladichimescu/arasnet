@@ -4,19 +4,25 @@ import jsonServerDB from "../index.js"
 
 const secret = process.env.SECRET
 
-function auth({ headers }, res, next) {
-  const bearer = headers?.authorization || ""
-  const token = bearer.split(" ")[1]
+function auth({ headers: { authorization = "" } = {} }, res, next) {
+  const token = authorization.split(" ")[1]
 
   if (!token) {
     return res.status(401).send({
-      code: "unauthenticated",
-      message: "not authenticated",
+      code: "authentication_failed",
+      message: "authentication failed",
     })
   }
 
   jwt.verify(token, secret, function (err) {
     if (err) {
+      if (err.name === "TokenExpiredError") {
+        return res.status(401).send({
+          code: "authentication_expired",
+          message: "authentication expired",
+        })
+      }
+
       return res.status(401).send({
         code: "authentication_failed",
         message: "authentication failed",
@@ -76,25 +82,21 @@ function login({ body: employee = {} }, res) {
   return res.status(200).send({ token })
 }
 
-function resign({ headers: { authorization: bearer = "" } = {} }, res) {
-  const token = bearer.split(" ")[1]
+function resign({ headers: { authorization = "" } = {} }, res) {
+  const token = authorization.split(" ")[1]
 
   if (!token) {
-    return res.status(400).send({
-      token: {
-        code: "token_required",
-        message: "token required",
-      },
+    return res.status(401).send({
+      code: "authentication_failed",
+      message: "authentication failed",
     })
   }
 
   jwt.verify(token, secret, function (err) {
     if (err && err.name !== "TokenExpiredError") {
-      return res.status(400).send({
-        token: {
-          code: "token_invalid",
-          message: "token invalid",
-        },
+      return res.status(401).send({
+        code: "authentication_failed",
+        message: "authentication failed",
       })
     }
 
@@ -105,7 +107,7 @@ function resign({ headers: { authorization: bearer = "" } = {} }, res) {
       },
       secret,
       {
-        expiresIn: "12h",
+        expiresIn: "1h",
       }
     )
 
