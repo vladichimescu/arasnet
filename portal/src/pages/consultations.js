@@ -4,10 +4,21 @@ import { AgGridReact } from "@ag-grid-community/react"
 import "@ag-grid-community/styles/ag-grid.css"
 import "@ag-grid-community/styles/ag-theme-quartz.css"
 import React from "react"
+import { toast } from "react-toastify"
 
 import ConsultationsApi from "../apis/consultations-api"
 
 ModuleRegistry.registerModules([InfiniteRowModelModule])
+
+const consultationStatuses =
+  process.env.REACT_APP_CONSULTATION_STATUSES.split(",")
+
+const ConfirmationsComponent = ({ api: gridApi, data: { phone } = {} }) => (
+  <div>
+    <button onClick={() => window.alert(`WhatsApp ${phone}`)}>WhatsApp</button>
+    <button onClick={() => window.alert(`Phone ${phone}`)}>Phone</button>
+  </div>
+)
 
 const dateFormatter = ({ value }) =>
   // TODO: set LOCALE format based on i18n
@@ -21,26 +32,16 @@ const dateFormatter = ({ value }) =>
       }).format(new Date(value))
     : value
 
+const getRowId = ({ data: { id } = {} }) => id
+
 const pageSize = 20
 
 const defaultColDef = {
   flex: 1,
+  singleClickEdit: true,
 }
 
 const columnDefs = [
-  {
-    field: "id",
-    headerName: "ID",
-  },
-  {
-    field: "createdAt",
-    headerName: "Creat",
-    valueFormatter: dateFormatter,
-  },
-  {
-    field: "location",
-    headerName: "Locatie",
-  },
   {
     field: "phone",
     headerName: "Telefon",
@@ -60,6 +61,39 @@ const columnDefs = [
   {
     field: "status",
     headerName: "Status",
+    editable: true,
+    cellEditorSelector: () => {
+      return {
+        component: "agSelectCellEditor",
+        params: { values: consultationStatuses },
+      }
+    },
+    onCellValueChanged: async ({ api: gridApi, data, oldValue }) => {
+      try {
+        await ConsultationsApi.update(data)
+        toast("Status updated")
+      } catch (err) {
+        gridApi.getRowNode(`${data.id}`).updateData({
+          ...data,
+          status: oldValue,
+        })
+        toast("Status could not be updated")
+      }
+    },
+  },
+  {
+    field: "createdAt",
+    headerName: "Creat",
+    valueFormatter: dateFormatter,
+  },
+  {
+    field: "location",
+    headerName: "Locatie",
+  },
+  {
+    field: "confirmation",
+    cellRenderer: ConfirmationsComponent,
+    flex: 1,
   },
 ]
 
@@ -103,6 +137,7 @@ function Consultations() {
         className="ag-theme-quartz"
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
+        getRowId={getRowId}
         rowModelType="infinite"
         datasource={dataSource}
         cacheBlockSize={pageSize}
