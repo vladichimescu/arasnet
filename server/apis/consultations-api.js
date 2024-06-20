@@ -1,3 +1,4 @@
+import jsonServerDB from "../index.js"
 import { mandatoryPropsCheck } from "../libs/mandatory-props-check.js"
 
 const locations = process.env.SUPPORTED_LOCATIONS.split(",")

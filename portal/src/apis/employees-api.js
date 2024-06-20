@@ -10,12 +10,12 @@ async function read(params) {
   return await api.get(employeesApiPath, { params })
 }
 
-async function update() {
-  return await api.put(employeesApiPath)
+async function update(payload) {
+  return await api.put(employeesApiPath, payload)
 }
 
-async function remove() {
-  return await api.delete(employeesApiPath)
+async function remove(payload) {
+  return await api.delete(employeesApiPath, payload)
 }
 
 const EmployeesApi = {
