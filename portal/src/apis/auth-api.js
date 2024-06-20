@@ -1,15 +1,13 @@
 import api from "./api"
 
-const authApiPath = "auth"
+const authApiPath = process.env.REACT_APP_SERVER_PATH_AUTH
 
 async function login(account) {
-  const { token } = await api.post(authApiPath, account)
-  return token
+  return await api.post(authApiPath, account)
 }
 
 async function resign() {
-  const { token } = await api.get(authApiPath)
-  return token
+  return await api.get(authApiPath)
 }
 
 const AuthApi = {

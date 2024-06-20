@@ -50,6 +50,7 @@ function login({ body: employee = {} }, res) {
   const dbEmployee = jsonServerDB
     .getState()
     .employees.find(({ email } = {}) => email === employee.email)
+
   if (!dbEmployee) {
     return res.status(400).send({
       email: {
@@ -60,6 +61,7 @@ function login({ body: employee = {} }, res) {
   }
 
   const isPasswordValid = dbEmployee.password === employee.password
+
   if (!isPasswordValid) {
     return res.status(400).send({
       password: {
@@ -75,11 +77,11 @@ function login({ body: employee = {} }, res) {
     },
     secret,
     {
-      expiresIn: "1h",
+      expiresIn: "1m",
     }
   )
 
-  return res.status(200).send({ token })
+  return res.status(200).send(token)
 }
 
 function resign({ headers: { authorization = "" } = {} }, res) {
@@ -107,12 +109,13 @@ function resign({ headers: { authorization = "" } = {} }, res) {
       },
       secret,
       {
-        expiresIn: "1h",
+        expiresIn: "1m",
       }
     )
 
-    return res.status(200).send({ token: newToken })
+    return res.status(200).send(newToken)
   })
 }
 
-export { auth, login, resign }
+const AuthApi = { auth, login, resign }
+export default AuthApi

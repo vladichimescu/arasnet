@@ -5,8 +5,10 @@ import AuthService from "../services/auth-service"
 
 import AuthApi from "./auth-api"
 
+const apiServerUrl = process.env.REACT_APP_SERVER_URL
+
 const api = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_URL,
+  baseURL: apiServerUrl,
 })
 
 api.interceptors.request.use(

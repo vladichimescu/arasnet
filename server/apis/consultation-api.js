@@ -4,7 +4,7 @@ const locations = process.env.SUPPORTED_LOCATIONS.split(",")
 const consultationMandatoryFields =
   process.env.CONSULTATION_MANDATORY_FIELDS.split(",")
 
-function createConsultation({ body: consultation = {} }, res, next) {
+function create({ body: consultation = {} }, res, next) {
   // TODO: based on user permissions, apply filters if not present already
 
   const errors = mandatoryPropsCheck(consultation, consultationMandatoryFields)
@@ -34,13 +34,13 @@ function createConsultation({ body: consultation = {} }, res, next) {
   next()
 }
 
-function infoConsultation({ body: consultation = {} }, res, next) {
+function read({ body: consultation = {} }, res, next) {
   // TODO: based on user permissions, apply filters if not present already
 
   next()
 }
 
-function updateConsultation({ body: consultation = {} }, res, next) {
+function update({ body: consultation = {} }, res, next) {
   // TODO: based on user permissions, apply filters if not present already
 
   const errors = mandatoryPropsCheck(consultation, consultationMandatoryFields)
@@ -52,15 +52,17 @@ function updateConsultation({ body: consultation = {} }, res, next) {
   next()
 }
 
-function deleteConsultation({ body: consultation = {} }, res, next) {
+function remove({ body: consultation = {} }, res, next) {
   // TODO: based on user permissions, apply filters if not present already
 
   next()
 }
 
-export {
-  createConsultation,
-  infoConsultation,
-  updateConsultation,
-  deleteConsultation,
+const ConsultationsApi = {
+  create,
+  read,
+  update,
+  remove,
 }
+
+export default ConsultationsApi

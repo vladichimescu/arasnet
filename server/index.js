@@ -1,21 +1,14 @@
 import jsonServer from "json-server"
 
-import { auth, login, resign } from "./apis/auth.js"
-import {
-  createConsultation,
-  deleteConsultation,
-  infoConsultation,
-  updateConsultation,
-} from "./apis/consultation.js"
-import {
-  deleteEmployee,
-  infoEmployee,
-  registerEmployee,
-  updateEmployee,
-} from "./apis/employee.js"
+import AuthApi from "./apis/auth-api.js"
+import ConsultationsApi from "./apis/consultation-api.js"
+import EmployeesApi from "./apis/employee-api.js"
 
 const port = process.env.SERVER_PORT
 const file = process.env.DB_FILE
+const authApiPath = `/${process.env.SERVER_PATH_AUTH}`
+const employeesApiPath = `/${process.env.SERVER_PATH_EMPLOYEES}`
+const consultationsApiPath = `/${process.env.SERVER_PATH_CONSULTATIONS}`
 
 const server = jsonServer.create()
 const middlewares = jsonServer.defaults()
@@ -24,10 +17,10 @@ const router = jsonServer.router(file)
 server.use(middlewares)
 server.use(jsonServer.bodyParser)
 
-server.post("/auth", login)
-server.get("/auth", resign)
+server.post(authApiPath, AuthApi.login)
+server.get(authApiPath, AuthApi.resign)
 
-server.use(auth)
+server.use(AuthApi.auth)
 
 server.use((req, res, next) => {
   if (req.method === "POST") {
@@ -41,15 +34,15 @@ server.use((req, res, next) => {
   next()
 })
 
-// server.post("/employees", registerEmployee)
-// server.get("/employees", infoEmployee)
-// server.patch("/employees", updateEmployee)
-// server.delete("/employees", deleteEmployee)
+server.post(employeesApiPath, EmployeesApi.create)
+server.get(employeesApiPath, EmployeesApi.read)
+server.put(employeesApiPath, EmployeesApi.update)
+server.delete(employeesApiPath, EmployeesApi.remove)
 
-// server.post("/consultations", createConsultation)
-// server.get("/consultations", infoConsultation)
-// server.patch("/consultations", updateConsultation)
-// server.delete("/consultations", deleteConsultation)
+server.post(consultationsApiPath, ConsultationsApi.create)
+server.get(consultationsApiPath, ConsultationsApi.read)
+server.put(consultationsApiPath, ConsultationsApi.update)
+server.delete(consultationsApiPath, ConsultationsApi.remove)
 
 server.use(router)
 

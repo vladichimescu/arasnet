@@ -31,7 +31,7 @@ function AuthProvider(props) {
       setIsLogged(false)
     },
     register: async (account) => {
-      const user = await EmployeesApi.register(account)
+      const user = await EmployeesApi.create(account)
       state.login(account)
 
       return user

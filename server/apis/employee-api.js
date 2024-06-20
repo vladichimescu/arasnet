@@ -3,7 +3,7 @@ import { mandatoryPropsCheck } from "../libs/mandatory-props-check.js"
 
 const employeeMandatoryFields = process.env.EMPLOYEE_MANDATORY_FIELDS.split(",")
 
-function registerEmployee({ body: employee = {} }, res, next) {
+function create({ body: employee = {} }, res, next) {
   // TODO: based on user permissions, apply filters if not present already
 
   const errors = mandatoryPropsCheck(employee, employeeMandatoryFields)
@@ -28,13 +28,13 @@ function registerEmployee({ body: employee = {} }, res, next) {
   next()
 }
 
-function infoEmployee({ body: employee = {} }, res, next) {
+function read({ body: employee = {} }, res, next) {
   // TODO: based on user permissions, apply filters if not present already
 
   next()
 }
 
-function updateEmployee({ body: employee = {} }, res, next) {
+function update({ body: employee = {} }, res, next) {
   // TODO: based on user permissions, apply filters if not present already
 
   const errors = mandatoryPropsCheck(employee, employeeMandatoryFields)
@@ -46,10 +46,17 @@ function updateEmployee({ body: employee = {} }, res, next) {
   next()
 }
 
-function deleteEmployee({ body: employee = {} }, res, next) {
+function remove({ body: employee = {} }, res, next) {
   // TODO: based on user permissions, apply filters if not present already
 
   next()
 }
 
-export { registerEmployee, infoEmployee, updateEmployee, deleteEmployee }
+const EmployeesApi = {
+  create,
+  read,
+  update,
+  remove,
+}
+
+export default EmployeesApi
