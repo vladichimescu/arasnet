@@ -4,7 +4,7 @@ import jsonServerDB from "../index.js"
 
 const secret = process.env.SECRET
 
-function auth({ headers: { authorization = "" } = {} }, res, next) {
+function authenticate({ headers: { authorization = "" } = {} }, res, next) {
   const token = authorization.split(" ")[1]
 
   if (!token) {
@@ -77,7 +77,7 @@ function login({ body: employee = {} }, res) {
     },
     secret,
     {
-      expiresIn: "1m",
+      expiresIn: "1h",
     }
   )
 
@@ -109,7 +109,7 @@ function resign({ headers: { authorization = "" } = {} }, res) {
       },
       secret,
       {
-        expiresIn: "1m",
+        expiresIn: "1h",
       }
     )
 
@@ -117,5 +117,5 @@ function resign({ headers: { authorization = "" } = {} }, res) {
   })
 }
 
-const AuthApi = { auth, login, resign }
+const AuthApi = { authenticate, login, resign }
 export default AuthApi

@@ -14,13 +14,25 @@ const server = jsonServer.create()
 const middlewares = jsonServer.defaults()
 const router = jsonServer.router(file)
 
+const redirect = (req, res, next) => {
+  if (
+    ["PUT", "DELETE"].includes(req.method) &&
+    req.originalUrl.split("/").length === 2
+  ) {
+    res.redirect(302, `${req.originalUrl}/${req.body?.id}`)
+    return
+  }
+
+  next()
+}
+
 server.use(middlewares)
 server.use(jsonServer.bodyParser)
 
 server.post(authApiPath, AuthApi.login)
 server.get(authApiPath, AuthApi.resign)
 
-server.use(AuthApi.auth)
+server.use(AuthApi.authenticate)
 
 server.use((req, res, next) => {
   if (req.method === "POST") {
@@ -34,30 +46,14 @@ server.use((req, res, next) => {
   next()
 })
 
-server.post(employeesApiPath, EmployeesApi.create)
-server.get(employeesApiPath, EmployeesApi.read)
-server.put(employeesApiPath, (req, res, next) =>
-  EmployeesApi.update(req, res, () =>
-    res.redirect(302, `${employeesApiPath}/${req.body.id}`)
-  )
-)
-server.delete(employeesApiPath, (req, res, next) =>
-  EmployeesApi.remove(req, res, () =>
-    res.redirect(302, `${employeesApiPath}/${req.body.id}`)
-  )
+server.use(redirect)
+
+server.use(employeesApiPath, (req, res, next) =>
+  EmployeesApi[req.method](req, res, next)
 )
 
-server.post(consultationsApiPath, ConsultationsApi.create)
-server.get(consultationsApiPath, ConsultationsApi.read)
-server.put(consultationsApiPath, (req, res, next) =>
-  ConsultationsApi.update(req, res, () =>
-    res.redirect(302, `${consultationsApiPath}/${req.body.id}`)
-  )
-)
-server.delete(consultationsApiPath, (req, res, next) =>
-  ConsultationsApi.remove(req, res, () =>
-    res.redirect(302, `${consultationsApiPath}/${req.body.id}`)
-  )
+server.use(consultationsApiPath, (req, res, next) =>
+  ConsultationsApi[req.method](req, res, next)
 )
 
 server.use(router)
