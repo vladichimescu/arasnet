@@ -24,11 +24,8 @@ const dateFormatter = ({ value }) =>
   // TODO: set LOCALE format based on i18n
   value
     ? new Intl.DateTimeFormat("ro-RO", {
-        year: "numeric",
-        month: "numeric",
-        day: "numeric",
-        hour: "numeric",
-        minute: "numeric",
+        dateStyle: "full",
+        timeStyle: "short",
       }).format(new Date(value))
     : value
 
