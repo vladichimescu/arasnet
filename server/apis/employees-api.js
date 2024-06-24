@@ -1,12 +1,10 @@
 import jsonServerDB from "../index.js"
-import { mandatoryPropsCheck } from "../libs/mandatory-props-check.js"
+import { checkMandatoryProps } from "../libs/check-mandatory-props.js"
 
 const employeeMandatoryFields = process.env.EMPLOYEE_MANDATORY_FIELDS.split(",")
 
 function create({ body: employee = {} }, res, next) {
-  // TODO: based on user permissions, apply filters if not present already
-
-  const errors = mandatoryPropsCheck(employee, employeeMandatoryFields)
+  const errors = checkMandatoryProps(employee, employeeMandatoryFields)
 
   if (Object.keys(errors).length) {
     return res.status(400).send(errors)
@@ -29,15 +27,11 @@ function create({ body: employee = {} }, res, next) {
 }
 
 function read({ body: employee = {} }, res, next) {
-  // TODO: based on user permissions, apply filters if not present already
-
   next()
 }
 
 function update({ body: employee = {} }, res, next) {
-  // TODO: based on user permissions, apply filters if not present already
-
-  const errors = mandatoryPropsCheck(employee, employeeMandatoryFields)
+  const errors = checkMandatoryProps(employee, employeeMandatoryFields)
 
   if (Object.keys(errors).length) {
     return res.status(400).send(errors)
@@ -47,16 +41,17 @@ function update({ body: employee = {} }, res, next) {
 }
 
 function remove({ body: employee = {} }, res, next) {
-  // TODO: based on user permissions, apply filters if not present already
-
   next()
 }
 
 const EmployeesApi = {
-  create,
-  read,
-  update,
-  remove,
+  GET: read,
+  POST: create,
+  PUT: update,
+  DELETE: remove,
+  //TODO: check PATCH
+  // PATCH: update,
+  middleware: (req, res, next) => EmployeesApi[req.method](req, res, next),
 }
 
 export default EmployeesApi

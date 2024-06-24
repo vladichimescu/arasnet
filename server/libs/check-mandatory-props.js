@@ -1,4 +1,4 @@
-function mandatoryPropsCheck(obj = {}, mandatoryProps = []) {
+function checkMandatoryProps(obj = {}, mandatoryProps = []) {
   const errors = {}
 
   mandatoryProps.forEach((iProp) => {
@@ -13,4 +13,4 @@ function mandatoryPropsCheck(obj = {}, mandatoryProps = []) {
   return errors
 }
 
-export { mandatoryPropsCheck }
+export { checkMandatoryProps }

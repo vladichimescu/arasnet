@@ -14,7 +14,33 @@ const server = jsonServer.create()
 const middlewares = jsonServer.defaults()
 const router = jsonServer.router(file)
 
-const redirect = (req, res, next) => {
+server.use(middlewares)
+server.use(jsonServer.bodyParser)
+server.use(timestamp)
+
+//#region Public APIs
+server.post(authApiPath, AuthApi.login)
+server.get(authApiPath, AuthApi.resign)
+//#endregion
+
+//#region Private APIs
+server.use(redirect)
+server.use(AuthApi.authenticate)
+server.use(AuthApi.authorize)
+
+server.use(employeesApiPath, EmployeesApi.middleware)
+server.use(consultationsApiPath, ConsultationsApi.middleware)
+//#endregion
+
+server.use(router)
+
+server.listen(port, () => console.log(`ARASnet Server started on port ${port}`))
+
+const jsonServerDB = router.db
+export default jsonServerDB
+
+//#region
+function redirect(req, res, next) {
   if (
     ["PUT", "DELETE"].includes(req.method) &&
     req.originalUrl.split("/").length === 2
@@ -26,39 +52,15 @@ const redirect = (req, res, next) => {
   next()
 }
 
-server.use(middlewares)
-server.use(jsonServer.bodyParser)
-
-server.post(authApiPath, AuthApi.login)
-server.get(authApiPath, AuthApi.resign)
-
-server.use(AuthApi.authenticate)
-
-server.use((req, res, next) => {
+function timestamp(req, res, next) {
   if (req.method === "POST") {
     req.body.createdAt = new Date().toISOString()
   }
 
-  if (req.method === "PUT") {
+  if (req.method === "PUT" || req.method === "PATCH") {
     req.body.updatedAt = new Date().toISOString()
   }
 
   next()
-})
-
-server.use(redirect)
-
-server.use(employeesApiPath, (req, res, next) =>
-  EmployeesApi[req.method](req, res, next)
-)
-
-server.use(consultationsApiPath, (req, res, next) =>
-  ConsultationsApi[req.method](req, res, next)
-)
-
-server.use(router)
-
-server.listen(port, () => console.log(`ARASnet Server started on port ${port}`))
-
-const jsonServerDB = router.db
-export default jsonServerDB
+}
+//#endregion

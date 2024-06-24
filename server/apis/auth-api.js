@@ -4,6 +4,19 @@ import jsonServerDB from "../index.js"
 
 const secret = process.env.SECRET
 
+const apiPaths = [
+  process.env.SERVER_PATH_EMPLOYEES,
+  process.env.SERVER_PATH_CONSULTATIONS,
+]
+
+const apiMethods = {
+  GET: "read",
+  POST: "create",
+  PUT: "update",
+  DELETE: "delete",
+  PATCH: "update",
+}
+
 function authenticate({ headers: { authorization = "" } = {} }, res, next) {
   const token = authorization.split(" ")[1]
 
@@ -40,6 +53,55 @@ function authenticate({ headers: { authorization = "" } = {} }, res, next) {
         code: "authentication_failed",
         message: "authentication failed",
       })
+    }
+
+    next()
+  })
+}
+
+function authorize(
+  { headers: { authorization = "" } = {}, originalUrl, method, query, body },
+  res,
+  next
+) {
+  const token = authorization.split(" ")[1]
+
+  jwt.verify(token, secret, function (err) {
+    const { data: userEmail } = jwt.decode(token)
+
+    const dbEmployee = jsonServerDB
+      .getState()
+      .employees.find(({ email } = {}) => email === userEmail)
+
+    const api = apiPaths.find((path) => originalUrl.startsWith(`/${path}`))
+    const action = apiMethods[method]
+
+    const permissions = dbEmployee.permissions[api]
+
+    if (!permissions?.access.includes(action)) {
+      return res.status(403).send({
+        code: "authorization_failed",
+        message: "authorization failed",
+      })
+    }
+
+    if (permissions.filters) {
+      if (action === "read") {
+        Object.entries(permissions.filters).forEach(([key, value]) => {
+          query[key] = value
+        })
+      } else {
+        const payloadPermitted = Object.entries(permissions.filters).every(
+          ([key, value]) => value.includes(body[key])
+        )
+
+        if (!payloadPermitted) {
+          return res.status(403).send({
+            code: "authorization_failed",
+            message: "authorization failed",
+          })
+        }
+      }
     }
 
     next()
@@ -117,5 +179,6 @@ function resign({ headers: { authorization = "" } = {} }, res) {
   })
 }
 
-const AuthApi = { authenticate, login, resign }
+const AuthApi = { authenticate, authorize, login, resign }
+
 export default AuthApi

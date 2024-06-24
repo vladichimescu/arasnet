@@ -1,14 +1,12 @@
 import jsonServerDB from "../index.js"
-import { mandatoryPropsCheck } from "../libs/mandatory-props-check.js"
+import { checkMandatoryProps } from "../libs/check-mandatory-props.js"
 
-const locations = process.env.SUPPORTED_LOCATIONS.split(",")
+const supportedLocations = process.env.SUPPORTED_LOCATIONS.split(",")
 const consultationMandatoryFields =
   process.env.CONSULTATION_MANDATORY_FIELDS.split(",")
 
 function create({ body: consultation = {} }, res, next) {
-  // TODO: based on user permissions, apply filters if not present already
-
-  const errors = mandatoryPropsCheck(consultation, consultationMandatoryFields)
+  const errors = checkMandatoryProps(consultation, consultationMandatoryFields)
 
   if (Object.keys(errors).length) {
     return res.status(400).send(errors)
@@ -35,16 +33,12 @@ function create({ body: consultation = {} }, res, next) {
   next()
 }
 
-function read({ body: consultation = {} }, res, next) {
-  // TODO: based on user permissions, apply filters if not present already
-
+function read({ body: consultation = {}, query }, res, next) {
   next()
 }
 
 function update({ body: consultation = {} }, res, next) {
-  // TODO: based on user permissions, apply filters if not present already
-
-  const errors = mandatoryPropsCheck(consultation, consultationMandatoryFields)
+  const errors = checkMandatoryProps(consultation, consultationMandatoryFields)
 
   if (Object.keys(errors).length) {
     return res.status(400).send(errors)
@@ -54,16 +48,17 @@ function update({ body: consultation = {} }, res, next) {
 }
 
 function remove({ body: consultation = {} }, res, next) {
-  // TODO: based on user permissions, apply filters if not present already
-
   next()
 }
 
 const ConsultationsApi = {
-  create,
-  read,
-  update,
-  remove,
+  GET: read,
+  POST: create,
+  PUT: update,
+  DELETE: remove,
+  //TODO: check PATCH
+  // PATCH: update,
+  middleware: (req, res, next) => ConsultationsApi[req.method](req, res, next),
 }
 
 export default ConsultationsApi
