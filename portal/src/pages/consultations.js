@@ -13,10 +13,18 @@ ModuleRegistry.registerModules([InfiniteRowModelModule])
 const consultationStatuses =
   process.env.REACT_APP_CONSULTATION_STATUSES.split(",")
 
-const ConfirmationsComponent = ({ api: gridApi, data: { phone } = {} }) => (
+const ConfirmationButtons = ({ data: { phone } = {} }) => (
   <div>
-    <button onClick={() => window.alert(`WhatsApp ${phone}`)}>WhatsApp</button>
-    <button onClick={() => window.alert(`Phone ${phone}`)}>Phone</button>
+    <button
+      onClick={() =>
+        window.open(
+          `https://wa.me/${phone}?text=${encodeURIComponent("te rugam sa confirmi")}`
+        )
+      }
+    >
+      WhatsApp
+    </button>
+    <button onClick={() => window.open(`tel:${phone}`)}>Phone</button>
   </div>
 )
 
@@ -59,12 +67,13 @@ const columnDefs = [
     field: "status",
     headerName: "Status",
     editable: true,
-    cellEditorSelector: () => {
-      return {
-        component: "agSelectCellEditor",
-        params: { values: consultationStatuses },
-      }
-    },
+    cellEditorSelector:
+      consultationStatuses.length > 1
+        ? () => ({
+            component: "agSelectCellEditor",
+            params: { values: consultationStatuses },
+          })
+        : null,
     onCellValueChanged: async ({ api: gridApi, data, oldValue }) => {
       try {
         await ConsultationsApi.update(data)
@@ -74,7 +83,7 @@ const columnDefs = [
           ...data,
           status: oldValue,
         })
-        toast("Status could not be updated")
+        toast(`Status could not be updated\nreason: ${err.message}`)
       }
     },
   },
@@ -89,8 +98,7 @@ const columnDefs = [
   },
   {
     field: "confirmation",
-    cellRenderer: ConfirmationsComponent,
-    flex: 1,
+    cellRenderer: ConfirmationButtons,
   },
 ]
 
