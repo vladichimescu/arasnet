@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "postinstall": "dotenv -e .env -- node db",
+    "postinstall": "dotenv -e ../.env -e .env -- node db",
     "start": "dotenv -e ../.env -e .env -- node --experimental-json-modules index.js",
     "debug": "dotenv -e ../.env -e .env -- node --experimental-json-modules --inspect index.js"
   },
