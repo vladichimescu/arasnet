@@ -66,9 +66,9 @@ const data = {
       },
       createdAt: new Date().toISOString(),
     },
-    ...[...Array(10)].map(mockEmployee),
+    ...[...Array(47)].map(mockEmployee),
   ],
-  consultations: [...Array(100)].map(mockConsultation),
+  consultations: [...Array(500)].map(mockConsultation),
 }
 
 fs.writeFileSync(process.env.DB_FILE, JSON.stringify(data, null, 2), "utf-8")

@@ -36,8 +36,7 @@ const columnDefs = [
     headerName: "Phone",
     filter: "agNumberColumnFilter",
     filterParams: {
-      // TODO: change name of filter
-      filterOptions: ["PHONE NUMBER"],
+      filterOptions: ["contains"],
       maxNumConditions: 1,
       debounceMs: 500,
     },
@@ -46,10 +45,22 @@ const columnDefs = [
     field: "date",
     headerName: "Appointment",
     valueFormatter: valueFormatterDate,
+    filter: "agDateColumnFilter",
+    filterParams: {
+      filterOptions: ["greaterThan", "lessThan", "inRange"],
+      maxNumConditions: 1,
+      debounceMs: 500,
+    },
   },
   {
     field: "status",
     headerName: "Status",
+    filter: "agTextColumnFilter",
+    filterParams: {
+      filterOptions: ["contains"],
+      maxNumConditions: 1,
+      debounceMs: 500,
+    },
     editable: true,
     cellEditorSelector:
       consultationStatuses.length > 1
@@ -79,6 +90,12 @@ const columnDefs = [
   {
     field: "location",
     headerName: "Location",
+    filter: "agTextColumnFilter",
+    filterParams: {
+      filterOptions: ["contains"],
+      maxNumConditions: 1,
+      debounceMs: 500,
+    },
   },
   {
     field: "confirmation",

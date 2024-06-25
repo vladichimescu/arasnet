@@ -3,13 +3,54 @@ import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
 import { AgGridReact } from "@ag-grid-community/react"
 import "@ag-grid-community/styles/ag-grid.css"
 import "@ag-grid-community/styles/ag-theme-quartz-no-font.css"
-// import "@ag-grid-community/styles/ag-theme-quartz.css"
 import React, { useRef } from "react"
 
 ModuleRegistry.registerModules([InfiniteRowModelModule])
 
 const pageSize = 20
 
+function DataGrid({
+  columnDefs,
+  defaultColDef = {
+    flex: 1,
+    singleClickEdit: true,
+  },
+  getRowId = ({ data: { id } = {} }) => id,
+  datasourceApi,
+}) {
+  const ref = useRef()
+
+  columnDefs[0].cellRenderer = LoadingCell
+
+  return (
+    <div
+      style={{
+        height: "100%",
+        flex: 1,
+      }}
+    >
+      <AgGridReact
+        ref={ref}
+        className="ag-theme-quartz-auto-dark"
+        suppressMenuHide
+        columnDefs={columnDefs}
+        defaultColDef={defaultColDef}
+        getRowId={getRowId}
+        rowModelType="infinite"
+        datasource={datasource(datasourceApi, ref)}
+        cacheBlockSize={pageSize}
+        rowBuffer={0}
+        maxConcurrentDatasourceRequests={1}
+        onBodyScrollEnd={() => ref.current.api.autoSizeAllColumns()}
+      />
+    </div>
+  )
+}
+
+export default DataGrid
+export { valueFormatterDate }
+
+//#region
 function LoadingCell({ value, api: gridApi }) {
   if (value) {
     return value
@@ -29,9 +70,56 @@ function datasource(datasourceApi, ref) {
       endRow: _end,
       successCallback,
       failCallback,
-      filterModel: { phone: { filter: phone_like } = {} },
+      filterModel,
       sortModel: [{ colId: _sort = "", sort: _order = "" } = {}],
     } = {}) => {
+      const filters = Object.entries(filterModel).reduce(
+        (
+          acc,
+          [
+            key,
+            {
+              filterType,
+              type: operand,
+              filter: filterValue,
+              dateFrom,
+              dateTo,
+            },
+          ]
+        ) => {
+          const filter = {
+            text: {
+              contains: {
+                [`${key}_like`]: filterValue,
+              },
+            },
+            number: {
+              contains: {
+                [`${key}_like`]: filterValue,
+              },
+            },
+            date: {
+              greaterThan: {
+                [`${key}_gte`]: dateFrom,
+              },
+              lessThan: {
+                [`${key}_lte`]: dateFrom,
+              },
+              inRange: {
+                [`${key}_gte`]: dateFrom,
+                [`${key}_lte`]: formatIncludesDateTo(dateTo),
+              },
+            },
+          }[filterType][operand]
+
+          return {
+            ...acc,
+            ...filter,
+          }
+        },
+        {}
+      )
+
       if (_start === 0) {
         ref.current.api.showLoadingOverlay()
       }
@@ -41,7 +129,7 @@ function datasource(datasourceApi, ref) {
         _end,
         _sort,
         _order,
-        phone_like,
+        ...filters,
       }).then(
         (data) => {
           successCallback(
@@ -49,7 +137,9 @@ function datasource(datasourceApi, ref) {
             data.length !== pageSize ? _start + data.length : null
           )
 
-          setTimeout(() => ref.current.api.autoSizeAllColumns(), 0)
+          if (_start === 0 && data.length) {
+            setTimeout(() => ref.current.api.autoSizeAllColumns(), 0)
+          }
 
           ref.current.api.hideOverlay()
         },
@@ -63,6 +153,19 @@ function datasource(datasourceApi, ref) {
   }
 }
 
+function formatIncludesDateTo(dateTo) {
+  if (!dateTo) {
+    return
+  }
+
+  const dateEnd = new Date(dateTo)
+  dateEnd.setDate(dateEnd.getDate() + 1)
+  dateEnd.setMinutes(dateEnd.getMinutes() - dateEnd.getTimezoneOffset())
+
+  const [date, hours] = dateEnd.toISOString().split(/T|\./)
+  return `${date} ${hours}`
+}
+
 function valueFormatterDate({ value }) {
   // TODO: set LOCALE format based on i18n
   return value
@@ -72,42 +175,4 @@ function valueFormatterDate({ value }) {
       }).format(new Date(value))
     : value
 }
-
-function DataGrid({
-  columnDefs,
-  defaultColDef = {
-    flex: 1,
-    singleClickEdit: true,
-  },
-  getRowId = ({ data: { id } = {} }) => id,
-  datasourceApi,
-}) {
-  const ref = useRef()
-
-  columnDefs[0].cellRenderer = LoadingCell
-
-  return (
-    <div
-      style={{
-        height: "100%",
-      }}
-    >
-      <AgGridReact
-        ref={ref}
-        className="ag-theme-quartz-auto-dark"
-        suppressMenuHide
-        columnDefs={columnDefs}
-        defaultColDef={defaultColDef}
-        getRowId={getRowId}
-        rowModelType="infinite"
-        datasource={datasource(datasourceApi, ref)}
-        cacheBlockSize={pageSize}
-        rowBuffer={0}
-        maxConcurrentDatasourceRequests={1}
-      />
-    </div>
-  )
-}
-
-export default DataGrid
-export { valueFormatterDate }
+//#endregion

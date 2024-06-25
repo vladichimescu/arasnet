@@ -24,8 +24,7 @@ const columnDefs = [
     headerName: "Phone",
     filter: "agNumberColumnFilter",
     filterParams: {
-      // TODO: change name of filter
-      filterOptions: ["PHONE NUMBER"],
+      filterOptions: ["contains"],
       maxNumConditions: 1,
       debounceMs: 500,
     },
@@ -33,14 +32,32 @@ const columnDefs = [
   {
     field: "first",
     headerName: "First",
+    filter: "agTextColumnFilter",
+    filterParams: {
+      filterOptions: ["contains"],
+      maxNumConditions: 1,
+      debounceMs: 500,
+    },
   },
   {
     field: "last",
     headerName: "Last",
+    filter: "agTextColumnFilter",
+    filterParams: {
+      filterOptions: ["contains"],
+      maxNumConditions: 1,
+      debounceMs: 500,
+    },
   },
   {
     field: "email",
     headerName: "Email",
+    filter: "agTextColumnFilter",
+    filterParams: {
+      filterOptions: ["contains"],
+      maxNumConditions: 1,
+      debounceMs: 500,
+    },
   },
   {
     field: "createdAt",
