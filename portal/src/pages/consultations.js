@@ -1,55 +1,39 @@
 import { ModuleRegistry } from "@ag-grid-community/core"
 import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
-import { AgGridReact } from "@ag-grid-community/react"
 import "@ag-grid-community/styles/ag-grid.css"
 import "@ag-grid-community/styles/ag-theme-quartz.css"
 import React from "react"
 import { toast } from "react-toastify"
 
 import ConsultationsApi from "../apis/consultations-api"
+import DataGrid, { valueFormatterDate } from "../components/data-grid"
 
 ModuleRegistry.registerModules([InfiniteRowModelModule])
 
 const consultationStatuses =
   process.env.REACT_APP_CONSULTATION_STATUSES.split(",")
 
-const ConfirmationButtons = ({ data: { phone } = {} }) => (
-  <div>
-    <button
-      onClick={() =>
-        window.open(
-          `https://wa.me/${phone}?text=${encodeURIComponent("te rugam sa confirmi")}`
-        )
-      }
-    >
-      WhatsApp
-    </button>
-    <button onClick={() => window.open(`tel:${phone}`)}>Phone</button>
-  </div>
-)
-
-const dateFormatter = ({ value }) =>
-  // TODO: set LOCALE format based on i18n
-  value
-    ? new Intl.DateTimeFormat("ro-RO", {
-        dateStyle: "full",
-        timeStyle: "short",
-      }).format(new Date(value))
-    : value
-
-const getRowId = ({ data: { id } = {} }) => id
-
-const pageSize = 20
-
-const defaultColDef = {
-  flex: 1,
-  singleClickEdit: true,
-}
+const ConfirmationButtons = ({ data: { phone } = {} }) =>
+  phone ? (
+    <div>
+      <button
+        style={{ marginRight: 15 }}
+        onClick={() =>
+          window.open(
+            `https://wa.me/${phone}?text=${encodeURIComponent("te rugam sa confirmi")}`
+          )
+        }
+      >
+        WhatsApp
+      </button>
+      <button onClick={() => window.open(`tel:${phone}`)}>Phone</button>
+    </div>
+  ) : null
 
 const columnDefs = [
   {
     field: "phone",
-    headerName: "Telefon",
+    headerName: "Phone",
     filter: "agNumberColumnFilter",
     filterParams: {
       // TODO: change name of filter
@@ -60,8 +44,8 @@ const columnDefs = [
   },
   {
     field: "date",
-    headerName: "Programare",
-    valueFormatter: dateFormatter,
+    headerName: "Appointment",
+    valueFormatter: valueFormatterDate,
   },
   {
     field: "status",
@@ -89,46 +73,18 @@ const columnDefs = [
   },
   {
     field: "createdAt",
-    headerName: "Creat",
-    valueFormatter: dateFormatter,
+    headerName: "Created",
+    valueFormatter: valueFormatterDate,
   },
   {
     field: "location",
-    headerName: "Locatie",
+    headerName: "Location",
   },
   {
     field: "confirmation",
     cellRenderer: ConfirmationButtons,
   },
 ]
-
-const dataSource = {
-  getRows: (params) => {
-    const {
-      startRow: _start,
-      endRow: _end,
-      successCallback,
-      failCallback,
-      filterModel: { phone: { filter: phone_like } = {} },
-      sortModel: [{ colId: _sort = "", sort: _order = "" } = {}],
-    } = params
-
-    ConsultationsApi.read({
-      _start,
-      _end,
-      _sort,
-      _order,
-      phone_like,
-    }).then(
-      (data) =>
-        successCallback(
-          data,
-          data.length !== pageSize ? _start + data.length : null
-        ),
-      failCallback
-    )
-  },
-}
 
 function Consultations() {
   return (
@@ -138,17 +94,7 @@ function Consultations() {
         width: "100%",
       }}
     >
-      <AgGridReact
-        className="ag-theme-quartz-auto-dark"
-        columnDefs={columnDefs}
-        defaultColDef={defaultColDef}
-        getRowId={getRowId}
-        rowModelType="infinite"
-        datasource={dataSource}
-        cacheBlockSize={pageSize}
-        rowBuffer={0}
-        maxConcurrentDatasourceRequests={1}
-      />
+      <DataGrid columnDefs={columnDefs} datasourceApi={ConsultationsApi.read} />
     </div>
   )
 }
