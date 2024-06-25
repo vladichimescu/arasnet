@@ -50,9 +50,9 @@ root.render(
         <AuthProvider>
           <ToastContainer
             autoClose={3500}
-            closeOnClick={true}
+            closeOnClick
             position="top-center"
-            hideProgressBar
+            theme="colored"
           />
           <RouterProvider router={router} />
         </AuthProvider>

@@ -3,7 +3,7 @@ import { toast } from "react-toastify"
 
 const ErrorFallback = ({ error }) => {
   useEffect(() => {
-    toast("Try again, refresh the page")
+    toast.warn("Try again, refresh the page")
   }, [])
 
   return (

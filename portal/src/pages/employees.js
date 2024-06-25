@@ -108,7 +108,7 @@ function Employees() {
       }}
     >
       <AgGridReact
-        className="ag-theme-quartz"
+        className="ag-theme-quartz-auto-dark"
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         getRowId={getRowId}

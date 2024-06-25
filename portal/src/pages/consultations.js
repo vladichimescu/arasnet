@@ -77,13 +77,13 @@ const columnDefs = [
     onCellValueChanged: async ({ api: gridApi, data, oldValue }) => {
       try {
         await ConsultationsApi.update(data)
-        toast("Status updated")
+        toast.success("Status updated")
       } catch (err) {
         gridApi.getRowNode(`${data.id}`).updateData({
           ...data,
           status: oldValue,
         })
-        toast(`Status could not be updated\nreason: ${err.message}`)
+        toast.error(`Status could not be updated\nreason: ${err.message}`)
       }
     },
   },
@@ -139,7 +139,7 @@ function Consultations() {
       }}
     >
       <AgGridReact
-        className="ag-theme-quartz"
+        className="ag-theme-quartz-auto-dark"
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         getRowId={getRowId}
