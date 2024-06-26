@@ -25,8 +25,6 @@ const columnDefs = [
     filter: "agNumberColumnFilter",
     filterParams: {
       filterOptions: ["contains"],
-      maxNumConditions: 1,
-      debounceMs: 500,
     },
   },
   {
@@ -35,8 +33,6 @@ const columnDefs = [
     filter: "agTextColumnFilter",
     filterParams: {
       filterOptions: ["contains"],
-      maxNumConditions: 1,
-      debounceMs: 500,
     },
   },
   {
@@ -45,8 +41,6 @@ const columnDefs = [
     filter: "agTextColumnFilter",
     filterParams: {
       filterOptions: ["contains"],
-      maxNumConditions: 1,
-      debounceMs: 500,
     },
   },
   {
@@ -55,8 +49,6 @@ const columnDefs = [
     filter: "agTextColumnFilter",
     filterParams: {
       filterOptions: ["contains"],
-      maxNumConditions: 1,
-      debounceMs: 500,
     },
   },
   {

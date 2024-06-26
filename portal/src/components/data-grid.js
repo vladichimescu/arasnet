@@ -14,6 +14,10 @@ function DataGrid({
   defaultColDef = {
     flex: 1,
     singleClickEdit: true,
+    filterParams: {
+      debounceMs: 500,
+      maxNumConditions: 1,
+    },
   },
   getRowId = ({ data: { id } = {} }) => id,
   datasourceApi,
