@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react"
+import React, { createContext, useCallback, useContext, useState } from "react"
 
 import AuthApi from "../apis/auth-api"
 import EmployeesApi from "../apis/employees-api"
@@ -9,36 +9,39 @@ const Context = createContext()
 function AuthProvider(props) {
   const [isLogged, setIsLogged] = useState(!!AuthService.getToken())
 
-  const state = {
-    isLogged,
-    login: async (account) => {
-      try {
-        const token = await AuthApi.login(account)
-        AuthService.saveToken(token)
+  const login = useCallback(async (account) => {
+    const token = await AuthApi.login(account)
+    AuthService.saveToken(token)
 
-        setIsLogged(true)
+    setIsLogged(true)
 
-        return token
-      } catch (err) {
-        setIsLogged(false)
+    return token
+  }, [])
 
-        throw err
-      }
-    },
-    logout: () => {
-      AuthService.removeToken()
+  const logout = useCallback(() => {
+    AuthService.removeToken()
 
-      setIsLogged(false)
-    },
-    register: async (account) => {
-      const user = await EmployeesApi.create(account)
-      state.login(account)
+    setIsLogged(false)
+  }, [])
 
-      return user
-    },
-  }
+  const register = useCallback(async (account) => {
+    const user = await EmployeesApi.create(account)
+    login(account)
 
-  return <Context.Provider value={state} {...props} />
+    return user
+  }, [])
+
+  return (
+    <Context.Provider
+      value={{
+        isLogged,
+        login,
+        logout,
+        register,
+      }}
+      {...props}
+    />
+  )
 }
 
 export default AuthProvider
