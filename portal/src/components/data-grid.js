@@ -143,7 +143,7 @@ function datasource(datasourceApi, ref) {
           )
 
           if (_start === 0 && data.length) {
-            setTimeout(() => ref.current.api.autoSizeAllColumns(), 0)
+            setTimeout(() => ref.current?.api.autoSizeAllColumns(), 0)
           }
 
           ref.current.api.hideOverlay()
