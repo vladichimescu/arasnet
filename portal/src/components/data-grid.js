@@ -104,14 +104,14 @@ function datasource(datasourceApi, ref) {
             },
             date: {
               greaterThan: {
-                [`${key}_gte`]: dateFrom,
+                [`${key}_gte`]: formatIncludesDate({ gte: dateFrom }),
               },
               lessThan: {
-                [`${key}_lte`]: dateFrom,
+                [`${key}_lte`]: formatIncludesDate({ lte: dateTo }),
               },
               inRange: {
-                [`${key}_gte`]: dateFrom,
-                [`${key}_lte`]: formatIncludesDateTo(dateTo),
+                [`${key}_gte`]: formatIncludesDate({ gte: dateFrom }),
+                [`${key}_lte`]: formatIncludesDate({ lte: dateTo }),
               },
             },
           }[filterType][operand]
@@ -157,17 +157,17 @@ function datasource(datasourceApi, ref) {
   }
 }
 
-function formatIncludesDateTo(dateTo) {
-  if (!dateTo) {
-    return
+function formatIncludesDate({ gte, lte }) {
+  if (gte) {
+    return new Date(gte).toISOString()
   }
 
-  const dateEnd = new Date(dateTo)
-  dateEnd.setDate(dateEnd.getDate() + 1)
-  dateEnd.setMinutes(dateEnd.getMinutes() - dateEnd.getTimezoneOffset())
+  if (lte) {
+    const date = new Date(lte)
+    date.setDate(date.getDate() + 1)
 
-  const [date, hours] = dateEnd.toISOString().split(/T|\./)
-  return `${date} ${hours}`
+    return date.toISOString()
+  }
 }
 
 function valueFormatterDate({ value }) {
