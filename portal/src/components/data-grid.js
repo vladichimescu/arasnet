@@ -4,6 +4,7 @@ import { AgGridReact } from "@ag-grid-community/react"
 import "@ag-grid-community/styles/ag-grid.css"
 import "@ag-grid-community/styles/ag-theme-quartz-no-font.css"
 import React, { useRef } from "react"
+import { toast } from "react-toastify"
 
 ModuleRegistry.registerModules([InfiniteRowModelModule])
 
@@ -52,7 +53,7 @@ function DataGrid({
 }
 
 export default DataGrid
-export { valueFormatterDate }
+export { valueFormatterDate, onCellValueChanged }
 
 //#region
 function LoadingCell({ value, api: gridApi }) {
@@ -178,5 +179,20 @@ function valueFormatterDate({ value }) {
         timeStyle: "short",
       }).format(new Date(value))
     : value
+}
+
+function onCellValueChanged({ api: gridApi, data, oldValue }) {
+  return async function (Api) {
+    try {
+      await Api.update(data)
+      toast.success("Updating success")
+    } catch (err) {
+      gridApi.getRowNode(`${data.id}`).updateData({
+        ...data,
+        status: oldValue,
+      })
+      toast.error(`Updating error\nreason: ${err.message}`)
+    }
+  }
 }
 //#endregion

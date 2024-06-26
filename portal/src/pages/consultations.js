@@ -3,32 +3,17 @@ import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
 import "@ag-grid-community/styles/ag-grid.css"
 import "@ag-grid-community/styles/ag-theme-quartz.css"
 import React from "react"
-import { toast } from "react-toastify"
 
 import ConsultationsApi from "../apis/consultations-api"
-import DataGrid, { valueFormatterDate } from "../components/data-grid"
+import DataGrid, {
+  onCellValueChanged,
+  valueFormatterDate,
+} from "../components/data-grid"
 
 ModuleRegistry.registerModules([InfiniteRowModelModule])
 
 const consultationStatuses =
   process.env.REACT_APP_CONSULTATION_STATUSES.split(",")
-
-const ConfirmationButtons = ({ data: { phone } = {} }) =>
-  phone ? (
-    <div>
-      <button
-        style={{ marginRight: 15 }}
-        onClick={() =>
-          window.open(
-            `https://wa.me/${phone}?text=${encodeURIComponent("te rugam sa confirmi")}`
-          )
-        }
-      >
-        WhatsApp
-      </button>
-      <button onClick={() => window.open(`tel:${phone}`)}>Phone</button>
-    </div>
-  ) : null
 
 const columnDefs = [
   {
@@ -63,18 +48,7 @@ const columnDefs = [
             params: { values: consultationStatuses },
           })
         : null,
-    onCellValueChanged: async ({ api: gridApi, data, oldValue }) => {
-      try {
-        await ConsultationsApi.update(data)
-        toast.success("Status updated")
-      } catch (err) {
-        gridApi.getRowNode(`${data.id}`).updateData({
-          ...data,
-          status: oldValue,
-        })
-        toast.error(`Status could not be updated\nreason: ${err.message}`)
-      }
-    },
+    onCellValueChanged: onCellValueChanged(ConsultationsApi),
   },
   {
     field: "createdAt",
@@ -109,3 +83,27 @@ function Consultations() {
 }
 
 export default Consultations
+
+//#region
+function ConfirmationButtons({ data: { phone } = {} }) {
+  if (!phone) {
+    return null
+  }
+
+  return (
+    <div>
+      <button
+        style={{ marginRight: 15 }}
+        onClick={() =>
+          window.open(
+            `https://wa.me/${phone}?text=${encodeURIComponent("te rugam sa confirmi")}`
+          )
+        }
+      >
+        WhatsApp
+      </button>
+      <button onClick={() => window.open(`tel:${phone}`)}>Phone</button>
+    </div>
+  )
+}
+//#endregion
