@@ -13,3 +13,14 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+nav.top-bar {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+nav.top-bar > .top-bar-section > :not(:first-child) {
+ margin-left: 10px;
+}

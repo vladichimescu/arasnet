@@ -1,6 +1,7 @@
 import React, { Fragment, Suspense, lazy } from "react"
 import ReactDOM from "react-dom/client"
 import {
+  Outlet,
   Route,
   RouterProvider,
   createBrowserRouter,
@@ -9,9 +10,11 @@ import {
 import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
+import ActionsProvider from "./components/actions-provider"
 import AuthProvider from "./components/auth-provider"
 import ErrorBoundary from "./components/error-boundary"
 import Loading from "./components/loading"
+import TopBar from "./components/top-bar"
 import "./index.css"
 import NotFound from "./pages/not-found"
 
@@ -26,18 +29,20 @@ const Home = lazy(() => import("./pages/home"))
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Fragment>
-      <Route index element={<Home />} />
+      <Route element={<Layout />}>
+        <Route index element={<Home />} />
 
-      {/* <Route path="landing" element={<Landing />} /> */}
+        {/* <Route path="landing" element={<Landing />} /> */}
 
-      {/* <Route path="dashboard" element={<Dashboard />} /> */}
-      <Route path="consultations" element={<Consultations />} />
-      <Route path="employees" element={<Employees />} />
+        {/* <Route path="dashboard" element={<Dashboard />} /> */}
+        <Route path="consultations" element={<Consultations />} />
+        <Route path="employees" element={<Employees />} />
 
-      <Route path="logout" element={<Logout />} />
-      <Route path="login" element={<Login />} />
+        <Route path="logout" element={<Logout />} />
+        <Route path="login" element={<Login />} />
 
-      <Route path="*" element={<NotFound />} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
     </Fragment>
   )
 )
@@ -47,16 +52,29 @@ root.render(
   <React.StrictMode>
     <ErrorBoundary>
       <Suspense fallback={<Loading />}>
-        <AuthProvider>
-          <ToastContainer
-            autoClose={3500}
-            closeOnClick
-            position="top-center"
-            theme="colored"
-          />
-          <RouterProvider router={router} />
-        </AuthProvider>
+        <ActionsProvider>
+          <AuthProvider>
+            <ToastContainer
+              autoClose={3500}
+              closeOnClick
+              position="top-center"
+              theme="colored"
+            />
+            <RouterProvider router={router} />
+          </AuthProvider>
+        </ActionsProvider>
       </Suspense>
     </ErrorBoundary>
   </React.StrictMode>
 )
+
+//#region
+function Layout() {
+  return (
+    <Fragment>
+      <TopBar />
+      <Outlet />
+    </Fragment>
+  )
+}
+//#endregion
