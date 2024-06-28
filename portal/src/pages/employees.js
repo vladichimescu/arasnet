@@ -9,7 +9,7 @@ import DataGrid, { valueFormatterDate } from "../components/data-grid"
 
 ModuleRegistry.registerModules([InfiniteRowModelModule])
 
-const PermissionsButton = ({ api: gridApi, data: { email } = {} }) =>
+const PermissionsButton = ({ data: { email } = {} }) =>
   email ? (
     <div>
       <button onClick={() => window.alert(`Permissions ${email}`)}>
@@ -70,7 +70,7 @@ function Employees() {
         width: "100%",
       }}
     >
-      <DataGrid columnDefs={columnDefs} datasourceApi={EmployeesApi.read} />
+      <DataGrid columnDefs={columnDefs} context={EmployeesApi} />
     </div>
   )
 }

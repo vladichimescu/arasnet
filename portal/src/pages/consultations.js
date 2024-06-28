@@ -48,7 +48,7 @@ const columnDefs = [
             params: { values: consultationStatuses },
           })
         : null,
-    onCellValueChanged: onCellValueChanged(ConsultationsApi),
+    onCellValueChanged,
   },
   {
     field: "createdAt",
@@ -73,11 +73,11 @@ function Consultations() {
   return (
     <div
       style={{
-        height: "100vh",
+        height: "80vh",
         width: "100%",
       }}
     >
-      <DataGrid columnDefs={columnDefs} datasourceApi={ConsultationsApi.read} />
+      <DataGrid columnDefs={columnDefs} context={ConsultationsApi} />
     </div>
   )
 }
