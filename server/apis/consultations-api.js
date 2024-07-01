@@ -1,7 +1,6 @@
 import jsonServerDB from "../index.js"
 import { checkMandatoryProps } from "../libs/check-mandatory-props.js"
 
-const supportedLocations = process.env.SUPPORTED_LOCATIONS.split(",")
 const consultationMandatoryFields =
   process.env.CONSULTATION_MANDATORY_FIELDS.split(",")
 
@@ -12,23 +11,36 @@ function create({ body: consultation = {} }, res, next) {
     return res.status(400).send(errors)
   }
 
+  const consultationDate = new Date(consultation.date)
+
+  if (new Date() > consultationDate) {
+    return res.status(400).send({
+      date: {
+        code: "date_invalid",
+        message: `consultation cannot be schedules in past`,
+      },
+    })
+  }
+
   const dbConsultation = jsonServerDB
     .getState()
     .consultations.find(
-      ({ phone, date, location } = {}) =>
+      ({ phone, date } = {}) =>
         phone === consultation.phone &&
-        date === consultation.date &&
-        location === consultation.location
+        new Date(date).toDateString() === consultationDate.toDateString()
     )
 
   if (dbConsultation) {
     return res.status(400).send({
       date: {
         code: "date_invalid",
-        message: "consultation already exists",
+        message: `consultation already exists on ${consultationDate} in ${consultation.location}`,
       },
     })
   }
+
+  // TODO: expose .env variables as enum with i18n suport
+  consultation.status = "pending"
 
   next()
 }

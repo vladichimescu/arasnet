@@ -5,6 +5,7 @@ import "@ag-grid-community/styles/ag-theme-quartz.css"
 import React from "react"
 
 import ConsultationsApi from "../apis/consultations-api"
+import CreateConsultation from "../components/create-consultation"
 import DataGrid, {
   onCellValueChanged,
   valueFormatterDate,
@@ -48,6 +49,7 @@ const columnDefs = [
             params: { values: consultationStatuses },
           })
         : null,
+    cellClass: consultationStatuses.length > 1 ? "ag-cell-editable" : null,
     onCellValueChanged,
   },
   {
@@ -78,6 +80,7 @@ function Consultations() {
       }}
     >
       <DataGrid columnDefs={columnDefs} context={ConsultationsApi} />
+      <CreateConsultation />
     </div>
   )
 }

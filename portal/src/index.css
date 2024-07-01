@@ -24,3 +24,9 @@ nav.top-bar {
 nav.top-bar > .top-bar-section > :not(:first-child) {
  margin-left: 10px;
 }
+
+button,
+.ag-cell-editable,
+.ag-cell-inline-editing * {
+  cursor: pointer
+}
