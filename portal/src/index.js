@@ -1,3 +1,4 @@
+import NProgress from "nprogress"
 import React, { Fragment, Suspense, lazy } from "react"
 import ReactDOM from "react-dom/client"
 import {
@@ -25,6 +26,8 @@ const Employees = lazy(() => import("./pages/employees"))
 const Login = lazy(() => import("./pages/login"))
 const Logout = lazy(() => import("./pages/logout"))
 const Home = lazy(() => import("./pages/home"))
+
+NProgress.configure({ showSpinner: false })
 
 const router = createBrowserRouter(
   createRoutesFromElements(
