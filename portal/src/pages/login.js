@@ -23,14 +23,18 @@ function Login() {
 
   return (
     <form onSubmit={onSubmit}>
-      <label htmlFor="email">email</label>
-      <input name="email" type="email" required />
-      {errors?.email && <span>{errors.email.message}</span>}
+      <label>
+        email
+        <input name="email" type="email" required />
+        {errors?.email && <span>{errors.email.message}</span>}
+      </label>
       <br />
 
-      <label htmlFor="password">password</label>
-      <input name="password" type="password" required />
-      {errors?.password && <span>{errors.password.message}</span>}
+      <label>
+        password
+        <input name="password" type="password" required />
+        {errors?.password && <span>{errors.password.message}</span>}
+      </label>
       <br />
 
       <button type="submit">login</button>
