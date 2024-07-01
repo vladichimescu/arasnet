@@ -5,6 +5,7 @@ import "@ag-grid-community/styles/ag-theme-quartz.css"
 import React from "react"
 
 import EmployeesApi from "../apis/employees-api"
+import CreateEmployee from "../components/create-employee"
 import DataGrid, { valueFormatterDate } from "../components/data-grid"
 
 ModuleRegistry.registerModules([InfiniteRowModelModule])
@@ -71,6 +72,7 @@ function Employees() {
       }}
     >
       <DataGrid columnDefs={columnDefs} context={EmployeesApi} />
+      <CreateEmployee />
     </div>
   )
 }

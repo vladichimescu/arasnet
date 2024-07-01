@@ -10,15 +10,28 @@ function create({ body: employee = {} }, res, next) {
     return res.status(400).send(errors)
   }
 
-  const dbEmployee = jsonServerDB
+  const dbEmployeeByEmail = jsonServerDB
     .getState()
     .employees.find(({ email } = {}) => email === employee.email)
 
-  if (dbEmployee) {
+  if (dbEmployeeByEmail) {
     return res.status(400).send({
       email: {
         code: "email_invalid",
         message: "email already used",
+      },
+    })
+  }
+
+  const dbEmployeeByPhone = jsonServerDB
+    .getState()
+    .employees.find(({ phone } = {}) => phone === employee.phone)
+
+  if (dbEmployeeByPhone) {
+    return res.status(400).send({
+      phone: {
+        code: "phone_invalid",
+        message: "phone already used",
       },
     })
   }
