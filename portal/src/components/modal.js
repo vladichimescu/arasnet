@@ -15,17 +15,14 @@ function Modal({ open, onClose, formContent }) {
     }
 
     ref.current.querySelector("form").reset()
-
     ref.current.showModal()
+    ref.current.querySelector("button[value='cancel']").focus()
   }, [open])
 
   const onSubmit = async (event) => {
     event.preventDefault()
 
-    const form = event.target
-    const data = Object.fromEntries(new FormData(form))
-
-    onClose(data)
+    onClose(Object.fromEntries(new FormData(event.target)))
   }
 
   const onCancel = () => onClose()
@@ -35,11 +32,9 @@ function Modal({ open, onClose, formContent }) {
       <form onSubmit={onSubmit}>
         {formContent}
 
-        <button type="submit" value="submit">
-          Create
-        </button>
+        <button type="submit">Create</button>
 
-        <button type="button" value="no" onClick={onCancel} autoFocus>
+        <button type="button" value="cancel" onClick={onCancel}>
           Cancel
         </button>
       </form>
