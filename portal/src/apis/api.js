@@ -1,5 +1,6 @@
 import axios from "axios"
 import NProgress from "nprogress"
+import { toast } from "react-toastify"
 
 import AuthService from "../services/auth-service"
 
@@ -65,12 +66,17 @@ api.interceptors.response.use(
       }
 
       window.location.href = "/logout"
-    } else if (status === 400) {
-      // TODO: Handle business validation
-    } else if (status === 404) {
-      // TODO: Handle not found errors
-    } else {
-      // TODO: Handle other errors
+    } else if (status === 403) {
+      toast.warn(data.message)
+      // TODO: Handle authorization
+      // } else if (status === 400) {
+      //   alert("TODO: Handle business validation")
+      //   // TODO: Handle business validation
+      // } else if (status === 404) {
+      //   alert("TODO: Handle not found errors")
+      //   // TODO: Handle not found errors
+      // } else {
+      //   // TODO: Handle other errors
     }
 
     NProgress.done()
