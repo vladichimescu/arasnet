@@ -4,6 +4,7 @@ const trackingStorageKeyPrefix = "__tracking__"
 
 const storageKeys = {
   APP_AUTH_JWT: `${appStorageKeyPrefix}.auth_jwt`,
+  APP_AUTH_PERMISSIONS: `${appStorageKeyPrefix}.auth_permissions`,
   APP_TERMS_AND_CONDITIONS_DISMISSED: `${appStorageKeyPrefix}.terms_and_conditions-dismissed`,
   APP_CONTACT_SERVICE_USAGE_DISMISSED: `${appStorageKeyPrefix}.contact.service_usage-dismissed`,
 

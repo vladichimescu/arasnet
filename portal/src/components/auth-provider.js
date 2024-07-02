@@ -7,18 +7,24 @@ const Context = createContext()
 
 function AuthProvider(props) {
   const [isLogged, setIsLogged] = useState(!!AuthService.getToken())
+  const [permissions, setPermissions] = useState(AuthService.getAccessMatrix())
 
   const login = useCallback(async (account) => {
-    const token = await AuthApi.login(account)
+    const { token, permissions } = await AuthApi.login(account)
+
     AuthService.saveToken(token)
+    AuthService.savePermissions(permissions)
+
+    setPermissions(AuthService.getAccessMatrix())
 
     setIsLogged(true)
-
-    return token
   }, [])
 
   const logout = useCallback(() => {
     AuthService.removeToken()
+    AuthService.removePermissions()
+
+    setPermissions(AuthService.getAccessMatrix())
 
     setIsLogged(false)
   }, [])
@@ -27,6 +33,7 @@ function AuthProvider(props) {
     <Context.Provider
       value={{
         isLogged,
+        ...permissions,
         login,
         logout,
       }}

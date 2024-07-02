@@ -5,19 +5,33 @@ import { useActions } from "./actions-provider"
 import { useAuth } from "./auth-provider"
 
 const TopBar = () => {
-  const { isLogged } = useAuth()
+  const { isLogged, canReadConsultations, canReadEmployees } = useAuth()
   const { actions } = useActions()
 
   return (
     <nav className="top-bar">
       <div className="top-bar-section">
-        <Link to="consultations">
-          <button>Consultations</button>
-        </Link>
+        {isLogged ? (
+          <Link to="dashboard">
+            <button>Dashboard</button>
+          </Link>
+        ) : (
+          <Link to="landing">
+            <button>Landing</button>
+          </Link>
+        )}
 
-        <Link to="employees">
-          <button>Employees</button>
-        </Link>
+        {canReadConsultations ? (
+          <Link to="consultations">
+            <button>Consultations</button>
+          </Link>
+        ) : null}
+
+        {canReadEmployees ? (
+          <Link to="employees">
+            <button>Employees</button>
+          </Link>
+        ) : null}
       </div>
 
       <div className="top-bar-section">

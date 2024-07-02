@@ -143,7 +143,10 @@ function login({ body: employee = {} }, res) {
     }
   )
 
-  return res.status(200).send(token)
+  return res.status(200).send({
+    token,
+    permissions: dbEmployee.permissions,
+  })
 }
 
 function resign({ headers: { authorization = "" } = {} }, res) {

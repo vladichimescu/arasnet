@@ -5,6 +5,7 @@ import "@ag-grid-community/styles/ag-theme-quartz.css"
 import React from "react"
 
 import ConsultationsApi from "../apis/consultations-api"
+import { useAuth } from "../components/auth-provider"
 import CreateConsultation from "../components/create-consultation"
 import DataGrid, {
   onCellValueChanged,
@@ -72,6 +73,8 @@ const columnDefs = [
 ]
 
 function Consultations() {
+  const { canCreateConsultations } = useAuth()
+
   return (
     <div
       style={{
@@ -80,7 +83,7 @@ function Consultations() {
       }}
     >
       <DataGrid columnDefs={columnDefs} context={ConsultationsApi} />
-      <CreateConsultation />
+      {canCreateConsultations ? <CreateConsultation /> : null}
     </div>
   )
 }

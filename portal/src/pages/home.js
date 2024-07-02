@@ -6,8 +6,7 @@ import { useAuth } from "../components/auth-provider"
 function Home() {
   const { isLogged } = useAuth()
 
-  return <Navigate replace to={isLogged ? "consultations" : "login"} />
-  // return <Navigate replace to={isLogged ? "dashboard" : "landing"} />
+  return <Navigate replace to={isLogged ? "dashboard" : "landing"} />
 }
 
 export default Home

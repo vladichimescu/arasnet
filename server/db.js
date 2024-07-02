@@ -12,7 +12,7 @@ const data = {
     {
       id: 0,
       first: "Admin",
-      last: "Dalvit",
+      last: "ARASnet",
       phone: "0777777777",
       email: "admin@arasnet.ro",
       password: "pass",
@@ -28,6 +28,20 @@ const data = {
     },
     {
       id: 1,
+      first: "Website",
+      last: "ARASnet",
+      phone: "0777777777",
+      email: "website@arasnet.ro",
+      password: "pass",
+      permissions: {
+        consultations: {
+          access: ["create"],
+        },
+      },
+      createdAt: new Date().toISOString(),
+    },
+    {
+      id: 2,
       first: "Bucuresti",
       last: "Dalvit",
       phone: "0777777777",
@@ -47,7 +61,7 @@ const data = {
       createdAt: new Date().toISOString(),
     },
     {
-      id: 2,
+      id: 3,
       first: "Bucuresti",
       last: "Dalvit",
       phone: "0777777777",
@@ -76,7 +90,7 @@ fs.writeFileSync(process.env.DB_FILE, JSON.stringify(data, null, 2), "utf-8")
 //#region
 function mockEmployee(_, index) {
   return {
-    id: index + 3,
+    id: index + 4,
     first: faker.person.firstName(),
     last: faker.person.lastName(),
     phone: faker.helpers.fromRegExp("[0-9]{10}"),

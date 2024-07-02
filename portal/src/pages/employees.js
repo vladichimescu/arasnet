@@ -5,6 +5,7 @@ import "@ag-grid-community/styles/ag-theme-quartz.css"
 import React from "react"
 
 import EmployeesApi from "../apis/employees-api"
+import { useAuth } from "../components/auth-provider"
 import CreateEmployee from "../components/create-employee"
 import DataGrid, { valueFormatterDate } from "../components/data-grid"
 
@@ -64,6 +65,8 @@ const columnDefs = [
 ]
 
 function Employees() {
+  const { canCreateEmployees } = useAuth()
+
   return (
     <div
       style={{
@@ -72,7 +75,7 @@ function Employees() {
       }}
     >
       <DataGrid columnDefs={columnDefs} context={EmployeesApi} />
-      <CreateEmployee />
+      {canCreateEmployees ? <CreateEmployee /> : null}
     </div>
   )
 }
