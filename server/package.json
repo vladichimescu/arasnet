@@ -5,8 +5,9 @@
   "private": true,
   "scripts": {
     "postinstall": "dotenv -e ../.env -e .env -- node db",
+    "debug": "dotenv -e ../.env -e .env -- node --experimental-json-modules --inspect index.js",
     "start": "dotenv -e ../.env -e .env -- node --experimental-json-modules index.js",
-    "debug": "dotenv -e ../.env -e .env -- node --experimental-json-modules --inspect index.js"
+    "serve": "dotenv -e ../.env -e .env -c production -- node --experimental-json-modules index.js"
   },
   "dependencies": {
     "@faker-js/faker": "^8.4.1",

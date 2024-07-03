@@ -13,9 +13,11 @@
     "prettier": "^3.3.2"
   },
   "scripts": {
-    "clean": "rm -rf .yarn && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+    "clean": "rm -rf .yarn portal/build && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "yarn workspaces foreach --all --parallel run start"
+    "start": "yarn workspaces foreach --all --parallel run start",
+    "build": "yarn workspaces foreach --all --parallel run build",
+    "serve": "yarn workspaces foreach --all --parallel run serve"
   },
   "engines": {
     "node": "20.15.0",

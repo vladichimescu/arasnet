@@ -17,7 +17,8 @@
     "react-i18next": "^14.1.2",
     "react-router-dom": "^6.24.0",
     "react-scripts": "5.0.1",
-    "react-toastify": "^10.0.5"
+    "react-toastify": "^10.0.5",
+    "serve": "^14.2.3"
   },
   "devDependencies": {
     "@craco/craco": "^7.1.0",
@@ -25,7 +26,8 @@
   },
   "scripts": {
     "start": "dotenv -e ../.env -e .env -- craco start",
-    "build": "dotenv -e ../.env -e .env -- craco build"
+    "build": "dotenv -e ../.env -e .env -c production -- craco build",
+    "serve": "dotenv -e ../.env -e .env -c production -- serve -s build"
   },
   "eslintConfig": {
     "extends": [
