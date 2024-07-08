@@ -26,5 +26,19 @@
   "volta": {
     "node": "20.15.0",
     "yarn": "4.3.1"
+  },
+  "prettier": {
+    "semi": false,
+    "trailingComma": "es5",
+    "plugins": [
+      "@trivago/prettier-plugin-sort-imports"
+    ],
+    "importOrder": [
+      "^@arasnet/(.*)$",
+      "^../",
+      "^./"
+    ],
+    "importOrderSeparation": true,
+    "importOrderSortSpecifiers": true
   }
 }
