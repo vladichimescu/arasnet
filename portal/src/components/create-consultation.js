@@ -61,6 +61,7 @@ function CreateConsultation({ onSuccess = () => {} }) {
               }}
               enableSearch
               country="ro"
+              autoFormat={false}
             />
             {errors?.phone && <span>{errors.phone.message}</span>}
           </label>
