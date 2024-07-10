@@ -25,11 +25,18 @@ code {
     monospace;
 }
 
+input[type="radio"][readonly],
+input[type="checkbox"][readonly] {
+  pointer-events: none;
+}
+
 .data-grid {
   flex: 1;
 }
 
 button,
+input[type="radio"],
+input[type="checkbox"],
 .data-grid .ag-cell-editable,
 .data-grid .ag-cell-inline-editing * {
   cursor: pointer;
