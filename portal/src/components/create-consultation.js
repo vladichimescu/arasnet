@@ -62,7 +62,12 @@ function CreateConsultation({ onSuccess = () => {} }) {
           </label>
           <label>
             Date
-            <input type="text" name="date" required />
+            <input
+              type="datetime-local"
+              min={`${new Date().toISOString().slice(0, -8)}`}
+              name="date"
+              required
+            />
             {errors?.date && <span>{errors.date.message}</span>}
           </label>
           <label>
