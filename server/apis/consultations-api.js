@@ -17,7 +17,7 @@ function create({ body: consultation = {} }, res, next) {
     return res.status(400).send({
       date: {
         code: "date_invalid",
-        message: `consultation cannot be schedules in past`,
+        message: `consultation cannot be scheduled in past`,
       },
     })
   }
@@ -34,7 +34,7 @@ function create({ body: consultation = {} }, res, next) {
     return res.status(400).send({
       date: {
         code: "date_invalid",
-        message: `consultation already exists on ${consultationDate} in ${consultation.location}`,
+        message: `consultation already exists on ${consultationDate.toDateString()} in ${consultation.location}`,
       },
     })
   }
