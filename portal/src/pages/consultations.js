@@ -56,6 +56,7 @@ const columnDefs = [
   {
     field: "confirmation",
     cellRenderer: ConfirmationButtons,
+    sortable: false,
   },
   {
     field: "location",
@@ -89,17 +90,17 @@ function Consultations() {
               }
         )
 
-  if (!canUpdateConsultations)
-    return (
-      <Fragment>
-        <DataGrid columnDefs={columnDefsPermitted} context={ConsultationsApi} />
-        {canCreateConsultations ? (
-          <CreateConsultation
-            onSuccess={() => ConsultationsApi.api.purgeInfiniteCache()}
-          />
-        ) : null}
-      </Fragment>
-    )
+  return (
+    <Fragment>
+      <DataGrid columnDefs={columnDefsPermitted} context={ConsultationsApi} />
+
+      {canCreateConsultations ? (
+        <CreateConsultation
+          onSuccess={() => ConsultationsApi.api.purgeInfiniteCache()}
+        />
+      ) : null}
+    </Fragment>
+  )
 }
 
 export default Consultations

@@ -61,6 +61,7 @@ const columnDefs = [
   {
     field: "permissions",
     cellRenderer: PermissionsButton,
+    sortable: false,
   },
 ]
 
@@ -70,6 +71,7 @@ function Employees() {
   return (
     <Fragment>
       <DataGrid columnDefs={columnDefs} context={EmployeesApi} />
+
       {canCreateEmployees ? (
         <CreateEmployee
           onSuccess={() => EmployeesApi.api.purgeInfiniteCache()}
