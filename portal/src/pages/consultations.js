@@ -73,18 +73,33 @@ const columnDefs = [
 ]
 
 function Consultations() {
-  const { canCreateConsultations } = useAuth()
+  const { canCreateConsultations, canUpdateConsultations } = useAuth()
 
-  return (
-    <Fragment>
-      <DataGrid columnDefs={columnDefs} context={ConsultationsApi} />
-      {canCreateConsultations ? (
-        <CreateConsultation
-          onSuccess={() => ConsultationsApi.api.purgeInfiniteCache()}
-        />
-      ) : null}
-    </Fragment>
-  )
+  const columnDefsPermitted = canUpdateConsultations
+    ? columnDefs
+    : columnDefs
+        .filter(({ field }) => field !== "confirmation")
+        .map((columnDef) =>
+          columnDef.field !== "status"
+            ? columnDef
+            : {
+                ...columnDef,
+                editable: false,
+                cellClass: null,
+              }
+        )
+
+  if (!canUpdateConsultations)
+    return (
+      <Fragment>
+        <DataGrid columnDefs={columnDefsPermitted} context={ConsultationsApi} />
+        {canCreateConsultations ? (
+          <CreateConsultation
+            onSuccess={() => ConsultationsApi.api.purgeInfiniteCache()}
+          />
+        ) : null}
+      </Fragment>
+    )
 }
 
 export default Consultations
