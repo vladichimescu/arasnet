@@ -54,7 +54,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
     <ErrorBoundary>
-      <Suspense fallback={<Loading />}>
+      <Suspense fallback={<Loading fullPage />}>
         <ActionsProvider>
           <AuthProvider>
             <ToastContainer
