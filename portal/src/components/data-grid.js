@@ -53,7 +53,7 @@ const datasource = {
           )
 
           if (_start === 0 && data.length) {
-            setTimeout(() => context.api.autoSizeAllColumns(), 0)
+            setTimeout(() => context.api.autoSizeAllColumns(), 50)
           }
 
           context.api.hideOverlay()
