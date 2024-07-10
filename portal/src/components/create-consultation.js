@@ -1,4 +1,6 @@
 import React, { Fragment, useEffect, useState } from "react"
+import PhoneInput from "react-phone-input-2"
+import "react-phone-input-2/lib/style.css"
 
 import ConsultationsApi from "../apis/consultations-api"
 
@@ -7,7 +9,7 @@ import Modal from "./modal"
 
 const supportedLocations = process.env.REACT_APP_SUPPORTED_LOCATIONS.split(",")
 
-function CreateConsultation() {
+function CreateConsultation({ onSuccess = () => {} }) {
   const { addAction, removeAction } = useActions()
 
   const [errors, setErrors] = useState()
@@ -37,6 +39,8 @@ function CreateConsultation() {
         try {
           await ConsultationsApi.create(data)
 
+          onSuccess()
+
           setIsOpened(false)
         } catch (err) {
           setErrors(err)
@@ -46,7 +50,14 @@ function CreateConsultation() {
         <Fragment>
           <label>
             Phone
-            <input type="number" name="phone" required />
+            <PhoneInput
+              inputProps={{
+                name: "phone",
+                required: true,
+              }}
+              enableSearch
+              country="ro"
+            />
             {errors?.phone && <span>{errors.phone.message}</span>}
           </label>
           <label>

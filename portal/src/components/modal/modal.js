@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from "react"
 
+import classes from "./modal.module.css"
+
 function Modal({ open, onClose, formContent }) {
   const ref = useRef()
 
@@ -25,18 +27,18 @@ function Modal({ open, onClose, formContent }) {
     onClose(Object.fromEntries(new FormData(event.target)))
   }
 
-  const onCancel = () => onClose()
-
   return (
-    <dialog ref={ref} onClose={onCancel}>
-      <form onSubmit={onSubmit}>
+    <dialog className={classes.dialog} ref={ref} onClose={() => onClose()}>
+      <form className={classes.form} onSubmit={onSubmit}>
         {formContent}
 
-        <button type="submit">Create</button>
+        <div className={classes.formActions}>
+          <button type="submit">Create</button>
 
-        <button type="button" value="cancel" onClick={onCancel}>
-          Cancel
-        </button>
+          <button type="button" value="cancel" onClick={() => onClose()}>
+            Cancel
+          </button>
+        </div>
       </form>
     </dialog>
   )

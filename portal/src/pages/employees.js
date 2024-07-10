@@ -75,7 +75,11 @@ function Employees() {
       }}
     >
       <DataGrid columnDefs={columnDefs} context={EmployeesApi} />
-      {canCreateEmployees ? <CreateEmployee /> : null}
+      {canCreateEmployees ? (
+        <CreateEmployee
+          onSuccess={() => EmployeesApi.api.purgeInfiniteCache()}
+        />
+      ) : null}
     </div>
   )
 }

@@ -1,11 +1,13 @@
 import React, { Fragment, useEffect, useState } from "react"
+import PhoneInput from "react-phone-input-2"
+import "react-phone-input-2/lib/style.css"
 
 import EmployeesApi from "../apis/employees-api"
 
 import { useActions } from "./actions-provider"
 import Modal from "./modal"
 
-function CreateEmployee() {
+function CreateEmployee({ onSuccess = () => {} }) {
   const { addAction, removeAction } = useActions()
 
   const [errors, setErrors] = useState()
@@ -35,6 +37,8 @@ function CreateEmployee() {
         try {
           await EmployeesApi.create(data)
 
+          onSuccess()
+
           setIsOpened(false)
         } catch (err) {
           setErrors(err)
@@ -54,7 +58,14 @@ function CreateEmployee() {
           </label>
           <label>
             Phone
-            <input type="number" name="phone" required />
+            <PhoneInput
+              inputProps={{
+                name: "phone",
+                required: true,
+              }}
+              enableSearch
+              country="ro"
+            />
             {errors?.phone && <span>{errors.phone.message}</span>}
           </label>
           <label>

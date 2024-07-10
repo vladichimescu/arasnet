@@ -83,7 +83,11 @@ function Consultations() {
       }}
     >
       <DataGrid columnDefs={columnDefs} context={ConsultationsApi} />
-      {canCreateConsultations ? <CreateConsultation /> : null}
+      {canCreateConsultations ? (
+        <CreateConsultation
+          onSuccess={() => ConsultationsApi.api.purgeInfiniteCache()}
+        />
+      ) : null}
     </div>
   )
 }
