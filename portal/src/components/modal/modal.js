@@ -37,7 +37,7 @@ function Modal({ open, onClose, formContent }) {
         {formContent}
 
         <div className={classes.formActions}>
-          <button type="submit">Create</button>
+          <button type="submit">Submit</button>
 
           <button type="button" value="cancel" onClick={() => onClose()}>
             Cancel
