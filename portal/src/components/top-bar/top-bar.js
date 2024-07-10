@@ -1,16 +1,18 @@
 import React from "react"
 import { Link } from "react-router-dom"
 
-import { useActions } from "./actions-provider"
-import { useAuth } from "./auth-provider"
+import { useActions } from "../actions-provider"
+import { useAuth } from "../auth-provider"
+
+import classes from "./top-bar.module.css"
 
 const TopBar = () => {
   const { isLogged, canReadConsultations, canReadEmployees } = useAuth()
   const { actions } = useActions()
 
   return (
-    <nav className="top-bar">
-      <div className="top-bar-section">
+    <nav className={classes.nav}>
+      <div className={classes.section}>
         {isLogged ? (
           <Link to="dashboard">
             <button>Dashboard</button>
@@ -34,7 +36,7 @@ const TopBar = () => {
         ) : null}
       </div>
 
-      <div className="top-bar-section">
+      <div className={classes.section}>
         {actions.map(({ action, handler }) => (
           <button key={action} onClick={handler}>
             {action}

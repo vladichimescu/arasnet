@@ -76,7 +76,9 @@ function Layout() {
   return (
     <Fragment>
       <TopBar />
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
     </Fragment>
   )
 }

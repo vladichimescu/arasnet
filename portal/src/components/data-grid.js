@@ -74,32 +74,25 @@ function DataGrid({
   columnDefs[0].cellRenderer = LoadingCell
 
   return (
-    <div
-      style={{
-        height: "100%",
-        flex: 1,
+    <AgGridReact
+      className="data-grid ag-theme-quartz-auto-dark"
+      suppressMenuHide
+      columnDefs={columnDefs}
+      defaultColDef={defaultColDef}
+      context={context}
+      getRowId={getRowId}
+      rowModelType="infinite"
+      datasource={datasource}
+      cacheBlockSize={pageSize}
+      rowBuffer={0}
+      maxConcurrentDatasourceRequests={1}
+      onGridReady={({ api, context }) => {
+        context.api = api
       }}
-    >
-      <AgGridReact
-        className="ag-theme-quartz-auto-dark"
-        suppressMenuHide
-        columnDefs={columnDefs}
-        defaultColDef={defaultColDef}
-        context={context}
-        getRowId={getRowId}
-        rowModelType="infinite"
-        datasource={datasource}
-        cacheBlockSize={pageSize}
-        rowBuffer={0}
-        maxConcurrentDatasourceRequests={1}
-        onGridReady={({ api, context }) => {
-          context.api = api
-        }}
-        onBodyScrollEnd={({ api }) => {
-          api.autoSizeAllColumns()
-        }}
-      />
-    </div>
+      onBodyScrollEnd={({ api }) => {
+        api.autoSizeAllColumns()
+      }}
+    />
   )
 }
 

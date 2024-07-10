@@ -2,7 +2,7 @@ import { ModuleRegistry } from "@ag-grid-community/core"
 import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
 import "@ag-grid-community/styles/ag-grid.css"
 import "@ag-grid-community/styles/ag-theme-quartz.css"
-import React from "react"
+import React, { Fragment } from "react"
 
 import ConsultationsApi from "../apis/consultations-api"
 import { useAuth } from "../components/auth-provider"
@@ -76,19 +76,14 @@ function Consultations() {
   const { canCreateConsultations } = useAuth()
 
   return (
-    <div
-      style={{
-        height: "80vh",
-        width: "100%",
-      }}
-    >
+    <Fragment>
       <DataGrid columnDefs={columnDefs} context={ConsultationsApi} />
       {canCreateConsultations ? (
         <CreateConsultation
           onSuccess={() => ConsultationsApi.api.purgeInfiniteCache()}
         />
       ) : null}
-    </div>
+    </Fragment>
   )
 }
 
