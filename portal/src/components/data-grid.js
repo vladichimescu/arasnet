@@ -52,10 +52,6 @@ const datasource = {
             data.length !== pageSize ? _start + data.length : null
           )
 
-          if (_start === 0 && data.length) {
-            setTimeout(() => context.api.autoSizeAllColumns(), 50)
-          }
-
           context.api.hideOverlay()
         },
         () => {
