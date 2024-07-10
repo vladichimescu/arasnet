@@ -25,12 +25,18 @@ code {
     monospace;
 }
 
-.data-grid.ag-theme-quartz-auto-dark {
+.data-grid {
   flex: 1;
 }
 
 button,
-.data-grid.ag-theme-quartz-auto-dark .ag-cell-editable,
-.data-grid.ag-theme-quartz-auto-dark .ag-cell-inline-editing * {
+.data-grid .ag-cell-editable,
+.data-grid .ag-cell-inline-editing * {
   cursor: pointer;
+}
+
+.data-grid .full-width-cell-renderer {
+  width: 100%;
+  height: 100%;
+  text-align: center;
 }

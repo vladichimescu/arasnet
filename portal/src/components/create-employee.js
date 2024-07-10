@@ -19,7 +19,11 @@ function CreateEmployee({ onSuccess = () => {} }) {
       setIsOpened(true)
     }
 
-    const actionId = addAction(createEmployee, "Add employee")
+    const actionId = addAction({
+      label: "Add employee",
+      handler: createEmployee,
+      type: "data-grid",
+    })
 
     return () => removeAction(actionId)
   }, [addAction, removeAction])

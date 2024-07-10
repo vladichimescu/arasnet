@@ -54,9 +54,8 @@ const columnDefs = [
     onCellValueChanged,
   },
   {
-    field: "createdAt",
-    headerName: "Created",
-    valueFormatter: valueFormatterDate,
+    field: "confirmation",
+    cellRenderer: ConfirmationButtons,
   },
   {
     field: "location",
@@ -67,8 +66,9 @@ const columnDefs = [
     },
   },
   {
-    field: "confirmation",
-    cellRenderer: ConfirmationButtons,
+    field: "createdAt",
+    headerName: "Created",
+    valueFormatter: valueFormatterDate,
   },
 ]
 

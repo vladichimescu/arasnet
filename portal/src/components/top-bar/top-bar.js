@@ -37,11 +37,13 @@ const TopBar = () => {
       </div>
 
       <div className={classes.section}>
-        {actions.map(({ action, handler }) => (
-          <button key={action} onClick={handler}>
-            {action}
-          </button>
-        ))}
+        {actions.map(({ label, handler, type }) =>
+          type !== "top-bar" ? null : (
+            <button key={label} onClick={handler}>
+              {label}
+            </button>
+          )
+        )}
 
         {isLogged ? (
           <Link to="logout">

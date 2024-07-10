@@ -6,6 +6,8 @@ import "@ag-grid-community/styles/ag-theme-quartz-no-font.css"
 import React from "react"
 import { toast } from "react-toastify"
 
+import { useActions } from "./actions-provider"
+
 ModuleRegistry.registerModules([InfiniteRowModelModule])
 
 const pageSize = 20
@@ -71,6 +73,8 @@ function DataGrid({
   getRowId = getGridRowId,
   context,
 }) {
+  const { actions } = useActions()
+
   columnDefs[0].cellRenderer = LoadingCell
 
   return (
@@ -79,6 +83,15 @@ function DataGrid({
       suppressMenuHide
       columnDefs={columnDefs}
       defaultColDef={defaultColDef}
+      pinnedBottomRowData={
+        actions.length === 0
+          ? null
+          : actions
+              .filter(({ type }) => type === "data-grid")
+              .map((action) => ({ ...action, fullWidth: true }))
+      }
+      isFullWidthRow={isFullWidthRow}
+      fullWidthCellRenderer={fullWidthCellRenderer}
       context={context}
       getRowId={getRowId}
       rowModelType="infinite"
@@ -102,6 +115,10 @@ export { valueFormatterDate, onCellValueChanged }
 //#region
 function getGridRowId({ data: { id } = {} }) {
   return id
+}
+
+function isFullWidthRow({ rowNode: { data: { fullWidth } = {} } }) {
+  return fullWidth
 }
 
 function mapFilters(filterModel) {
@@ -157,6 +174,14 @@ function LoadingCell({ value, api }) {
   }
 
   return "Loading..."
+}
+
+function fullWidthCellRenderer({ data: { label, handler } }) {
+  return (
+    <button className="full-width-cell-renderer" onClick={handler}>
+      {label}
+    </button>
+  )
 }
 
 function formatIncludesDate({ gte, lte }) {

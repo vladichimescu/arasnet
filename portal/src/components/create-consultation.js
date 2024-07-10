@@ -21,7 +21,11 @@ function CreateConsultation({ onSuccess = () => {} }) {
       setIsOpened(true)
     }
 
-    const actionId = addAction(createConsultation, "Create consultation")
+    const actionId = addAction({
+      label: "Create consultation",
+      handler: createConsultation,
+      type: "data-grid",
+    })
 
     return () => removeAction(actionId)
   }, [addAction, removeAction])
