@@ -14,7 +14,7 @@
   },
   "scripts": {
     "clean": "rm -rf .yarn portal/build && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+    "format": "prettier --write \"**/*.{css,js,jsx,json,md}\"",
     "start": "yarn workspaces foreach --all --parallel run start",
     "build": "yarn workspaces foreach --all --parallel run build",
     "serve": "yarn workspaces foreach --all --parallel run serve"
