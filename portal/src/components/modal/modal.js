@@ -27,6 +27,10 @@ function Modal({ open, onClose, formContent }) {
     onClose(Object.fromEntries(new FormData(event.target)))
   }
 
+  if (!open) {
+    return null
+  }
+
   return (
     <dialog className={classes.dialog} ref={ref} onClose={() => onClose()}>
       <form className={classes.form} onSubmit={onSubmit}>
