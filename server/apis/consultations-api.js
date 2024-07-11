@@ -34,13 +34,15 @@ function create({ body: consultation = {} }, res, next) {
     return res.status(400).send({
       date: {
         code: "date_invalid",
-        message: `consultation already exists on ${consultationDate.toDateString()} in ${consultation.location}`,
+        message: `consultation already exists on ${consultationDate.toDateString()} in ${dbConsultation.location}`,
       },
     })
   }
 
   // TODO: expose .env variables as enum with i18n suport
-  consultation.status = "pending"
+  if (!consultation.status) {
+    consultation.status = "pending"
+  }
 
   next()
 }
