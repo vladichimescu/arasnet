@@ -4,12 +4,14 @@ import jsonServerDB from "../index.js"
 
 const secret = process.env.SECRET
 
-const apiPaths = [
+const locations = process.env.LOCATIONS.split(",")
+
+const apis = [
   process.env.SERVER_PATH_EMPLOYEES,
   process.env.SERVER_PATH_CONSULTATIONS,
 ]
 
-const apiMethods = {
+const actions = {
   GET: "read",
   POST: "create",
   PUT: "update",
@@ -44,11 +46,11 @@ function authenticate({ headers: { authorization = "" } = {} }, res, next) {
 
     const { data: userEmail } = jwt.decode(token)
 
-    const dbEmployee = jsonServerDB
+    const dbUser = jsonServerDB
       .getState()
       .employees.find(({ email } = {}) => email === userEmail)
 
-    if (!dbEmployee) {
+    if (!dbUser) {
       return res.status(401).send({
         code: "authentication_failed",
         message: "authentication failed",
@@ -69,38 +71,47 @@ function authorize(
   jwt.verify(token, secret, function (err) {
     const { data: userEmail } = jwt.decode(token)
 
-    const dbEmployee = jsonServerDB
+    const dbUser = jsonServerDB
       .getState()
       .employees.find(({ email } = {}) => email === userEmail)
 
-    const api = apiPaths.find((path) => originalUrl.startsWith(`/${path}`))
-    const action = apiMethods[method]
+    const api = apis.find((path) => originalUrl.startsWith(`/${path}`))
+    const action = actions[method]
 
-    const permissions = dbEmployee.permissions[api]
+    const permittedLocations = Object.keys(dbUser.permissions).filter(
+      (location) =>
+        locations.includes(location) &&
+        dbUser.permissions[location][api].includes(action)
+    )
 
-    if (!permissions?.access.includes(action)) {
+    if (permittedLocations.length === 0) {
       return res.status(403).send({
         code: "authorization_failed",
         message: "authorization failed",
       })
     }
 
-    if (permissions.filters) {
-      if (action === "read") {
-        Object.entries(permissions.filters).forEach(([key, value]) => {
-          query[key] = value
-        })
-      } else {
-        const payloadPermitted = Object.entries(permissions.filters).every(
-          ([key, value]) => value.includes(body[key])
-        )
+    const locationFilters =
+      permittedLocations.length === locations.length
+        ? []
+        : ["location", permittedLocations]
 
-        if (!payloadPermitted) {
-          return res.status(403).send({
-            code: "authorization_failed",
-            message: "authorization failed",
-          })
-        }
+    const filters = [...locationFilters]
+
+    if (action === "read") {
+      filters.forEach(([key, value]) => {
+        query[key] = value
+      })
+    } else {
+      const payloadPermitted = filters.every(([key, value]) =>
+        value.includes(body[key])
+      )
+
+      if (!payloadPermitted) {
+        return res.status(403).send({
+          code: "authorization_failed",
+          message: "authorization failed",
+        })
       }
     }
 

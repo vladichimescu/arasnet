@@ -96,7 +96,7 @@ function Consultations() {
 
       {canCreateConsultations ? (
         <CreateConsultation
-          onSuccess={() => ConsultationsApi.api.purgeInfiniteCache()}
+          onSuccess={() => ConsultationsApi.gridApi.purgeInfiniteCache()}
         />
       ) : null}
     </Fragment>
@@ -106,8 +106,8 @@ function Consultations() {
 export default Consultations
 
 //#region
-function ConfirmationButtons({ data: { phone } = {} }) {
-  if (!phone) {
+function ConfirmationButtons({ data }) {
+  if (!data) {
     return null
   }
 
@@ -117,13 +117,13 @@ function ConfirmationButtons({ data: { phone } = {} }) {
         style={{ marginRight: 15 }}
         onClick={() =>
           window.open(
-            `https://wa.me/${phone}?text=${encodeURIComponent("te rugam sa confirmi")}`
+            `https://wa.me/${data.phone}?text=${encodeURIComponent("te rugam sa confirmi")}`
           )
         }
       >
         WhatsApp
       </button>
-      <button onClick={() => window.open(`tel:${phone}`)}>Phone</button>
+      <button onClick={() => window.open(`tel:${data.phone}`)}>Phone</button>
     </div>
   )
 }

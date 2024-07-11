@@ -2,23 +2,15 @@ import { ModuleRegistry } from "@ag-grid-community/core"
 import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
 import "@ag-grid-community/styles/ag-grid.css"
 import "@ag-grid-community/styles/ag-theme-quartz.css"
-import React, { Fragment } from "react"
+import React, { Fragment, useState } from "react"
 
 import EmployeesApi from "../apis/employees-api"
 import { useAuth } from "../components/auth-provider"
 import CreateEmployee from "../components/create-employee"
 import DataGrid, { valueFormatterDate } from "../components/data-grid"
+import UpdatePermissions from "../components/update-permissions"
 
 ModuleRegistry.registerModules([InfiniteRowModelModule])
-
-const PermissionsButton = ({ data: { email } = {} }) =>
-  email ? (
-    <div>
-      <button onClick={() => window.alert(`Permissions ${email}`)}>
-        Permissions
-      </button>
-    </div>
-  ) : null
 
 const columnDefs = [
   {
@@ -74,7 +66,7 @@ function Employees() {
 
       {canCreateEmployees ? (
         <CreateEmployee
-          onSuccess={() => EmployeesApi.api.purgeInfiniteCache()}
+          onSuccess={() => EmployeesApi.gridApi.purgeInfiniteCache()}
         />
       ) : null}
     </Fragment>
@@ -82,3 +74,27 @@ function Employees() {
 }
 
 export default Employees
+
+//#region
+function PermissionsButton({ data }) {
+  const [isOpened, setIsOpened] = useState(false)
+
+  if (!data) {
+    return null
+  }
+
+  return (
+    <Fragment>
+      <button onClick={() => setIsOpened(true)}>Permissions</button>
+
+      {isOpened ? (
+        <UpdatePermissions
+          isOpened={isOpened}
+          setIsOpened={setIsOpened}
+          employee={data}
+        />
+      ) : null}
+    </Fragment>
+  )
+}
+//#endregion

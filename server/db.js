@@ -1,8 +1,8 @@
 import { faker } from "@faker-js/faker"
 import fs from "fs"
 
-// TODO: rename supportedLocations to consultationLocations
-const supportedLocations = process.env.SUPPORTED_LOCATIONS.split(",")
+// TODO: rename locations to consultationLocations
+const locations = process.env.LOCATIONS.split(",")
 const consultationStatuses = process.env.CONSULTATION_STATUSES.split(",")
 
 //TODO: dev should use .env.local and inject in memory data
@@ -17,11 +17,13 @@ const data = {
       email: "admin@arasnet.ro",
       password: "pass",
       permissions: {
-        consultations: {
-          access: ["create", "read", "update", "delete"],
+        bucuresti: {
+          consultations: ["create", "read", "update", "delete"],
+          employees: ["create", "read", "update", "delete"],
         },
-        employees: {
-          access: ["create", "read", "update", "delete"],
+        cluj: {
+          consultations: ["create", "read", "update", "delete"],
+          employees: ["create", "read", "update", "delete"],
         },
       },
       createdAt: new Date().toISOString(),
@@ -34,8 +36,13 @@ const data = {
       email: "website@arasnet.ro",
       password: "pass",
       permissions: {
-        consultations: {
-          access: ["create"],
+        bucuresti: {
+          consultations: ["create"],
+          employees: [],
+        },
+        cluj: {
+          consultations: ["create"],
+          employees: [],
         },
       },
       createdAt: new Date().toISOString(),
@@ -48,14 +55,13 @@ const data = {
       email: "admin@bucuresti.ro",
       password: "pass",
       permissions: {
-        consultations: {
-          access: ["create", "read", "update", "delete"],
-          filters: {
-            location: ["bucuresti"],
-          },
+        bucuresti: {
+          consultations: ["create", "read", "update", "delete"],
+          employees: ["create", "read", "update", "delete"],
         },
-        employees: {
-          access: ["create", "read", "update", "delete"],
+        cluj: {
+          consultations: [],
+          employees: [],
         },
       },
       createdAt: new Date().toISOString(),
@@ -68,14 +74,13 @@ const data = {
       email: "user@bucuresti.ro",
       password: "pass",
       permissions: {
-        consultations: {
-          access: ["read"],
-          filters: {
-            location: ["bucuresti"],
-          },
+        bucuresti: {
+          consultations: ["read"],
+          employees: ["read"],
         },
-        employees: {
-          access: ["read"],
+        cluj: {
+          consultations: [],
+          employees: [],
         },
       },
       createdAt: new Date().toISOString(),
@@ -97,11 +102,15 @@ function mockEmployee(_, index) {
     email: faker.internet.email().toLowerCase(),
     password: faker.internet.password(),
     permissions: {
-      consultations: {
-        access: ["read"],
-        filters: {
-          location: [supportedLocations[Math.floor(Math.random() * 2)]],
-        },
+      [locations[Math.floor(Math.random() * 2)]]: {
+        consultations: ["create", "read", "update", "delete"].slice(
+          0,
+          Math.floor(Math.random() * 4)
+        ),
+        employees: ["create", "read", "update", "delete"].slice(
+          0,
+          Math.floor(Math.random() * 4)
+        ),
       },
     },
     createdAt: new Date().toISOString(),
@@ -120,7 +129,7 @@ function mockConsultation(_, index) {
           : index > 70
             ? faker.date.future()
             : faker.date.soon(),
-    location: supportedLocations[Math.floor(Math.random() * 2)],
+    location: locations[Math.floor(Math.random() * 2)],
     createdAt: new Date().toISOString(),
     status: consultationStatuses[Math.floor(Math.random() * 3)],
   }

@@ -1,0 +1,14 @@
+.updatePermissions {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  justify-items: end;
+}
+
+.action:first-child {
+  grid-column: 1 / span 2;
+}
+
+.location {
+  grid-column: 1 / span 5;
+  justify-self: center;
+}

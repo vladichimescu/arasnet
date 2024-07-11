@@ -1,7 +1,18 @@
+import jwt from "jsonwebtoken"
+
 import jsonServerDB from "../index.js"
 import { checkMandatoryProps } from "../libs/check-mandatory-props.js"
 
 const employeeMandatoryFields = process.env.EMPLOYEE_MANDATORY_FIELDS.split(",")
+
+const locations = process.env.LOCATIONS.split(",")
+
+const apis = [
+  process.env.SERVER_PATH_EMPLOYEES,
+  process.env.SERVER_PATH_CONSULTATIONS,
+]
+
+const actions = ["create", "read", "update", "delete"]
 
 function create({ body: employee = {} }, res, next) {
   const errors = checkMandatoryProps(employee, employeeMandatoryFields)
@@ -36,6 +47,22 @@ function create({ body: employee = {} }, res, next) {
     })
   }
 
+  if (!employee.permissions) {
+    employee.permissions = locations.reduce(
+      (acc, location) => ({
+        ...acc,
+        [location]: apis.reduce(
+          (acc, api) => ({
+            ...acc,
+            [api]: [],
+          }),
+          {}
+        ),
+      }),
+      {}
+    )
+  }
+
   next()
 }
 
@@ -43,12 +70,62 @@ function read({ body: employee = {} }, res, next) {
   next()
 }
 
-function update({ body: employee = {} }, res, next) {
+function update(
+  { body: employee = {}, headers: { authorization = "" } },
+  res,
+  next
+) {
   const errors = checkMandatoryProps(employee, employeeMandatoryFields)
 
   if (Object.keys(errors).length) {
     return res.status(400).send(errors)
   }
+
+  const token = authorization.split(" ")[1]
+  const { data: userEmail } = jwt.decode(token)
+
+  const dbUser = jsonServerDB
+    .getState()
+    .employees.find(({ email } = {}) => email === userEmail)
+
+  const dbEmployee = jsonServerDB
+    .getState()
+    .employees.find(({ id } = {}) => id === employee.id)
+
+  employee.permissions = locations.reduce(
+    (acc, location) => ({
+      ...acc,
+      [location]: apis.reduce(
+        (acc, api) => ({
+          ...acc,
+          [api]: actions.reduce((acc, action) => {
+            if (dbUser.permissions[location]?.[api]?.includes(action)) {
+              if (!employee.permissions[location]?.[api]?.includes(action)) {
+                return acc.filter((item) => item !== action)
+              }
+
+              if (!acc.includes(action)) {
+                return [...acc, action]
+              }
+            }
+
+            return acc
+          }, dbEmployee.permissions[location]?.[api] || []),
+        }),
+        {}
+      ),
+    }),
+    {}
+  )
+
+  // const isPermissionExceeded = !Object.entries(employee.permissions).every(
+  //   ([location, apis]) =>
+  //     Object.entries(apis).every(([api, actions]) =>
+  //       actions.every((action) =>
+  //         dbUser.permissions[location][api].includes(action)
+  //       )
+  //     )
+  // )
 
   next()
 }

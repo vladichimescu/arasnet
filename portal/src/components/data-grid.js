@@ -34,7 +34,7 @@ const datasource = {
     const filters = mapFilters(filterModel)
 
     if (_start === 0) {
-      context.api.showLoadingOverlay()
+      context.gridApi.showLoadingOverlay()
     }
 
     context
@@ -52,12 +52,12 @@ const datasource = {
             data.length !== pageSize ? _start + data.length : null
           )
 
-          context.api.hideOverlay()
+          context.gridApi.hideOverlay()
         },
         () => {
           failCallback()
 
-          context.api.hideOverlay()
+          context.gridApi.hideOverlay()
         }
       )
   },
@@ -96,7 +96,7 @@ function DataGrid({
       rowBuffer={0}
       maxConcurrentDatasourceRequests={1}
       onGridReady={({ api, context }) => {
-        context.api = api
+        context.gridApi = api
       }}
       onBodyScrollEnd={({ api }) => {
         api.autoSizeAllColumns()

@@ -7,7 +7,7 @@ import ConsultationsApi from "../apis/consultations-api"
 import { useActions } from "./actions-provider"
 import Modal from "./modal"
 
-const supportedLocations = process.env.REACT_APP_SUPPORTED_LOCATIONS.split(",")
+const locations = process.env.REACT_APP_LOCATIONS.split(",")
 
 function CreateConsultation({ onSuccess = () => {} }) {
   const { addAction, removeAction } = useActions()
@@ -78,7 +78,7 @@ function CreateConsultation({ onSuccess = () => {} }) {
           <label>
             Location
             <select name="location" required>
-              {supportedLocations.map((location) => (
+              {locations.map((location) => (
                 // TODO: value should the the location but add i18n for display name
                 <option key={location} value={location}>
                   {location}

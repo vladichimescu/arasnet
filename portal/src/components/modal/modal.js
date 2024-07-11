@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react"
 
 import classes from "./modal.module.css"
 
-function Modal({ open, onClose, formContent }) {
+function Modal({ open, onClose, formContent, disableSubmit }) {
   const ref = useRef()
 
   useEffect(() => {
@@ -37,7 +37,7 @@ function Modal({ open, onClose, formContent }) {
         {formContent}
 
         <div className={classes.formActions}>
-          <button type="submit">Submit</button>
+          {disableSubmit ? null : <button type="submit">Submit</button>}
 
           <button type="button" value="cancel" onClick={() => onClose()}>
             Cancel

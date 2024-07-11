@@ -4,8 +4,13 @@ const storageKeys = StorageService.getKeys()
 const authKey = storageKeys.APP_AUTH_JWT
 const permissionsKey = storageKeys.APP_AUTH_PERMISSIONS
 
-const apis = ["consultations", "employees"]
-const accesses = ["create", "read", "update", "delete"]
+const locations = process.env.REACT_APP_LOCATIONS.split(",")
+
+const apis = [
+  process.env.REACT_APP_SERVER_PATH_EMPLOYEES,
+  process.env.REACT_APP_SERVER_PATH_CONSULTATIONS,
+]
+const actions = ["create", "read", "update", "delete"]
 
 const getToken = () => StorageService.getItem({ id: authKey })
 
@@ -21,20 +26,32 @@ const getPermissions = () => StorageService.getItem({ id: permissionsKey })
 const getAccessMatrix = () => {
   const permissions = getPermissions()
 
-  return apis.reduce(
+  if (!permissions) {
+    return
+  }
+
+  const access = apis.reduce(
     (acc, api) => ({
       ...acc,
-      ...accesses.reduce(
-        (acc, access) => ({
+      ...actions.reduce(
+        (acc, action) => ({
           ...acc,
-          [toCamelCase(`can ${access} ${api}`)]:
-            permissions?.[api]?.access.includes(access) || false,
+          [toCamelCase(`can ${action} ${api}`)]:
+            Object.entries(permissions).filter(
+              ([location, apis]) =>
+                locations.includes(location) && apis[api].includes(action)
+            ).length !== 0,
         }),
         {}
       ),
     }),
     {}
   )
+
+  return {
+    permissions,
+    ...access,
+  }
 }
 
 const savePermissions = (permissions) =>
