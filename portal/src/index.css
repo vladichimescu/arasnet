@@ -32,6 +32,10 @@ input[type="checkbox"][disabled] {
   pointer-events: none;
 }
 
+.Toastify__toast-body {
+  white-space: pre-line;
+}
+
 .data-grid {
   flex: 1;
 }
