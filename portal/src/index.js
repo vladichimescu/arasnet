@@ -21,8 +21,8 @@ import NotFound from "./pages/not-found"
 
 const Consultations = lazy(() => import("./pages/consultations"))
 const Employees = lazy(() => import("./pages/employees"))
-const Dashboard = lazy(() => import("./pages/dashboard"))
-const Landing = lazy(() => import("./pages/landing"))
+// const Dashboard = lazy(() => import("./pages/dashboard"))
+// const Landing = lazy(() => import("./pages/landing"))
 const Login = lazy(() => import("./pages/login"))
 const Logout = lazy(() => import("./pages/logout"))
 const Home = lazy(() => import("./pages/home"))
@@ -35,9 +35,9 @@ const router = createBrowserRouter(
       <Route element={<Layout />}>
         <Route index element={<Home />} />
 
-        <Route path="landing" element={<Landing />} />
+        {/* <Route path="landing" element={<Landing />} /> */}
 
-        <Route path="dashboard" element={<Dashboard />} />
+        {/* <Route path="dashboard" element={<Dashboard />} /> */}
         <Route path="consultations" element={<Consultations />} />
         <Route path="employees" element={<Employees />} />
 

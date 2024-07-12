@@ -13,7 +13,7 @@ const TopBar = () => {
   return (
     <nav className={classes.nav}>
       <div className={classes.section}>
-        {isLogged ? (
+        {/* {isLogged ? (
           <Link to="dashboard">
             <button>Dashboard</button>
           </Link>
@@ -21,7 +21,7 @@ const TopBar = () => {
           <Link to="landing">
             <button>Landing</button>
           </Link>
-        )}
+        )} */}
 
         {canReadConsultations ? (
           <Link to="consultations">
@@ -45,15 +45,16 @@ const TopBar = () => {
           )
         )}
 
-        {isLogged ? (
-          <Link to="logout">
-            <button>Logout</button>
-          </Link>
-        ) : (
-          <Link to="login">
-            <button>Login</button>
-          </Link>
-        )}
+        {
+          isLogged ? (
+            <Link to="logout">
+              <button>Logout</button>
+            </Link>
+          ) : null
+          // <Link to="login">
+          //   <button>Login</button>
+          // </Link>
+        }
       </div>
     </nav>
   )
