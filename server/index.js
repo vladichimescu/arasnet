@@ -34,6 +34,8 @@ server.use(consultationsApiPath, ConsultationsApi.middleware)
 
 server.use(router)
 
+server.use(errors)
+
 server.listen(port, () => console.log(`ARASnet Server started on port ${port}`))
 
 const jsonServerDB = router.db
@@ -62,5 +64,13 @@ function timestamp(req, res, next) {
   }
 
   next()
+}
+
+function errors(err, req, res, next) {
+  res.status(500).send({
+    code: "server_error",
+    message: "Oops, something went wrong",
+    error: err.toString(),
+  })
 }
 //#endregion
