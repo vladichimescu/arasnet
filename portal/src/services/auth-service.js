@@ -39,7 +39,7 @@ const getAccessMatrix = () => {
           [toCamelCase(`can ${action} ${api}`)]:
             Object.entries(permissions).filter(
               ([location, apis]) =>
-                locations.includes(location) && apis[api].includes(action)
+                locations.includes(location) && apis[api]?.includes(action)
             ).length !== 0,
         }),
         {}
