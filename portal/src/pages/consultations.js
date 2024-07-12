@@ -115,13 +115,15 @@ function ConfirmationButtons({ data }) {
     return null
   }
 
+  const message = `Salutare,\nTe rugam sa confirmi programarea pentru testarea de ${valueFormatterDate({ value: data.date })}.\nCheckpoint ARAS Bucuresti (Bd. Eroii Sanitari, nr. 49).`
+
   return (
     <div>
       <button
         style={{ marginRight: 15 }}
         onClick={() =>
           window.open(
-            `https://wa.me/${data.phone}?text=${encodeURIComponent("te rugam sa confirmi")}`
+            `https://wa.me/${data.phone}?text=${encodeURIComponent(message)}`
           )
         }
       >
