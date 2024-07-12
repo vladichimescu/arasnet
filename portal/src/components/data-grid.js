@@ -53,6 +53,14 @@ const datasource = {
           )
 
           context.gridApi.hideOverlay()
+
+          if (_start === 0) {
+            if (data.length === 0) {
+              context.gridApi.showNoRowsOverlay()
+            } else {
+              setTimeout(() => context.gridApi.autoSizeAllColumns(), 50)
+            }
+          }
         },
         () => {
           failCallback()
@@ -206,7 +214,6 @@ function valueFormatterDate({ value }) {
 async function onCellValueChanged({ api, data, oldValue, context }) {
   try {
     await context.update(data)
-    toast.success("Updating success")
   } catch (err) {
     api.getRowNode(`${data.id}`).updateData({
       ...data,
