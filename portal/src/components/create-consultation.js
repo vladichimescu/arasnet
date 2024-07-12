@@ -84,7 +84,6 @@ function CreateConsultation({ onSuccess = () => {} }) {
             Location
             <select name="location" required>
               {locations.map((location) => (
-                // TODO: value should the the location but add i18n for display name
                 <option key={location} value={location}>
                   {location}
                 </option>

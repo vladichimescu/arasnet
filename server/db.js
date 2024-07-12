@@ -1,12 +1,9 @@
 import { faker } from "@faker-js/faker"
 import fs from "fs"
 
-// TODO: rename locations to consultationLocations
 const locations = process.env.LOCATIONS.split(",")
 const consultationStatuses = process.env.CONSULTATION_STATUSES.split(",")
 
-//TODO: dev should use .env.local and inject in memory data
-//TODO: production should use .env.production and use db.json (encrypt)
 const data = {
   employees: [
     {
