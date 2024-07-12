@@ -68,8 +68,12 @@ const columnDefs = [
   },
   {
     field: "createdAt",
-    headerName: "Created",
+    headerName: "Created at",
     valueFormatter: valueFormatterDate,
+  },
+  {
+    field: "createdBy",
+    headerName: "Created by",
   },
 ]
 

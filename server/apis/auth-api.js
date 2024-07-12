@@ -115,6 +115,14 @@ function authorize(
       }
     }
 
+    if (action === "create") {
+      body.createdBy = userEmail
+    }
+
+    if (action === "update") {
+      body.updatedBy = userEmail
+    }
+
     next()
   })
 }

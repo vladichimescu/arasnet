@@ -46,14 +46,18 @@ const columnDefs = [
     },
   },
   {
+    field: "permissions",
+    cellRenderer: PermissionsButton,
+    sortable: false,
+  },
+  {
     field: "createdAt",
     headerName: "Created",
     valueFormatter: valueFormatterDate,
   },
   {
-    field: "permissions",
-    cellRenderer: PermissionsButton,
-    sortable: false,
+    field: "createdBy",
+    headerName: "Created by",
   },
 ]
 

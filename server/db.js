@@ -27,6 +27,7 @@ const data = {
         },
       },
       createdAt: new Date().toISOString(),
+      createdBy: "SYSTEM",
     },
     {
       id: 1,
@@ -46,6 +47,7 @@ const data = {
         },
       },
       createdAt: new Date().toISOString(),
+      createdBy: "SYSTEM",
     },
     {
       id: 2,
