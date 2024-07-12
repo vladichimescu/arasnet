@@ -22,22 +22,63 @@ function Login() {
   }
 
   return (
-    <form onSubmit={onSubmit}>
-      <label>
+    <form
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        alignSelf: "center",
+        marginLeft: "auto",
+        marginRight: "auto",
+        gap: "16px",
+        width: "min(80vw, 400px)",
+      }}
+      onSubmit={onSubmit}
+    >
+      <label
+        style={{
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
         email
-        <input name="email" type="email" required />
+        <input
+          style={{
+            padding: "8px",
+          }}
+          name="email"
+          type="email"
+          required
+        />
         {errors?.email && <span>{errors.email.message}</span>}
       </label>
-      <br />
 
-      <label>
+      <label
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          fontSize: "14px",
+        }}
+      >
         password
-        <input name="password" type="password" required />
+        <input
+          style={{
+            padding: "8px",
+          }}
+          name="password"
+          type="password"
+          required
+        />
         {errors?.password && <span>{errors.password.message}</span>}
       </label>
-      <br />
 
-      <button type="submit">login</button>
+      <button
+        style={{
+          padding: "8px",
+        }}
+        type="submit"
+      >
+        login
+      </button>
       {errors && !errors.email && !errors.password ? errors.message : null}
     </form>
   )
