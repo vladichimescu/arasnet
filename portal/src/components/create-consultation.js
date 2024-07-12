@@ -15,6 +15,11 @@ function CreateConsultation({ onSuccess = () => {} }) {
   const [errors, setErrors] = useState()
   const [isOpened, setIsOpened] = useState(false)
 
+  const minDatetimeLocal = new Date()
+  minDatetimeLocal.setMinutes(
+    minDatetimeLocal.getMinutes() - minDatetimeLocal.getTimezoneOffset()
+  )
+
   useEffect(() => {
     const createConsultation = () => {
       setErrors(null)
@@ -69,7 +74,7 @@ function CreateConsultation({ onSuccess = () => {} }) {
             Date
             <input
               type="datetime-local"
-              min={`${new Date().toISOString().slice(0, -8)}`}
+              min={`${minDatetimeLocal.toISOString().slice(0, -8)}`}
               name="date"
               required
             />
