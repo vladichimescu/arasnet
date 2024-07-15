@@ -5,7 +5,7 @@ import EmployeesApi from "../../apis/employees-api"
 import { useAuth } from "../auth-provider"
 import Modal from "../modal"
 
-import classes from "./update-permissions.module.css"
+import classes from "./update-permissions.module.scss"
 
 const locations = process.env.REACT_APP_LOCATIONS.split(",")
 

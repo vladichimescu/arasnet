@@ -25,11 +25,12 @@ code {
     monospace;
 }
 
-input[type="radio"][readonly],
-input[type="radio"][disabled],
-input[type="checkbox"][readonly],
-input[type="checkbox"][disabled] {
-  pointer-events: none;
+button,
+input {
+  &[readonly],
+  &[disabled] {
+    pointer-events: none;
+  }
 }
 
 .Toastify__toast-body {

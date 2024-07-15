@@ -8,6 +8,16 @@
   flex-direction: column;
   flex: 1;
   gap: 16px;
+
+  label {
+    display: flex;
+    flex-direction: column;
+  }
+
+  input,
+  select {
+    padding: 8px;
+  }
 }
 
 .formActions {
@@ -15,15 +25,8 @@
   flex-direction: column;
   margin-top: auto;
   gap: 16px;
-}
 
-.form label {
-  display: flex;
-  flex-direction: column;
-}
-
-.form input,
-.form select,
-.formActions button {
-  padding: 8px;
+  button {
+    padding: 8px;
+  }
 }

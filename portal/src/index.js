@@ -16,7 +16,7 @@ import AuthProvider from "./components/auth-provider"
 import ErrorBoundary from "./components/error-boundary"
 import Loading from "./components/loading"
 import TopBar from "./components/top-bar"
-import "./index.css"
+import "./index.scss"
 import NotFound from "./pages/not-found"
 
 const Consultations = lazy(() => import("./pages/consultations"))

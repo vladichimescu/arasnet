@@ -4,7 +4,7 @@ import { Link } from "react-router-dom"
 import { useActions } from "../actions-provider"
 import { useAuth } from "../auth-provider"
 
-import classes from "./top-bar.module.css"
+import classes from "./top-bar.module.scss"
 
 const TopBar = () => {
   const { isLogged, canReadConsultations, canReadEmployees } = useAuth()

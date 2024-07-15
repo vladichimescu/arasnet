@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react"
 
-import classes from "./modal.module.css"
+import classes from "./modal.module.scss"
 
 function Modal({ open, onClose, formContent, disableSubmit }) {
   const ref = useRef()

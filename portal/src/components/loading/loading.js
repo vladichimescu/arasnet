@@ -1,7 +1,7 @@
 import NProgress from "nprogress"
 import React, { useEffect } from "react"
 
-import classes from "./loading.module.css"
+import classes from "./loading.module.scss"
 
 function Loading({ fullPage, isLoading = true }) {
   useEffect(() => {
