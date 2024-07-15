@@ -118,7 +118,7 @@ export { valueFormatterDate, onCellValueChanged }
 
 //#region
 function getGridRowId({ data: { id } = {} }) {
-  return id
+  return `${id}`
 }
 
 function isFullWidthRow({ rowNode: { data: { fullWidth } = {} } }) {
