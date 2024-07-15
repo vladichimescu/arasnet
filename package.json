@@ -10,7 +10,7 @@
   "private": true,
   "devDependencies": {
     "@trivago/prettier-plugin-sort-imports": "^4.3.0",
-    "prettier": "^3.3.2"
+    "prettier": "^3.3.3"
   },
   "scripts": {
     "clean": "rm -rf .yarn portal/build && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
@@ -20,11 +20,11 @@
     "serve": "yarn workspaces foreach --all --parallel run serve"
   },
   "engines": {
-    "node": "20.15.0",
+    "node": "20.15.1",
     "yarn": "4.3.1"
   },
   "volta": {
-    "node": "20.15.0",
+    "node": "20.15.1",
     "yarn": "4.3.1"
   },
   "prettier": {
