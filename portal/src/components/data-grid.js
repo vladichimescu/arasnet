@@ -1,12 +1,13 @@
 import { ModuleRegistry } from "@ag-grid-community/core"
 import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
 import { AgGridReact } from "@ag-grid-community/react"
-import "@ag-grid-community/styles/ag-grid.css"
-import "@ag-grid-community/styles/ag-theme-quartz-no-font.css"
 import React from "react"
 import { toast } from "react-toastify"
 
 import { useActions } from "./actions-provider"
+
+import "@ag-grid-community/styles/ag-grid.css"
+import "@ag-grid-community/styles/ag-theme-quartz-no-font.css"
 
 ModuleRegistry.registerModules([InfiniteRowModelModule])
 

@@ -36,7 +36,8 @@
     "importOrder": [
       "^@arasnet/(.*)$",
       "^../",
-      "^./"
+      "^./",
+      "^./*.*.(c|sc)ss"
     ],
     "importOrderSeparation": true,
     "importOrderSortSpecifiers": true

@@ -1,11 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react"
 import PhoneInput from "react-phone-input-2"
-import "react-phone-input-2/lib/style.css"
 
 import EmployeesApi from "../apis/employees-api"
 
 import { useActions } from "./actions-provider"
 import Modal from "./modal"
+
+import "react-phone-input-2/lib/style.css"
 
 function CreateEmployee({ onSuccess = () => {} }) {
   const { addAction, removeAction } = useActions()

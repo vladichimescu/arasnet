@@ -1,7 +1,5 @@
 import { ModuleRegistry } from "@ag-grid-community/core"
 import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
-import "@ag-grid-community/styles/ag-grid.css"
-import "@ag-grid-community/styles/ag-theme-quartz.css"
 import React, { Fragment } from "react"
 
 import ConsultationsApi from "../apis/consultations-api"

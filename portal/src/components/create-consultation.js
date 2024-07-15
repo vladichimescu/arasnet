@@ -1,11 +1,12 @@
 import React, { Fragment, useEffect, useState } from "react"
 import PhoneInput from "react-phone-input-2"
-import "react-phone-input-2/lib/style.css"
 
 import ConsultationsApi from "../apis/consultations-api"
 
 import { useActions } from "./actions-provider"
 import Modal from "./modal"
+
+import "react-phone-input-2/lib/style.css"
 
 const locations = process.env.REACT_APP_LOCATIONS.split(",")
 
