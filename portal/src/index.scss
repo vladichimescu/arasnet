@@ -1,13 +1,40 @@
-@import "nprogress/nprogress.css";
+@import "@csstools/normalize.css";
+@import "milligram";
+
+@import "@fortawesome/fontawesome-free/css/all.css";
+
+@import "nprogress/nprogress";
+
 @import "react-toastify/dist/ReactToastify.css";
+
+@import "react-phone-input-2/lib/style.css";
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  cursor: pointer;
+}
+
+button,
+input {
+  &[readonly],
+  &[disabled] {
+    pointer-events: none;
+  }
+}
+
+dialog {
+  border: none;
+  padding: 0;
+  color: #606c76; // var(--$color-secondary)
+  width: min(90vw, 400px);
+
+  &::backdrop {
+    background-color: white;
+  }
 }
 
 #root {
@@ -21,16 +48,38 @@ main {
   flex: 1;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.button,
+button,
+input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+  &.button-small {
+    font-size: 0.8rem;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    padding: 0 1.5rem;
+  }
+
+  &.button-large {
+    font-size: 1.4rem;
+    height: 4.5rem;
+    line-height: 4.5rem;
+    padding: 0 2rem;
+  }
 }
 
-button,
-input {
-  &[readonly],
-  &[disabled] {
-    pointer-events: none;
+.data-grid {
+  flex: 1;
+
+  .ag-cell-editable,
+  .ag-cell-inline-editing * {
+    cursor: pointer;
+  }
+
+  .full-width-cell-renderer {
+    width: 100%;
+    height: 100%;
+    text-align: center;
   }
 }
 
@@ -38,20 +87,10 @@ input {
   white-space: pre-line;
 }
 
-.data-grid {
-  flex: 1;
-}
+.react-tel-input {
+  margin-bottom: 1.5rem;
 
-button,
-input[type="radio"],
-input[type="checkbox"],
-.data-grid .ag-cell-editable,
-.data-grid .ag-cell-inline-editing * {
-  cursor: pointer;
-}
-
-.data-grid .full-width-cell-renderer {
-  width: 100%;
-  height: 100%;
-  text-align: center;
+  .form-control {
+    width: 100%;
+  }
 }
