@@ -53,9 +53,9 @@ const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
     <ErrorBoundary>
-      <Suspense fallback={<Loading fullPage />}>
+      <AuthProvider>
         <ActionsProvider>
-          <AuthProvider>
+          <Suspense fallback={<Loading fullPage />}>
             <ToastContainer
               autoClose={3500}
               closeOnClick
@@ -63,9 +63,9 @@ root.render(
               theme="colored"
             />
             <RouterProvider router={router} />
-          </AuthProvider>
+          </Suspense>
         </ActionsProvider>
-      </Suspense>
+      </AuthProvider>
     </ErrorBoundary>
   </React.StrictMode>
 )

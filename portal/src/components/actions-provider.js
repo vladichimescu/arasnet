@@ -2,7 +2,7 @@ import React, {
   createContext,
   useCallback,
   useContext,
-  useEffect,
+  useMemo,
   useState,
 } from "react"
 
@@ -10,11 +10,8 @@ const Context = createContext()
 
 function ActionsProvider(props) {
   const [actionRegistry, setActionRegistry] = useState({})
-  const [actions, setActions] = useState([])
 
-  useEffect(() => {
-    setActions(Object.values(actionRegistry))
-  }, [actionRegistry])
+  const actions = useMemo(() => Object.values(actionRegistry), [actionRegistry])
 
   const addAction = useCallback(({ label, handler, type }) => {
     const actionId = crypto.randomUUID()
@@ -33,17 +30,16 @@ function ActionsProvider(props) {
 
   const removeAction = useCallback((actionId) => {
     setActionRegistry((state) => {
-      delete state[actionId]
+      const newState = { ...state }
 
-      return { ...state }
+      delete newState[actionId]
+
+      return newState
     })
   }, [])
 
   const clearActions = useCallback(() => {
-    setActionRegistry((state) => {
-      state.clear()
-      return { ...state }
-    })
+    setActionRegistry({})
   }, [])
 
   return (
@@ -60,4 +56,15 @@ function ActionsProvider(props) {
 }
 
 export default ActionsProvider
-export const useActions = () => useContext(Context)
+export const useActions = (presetType) => {
+  const context = useContext(Context)
+
+  if (presetType) {
+    return {
+      ...context,
+      actions: context.actions.filter(({ type }) => type === presetType),
+    }
+  }
+
+  return context
+}

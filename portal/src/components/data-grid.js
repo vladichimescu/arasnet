@@ -1,7 +1,7 @@
 import { ModuleRegistry } from "@ag-grid-community/core"
 import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
 import { AgGridReact } from "@ag-grid-community/react"
-import React from "react"
+import React, { useMemo } from "react"
 import { toast } from "react-toastify"
 
 import { useActions } from "./actions-provider"
@@ -78,9 +78,14 @@ function DataGrid({
   getRowId = getGridRowId,
   context,
 }) {
-  const { actions } = useActions()
+  const { actions } = useActions("data-grid")
 
   columnDefs[0].cellRenderer = LoadingCell
+
+  const pinnedBottomRowData = useMemo(
+    () => actions.map((action) => ({ ...action, fullWidth: true })),
+    [actions]
+  )
 
   return (
     <AgGridReact
@@ -88,9 +93,7 @@ function DataGrid({
       suppressMenuHide
       columnDefs={columnDefs}
       defaultColDef={defaultColDef}
-      pinnedBottomRowData={actions
-        .filter(({ type }) => type === "data-grid")
-        .map((action) => ({ ...action, fullWidth: true }))}
+      pinnedBottomRowData={pinnedBottomRowData}
       isFullWidthRow={isFullWidthRow}
       fullWidthCellRenderer={ActionButton}
       context={context}
