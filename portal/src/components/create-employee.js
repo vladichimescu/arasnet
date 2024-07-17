@@ -6,6 +6,8 @@ import { useActions } from "./actions-provider"
 import Form from "./form/form"
 import Modal from "./modal"
 
+const isMobile = navigator.maxTouchPoints > 0
+
 function CreateEmployee() {
   const { addAction, removeAction } = useActions()
 
@@ -19,7 +21,7 @@ function CreateEmployee() {
     const actionId = addAction({
       label: "Add employee",
       handler: createEmployee,
-      type: "data-grid",
+      type: isMobile ? "data-grid" : "top-bar",
     })
 
     return () => {

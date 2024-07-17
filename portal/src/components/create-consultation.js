@@ -6,6 +6,8 @@ import { useActions } from "./actions-provider"
 import Form from "./form/form"
 import Modal from "./modal"
 
+const isMobile = navigator.maxTouchPoints > 0
+
 const locations = process.env.REACT_APP_LOCATIONS.split(",")
 
 function CreateConsultation() {
@@ -26,7 +28,7 @@ function CreateConsultation() {
     const actionId = addAction({
       label: "Create consultation",
       handler: createConsultation,
-      type: "data-grid",
+      type: isMobile ? "data-grid" : "top-bar",
     })
 
     return () => {
