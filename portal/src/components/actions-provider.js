@@ -16,7 +16,7 @@ function ActionsProvider(props) {
     setActions(Object.values(actionRegistry))
   }, [actionRegistry])
 
-  const addAction = useCallback(({ label, handler, type = "top-bar" }) => {
+  const addAction = useCallback(({ label, handler, type }) => {
     const actionId = crypto.randomUUID()
 
     setActionRegistry((state) => ({
