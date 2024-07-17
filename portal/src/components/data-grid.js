@@ -7,7 +7,7 @@ import { toast } from "react-toastify"
 import { useActions } from "./actions-provider"
 
 import "@ag-grid-community/styles/ag-grid.css"
-import "@ag-grid-community/styles/ag-theme-quartz-no-font.css"
+import "@ag-grid-community/styles/ag-theme-quartz.css"
 
 ModuleRegistry.registerModules([InfiniteRowModelModule])
 
@@ -84,19 +84,15 @@ function DataGrid({
 
   return (
     <AgGridReact
-      className="data-grid ag-theme-quartz-auto-dark"
+      className="data-grid ag-theme-quartz"
       suppressMenuHide
       columnDefs={columnDefs}
       defaultColDef={defaultColDef}
-      pinnedBottomRowData={
-        actions.length === 0
-          ? null
-          : actions
-              .filter(({ type }) => type === "data-grid")
-              .map((action) => ({ ...action, fullWidth: true }))
-      }
+      pinnedBottomRowData={actions
+        .filter(({ type }) => type === "data-grid")
+        .map((action) => ({ ...action, fullWidth: true }))}
       isFullWidthRow={isFullWidthRow}
-      fullWidthCellRenderer={fullWidthCellRenderer}
+      fullWidthCellRenderer={ActionButton}
       context={context}
       getRowId={getRowId}
       rowModelType="infinite"
@@ -181,9 +177,17 @@ function LoadingCell({ value, api }) {
   return "Loading..."
 }
 
-function fullWidthCellRenderer({ data: { label, handler } }) {
+function ActionButton({ data: { label, handler } = {} }) {
+  if (!label || !handler) {
+    return null
+  }
+
   return (
-    <button className="full-width-cell-renderer" onClick={handler}>
+    <button
+      type="button"
+      className="full-width-cell-renderer"
+      onClick={handler}
+    >
       {label}
     </button>
   )
