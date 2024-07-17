@@ -1,0 +1,12 @@
+.form {
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: min(90vw, 400px);
+
+  h1 {
+    small:last-of-type {
+      margin-left: auto;
+    }
+  }
+}
