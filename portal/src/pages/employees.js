@@ -93,8 +93,8 @@ function PermissionsButton({ data }) {
 
       {isOpened ? (
         <UpdatePermissions
-          isOpened={isOpened}
-          setIsOpened={setIsOpened}
+          open={isOpened}
+          onClose={() => setIsOpened(false)}
           employee={data}
         />
       ) : null}

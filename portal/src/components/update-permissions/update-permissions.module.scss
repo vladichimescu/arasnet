@@ -1,14 +1,40 @@
-.updatePermissions {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  justify-items: end;
-}
+.permissions {
+  h4 {
+    margin-bottom: 0;
 
-.action:first-child {
-  grid-column: 1 / span 2;
-}
+    + small {
+      line-height: normal;
+    }
+  }
 
-.location {
-  grid-column: 1 / span 5;
-  justify-self: center;
+  section {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    justify-items: end;
+    align-items: baseline;
+    margin-top: 1.5rem;
+    margin-bottom: 3rem;
+
+    label {
+      &:first-child {
+        grid-column: 1 / span 2;
+      }
+
+      &:nth-child(-n + 4) {
+        font-weight: normal;
+        font-weight: lighter;
+        margin-bottom: 0;
+      }
+    }
+
+    h4 {
+      grid-column: 1 / span 5;
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid;
+      width: 100%;
+      text-transform: uppercase;
+    }
+  }
 }
