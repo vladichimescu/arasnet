@@ -66,11 +66,7 @@ function Employees() {
     <Fragment>
       <DataGrid columnDefs={columnDefs} context={EmployeesApi} />
 
-      {canCreateEmployees ? (
-        <CreateEmployee
-          onSuccess={() => EmployeesApi.gridApi.purgeInfiniteCache()}
-        />
-      ) : null}
+      {canCreateEmployees ? <CreateEmployee /> : null}
     </Fragment>
   )
 }
@@ -87,7 +83,13 @@ function PermissionsButton({ data }) {
 
   return (
     <Fragment>
-      <button onClick={() => setIsOpened(true)}>Permissions</button>
+      <button
+        type="button"
+        className="button-outline button-small"
+        onClick={() => setIsOpened(true)}
+      >
+        Permissions
+      </button>
 
       {isOpened ? (
         <UpdatePermissions

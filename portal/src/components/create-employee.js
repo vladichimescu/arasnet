@@ -1,22 +1,18 @@
-import React, { Fragment, useEffect, useState } from "react"
-import PhoneInput from "react-phone-input-2"
+import React, { useEffect, useState } from "react"
 
 import EmployeesApi from "../apis/employees-api"
 
 import { useActions } from "./actions-provider"
+import Form from "./form/form"
 import Modal from "./modal"
 
-import "react-phone-input-2/lib/style.css"
-
-function CreateEmployee({ onSuccess = () => {} }) {
+function CreateEmployee() {
   const { addAction, removeAction } = useActions()
 
-  const [errors, setErrors] = useState()
   const [isOpened, setIsOpened] = useState(false)
 
   useEffect(() => {
     const createEmployee = () => {
-      setErrors(null)
       setIsOpened(true)
     }
 
@@ -26,67 +22,66 @@ function CreateEmployee({ onSuccess = () => {} }) {
       type: "data-grid",
     })
 
-    return () => removeAction(actionId)
+    return () => {
+      removeAction(actionId)
+    }
   }, [addAction, removeAction])
 
   return (
     <Modal
       open={isOpened}
-      onClose={async (data) => {
-        if (!data) {
-          setIsOpened(false)
-
-          return
-        }
-
-        try {
+      onClose={() => {
+        setIsOpened(false)
+      }}
+    >
+      <Form
+        onSubmit={async (data) => {
           await EmployeesApi.create(data)
 
-          onSuccess()
+          EmployeesApi.gridApi.purgeInfiniteCache()
 
           setIsOpened(false)
-        } catch (err) {
-          setErrors(err)
-        }
-      }}
-      formContent={
-        <Fragment>
-          <label>
-            First name
-            <input type="text" name="first" required />
-            {errors?.first && <span>{errors.first.message}</span>}
-          </label>
-          <label>
-            Last name
-            <input type="text" name="last" required />
-            {errors?.last && <span>{errors.last.message}</span>}
-          </label>
-          <label>
-            Phone
-            <PhoneInput
-              inputProps={{
-                name: "phone",
-                required: true,
-              }}
-              enableSearch
-              country="ro"
-              autoFormat={false}
-            />
-            {errors?.phone && <span>{errors.phone.message}</span>}
-          </label>
-          <label>
-            Email
-            <input type="email" name="email" required />
-            {errors?.email && <span>{errors.email.message}</span>}
-          </label>
-          <label>
-            Temp password
-            <input type="text" name="password" required />
-            {errors?.password && <span>{errors.password.message}</span>}
-          </label>
-        </Fragment>
-      }
-    />
+        }}
+        onCancel={() => {
+          setIsOpened(false)
+        }}
+        inputs={[
+          {
+            type: "text",
+            label: "First name",
+            name: "first",
+            required: true,
+          },
+          {
+            type: "text",
+            label: "Last name",
+            name: "last",
+            required: true,
+          },
+          {
+            type: "phone-input",
+            label: "Phone",
+            name: "phone",
+            required: true,
+            enableSearch: true,
+            country: "ro",
+            autoFormat: false,
+          },
+          {
+            type: "email",
+            label: "Email",
+            name: "email",
+            required: true,
+          },
+          {
+            type: "text",
+            label: "Temp password",
+            name: "password",
+            required: true,
+          },
+        ]}
+      />
+    </Modal>
   )
 }
 
