@@ -96,11 +96,7 @@ function Consultations() {
     <Fragment>
       <DataGrid columnDefs={columnDefsPermitted} context={ConsultationsApi} />
 
-      {canCreateConsultations ? (
-        <CreateConsultation
-          onSuccess={() => ConsultationsApi.gridApi.purgeInfiniteCache()}
-        />
-      ) : null}
+      {canCreateConsultations ? <CreateConsultation /> : null}
     </Fragment>
   )
 }
@@ -116,19 +112,36 @@ function ConfirmationButtons({ data }) {
   const message = `Salutare,\nTe rugam sa confirmi programarea pentru testarea de ${valueFormatterDate({ value: data.date })}.\nCheckpoint ARAS Bucuresti (Bd. Eroii Sanitari, nr. 49).`
 
   return (
-    <div>
-      <button
-        style={{ marginRight: 15 }}
-        onClick={() =>
-          window.open(
-            `https://wa.me/${data.phone}?text=${encodeURIComponent(message)}`
-          )
-        }
+    <Fragment>
+      <a
+        className="button button-clear"
+        style={{
+          marginRight: "16px",
+          paddingLeft: "12px",
+          paddingRight: "12px",
+        }}
+        href={`https://wa.me/${data.phone}?text=${encodeURIComponent(message)}`}
+        target="_blank"
+        rel="noreferrer"
       >
+        <i className="fa-brands fa-whatsapp" />
         WhatsApp
-      </button>
-      <button onClick={() => window.open(`tel:${data.phone}`)}>Phone</button>
-    </div>
+      </a>
+
+      <a
+        className="button button-clear"
+        style={{
+          paddingLeft: "12px",
+          paddingRight: "12px",
+        }}
+        href={`tel:${data.phone}`}
+        target="_blank"
+        rel="noreferrer"
+      >
+        <i className="fa-solid fa-phone" />
+        Call
+      </a>
+    </Fragment>
   )
 }
 //#endregion

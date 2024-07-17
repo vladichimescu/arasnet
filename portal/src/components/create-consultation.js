@@ -1,19 +1,16 @@
-import React, { Fragment, useEffect, useState } from "react"
-import PhoneInput from "react-phone-input-2"
+import React, { useEffect, useState } from "react"
 
 import ConsultationsApi from "../apis/consultations-api"
 
 import { useActions } from "./actions-provider"
+import Form from "./form/form"
 import Modal from "./modal"
-
-import "react-phone-input-2/lib/style.css"
 
 const locations = process.env.REACT_APP_LOCATIONS.split(",")
 
-function CreateConsultation({ onSuccess = () => {} }) {
+function CreateConsultation() {
   const { addAction, removeAction } = useActions()
 
-  const [errors, setErrors] = useState()
   const [isOpened, setIsOpened] = useState(false)
 
   const minDatetimeLocal = new Date()
@@ -23,7 +20,6 @@ function CreateConsultation({ onSuccess = () => {} }) {
 
   useEffect(() => {
     const createConsultation = () => {
-      setErrors(null)
       setIsOpened(true)
     }
 
@@ -33,67 +29,56 @@ function CreateConsultation({ onSuccess = () => {} }) {
       type: "data-grid",
     })
 
-    return () => removeAction(actionId)
+    return () => {
+      removeAction(actionId)
+    }
   }, [addAction, removeAction])
 
   return (
     <Modal
       open={isOpened}
-      onClose={async (data) => {
-        if (!data) {
-          setIsOpened(false)
-
-          return
-        }
-
-        try {
+      onClose={() => {
+        setIsOpened(false)
+      }}
+    >
+      <Form
+        onSubmit={async (data) => {
           await ConsultationsApi.create(data)
 
-          onSuccess()
+          ConsultationsApi.gridApi.purgeInfiniteCache()
 
           setIsOpened(false)
-        } catch (err) {
-          setErrors(err)
-        }
-      }}
-      formContent={
-        <Fragment>
-          <label>
-            Phone
-            <PhoneInput
-              inputProps={{
-                name: "phone",
-                required: true,
-              }}
-              enableSearch
-              country="ro"
-              autoFormat={false}
-            />
-            {errors?.phone && <span>{errors.phone.message}</span>}
-          </label>
-          <label>
-            Date
-            <input
-              type="datetime-local"
-              min={`${minDatetimeLocal.toISOString().slice(0, -8)}`}
-              name="date"
-              required
-            />
-            {errors?.date && <span>{errors.date.message}</span>}
-          </label>
-          <label>
-            Location
-            <select name="location" required>
-              {locations.map((location) => (
-                <option key={location} value={location}>
-                  {location}
-                </option>
-              ))}
-            </select>
-          </label>
-        </Fragment>
-      }
-    />
+        }}
+        onCancel={() => {
+          setIsOpened(false)
+        }}
+        inputs={[
+          {
+            type: "phone-input",
+            label: "Phone",
+            name: "phone",
+            required: true,
+            enableSearch: true,
+            country: "ro",
+            autoFormat: false,
+          },
+          {
+            type: "datetime-local",
+            label: "Date",
+            name: "date",
+            required: true,
+            min: `${minDatetimeLocal.toISOString().slice(0, -8)}`,
+          },
+          {
+            type: "select",
+            label: "Location",
+            name: "location",
+            required: true,
+            list: locations,
+          },
+        ]}
+      />
+    </Modal>
   )
 }
 
