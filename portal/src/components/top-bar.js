@@ -104,12 +104,7 @@ const TopBar = () => {
           <Link to="logout" className="button button-small">
             Logout
           </Link>
-        ) : (
-          // null
-          <Link to="login" className="button button-small">
-            Login
-          </Link>
-        )}
+        ) : null}
       </div>
     </nav>
   )
