@@ -49,6 +49,29 @@ main {
 
 .button,
 button,
+dd,
+dt,
+li,
+fieldset,
+input,
+select,
+textarea,
+blockquote,
+dl,
+figure,
+form,
+ol,
+p,
+pre,
+table,
+ul {
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.button,
+button,
 input[type="button"],
 input[type="reset"],
 input[type="submit"] {
