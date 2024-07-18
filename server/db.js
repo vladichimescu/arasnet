@@ -92,12 +92,12 @@ const data = {
       password: "pass",
       permissions: {
         "0d9625c8-f9bd-4b0c-9de5-960fff50b30c": {
-          consultations: ["create"],
-          employees: ["create"],
+          consultations: ["read"],
+          employees: ["read"],
         },
         "e3a607c9-7bce-459e-9ae2-25d30d8db95c": {
-          consultations: ["create"],
-          employees: ["create"],
+          consultations: ["read"],
+          employees: ["read"],
         },
       },
       createdAt: new Date().toISOString(),
