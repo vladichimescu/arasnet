@@ -10,6 +10,7 @@
     "serve": "dotenv -e ../.env -e .env -c production -- node --experimental-json-modules index.js"
   },
   "dependencies": {
+    "@arasnet/types": "*",
     "@faker-js/faker": "^8.4.1",
     "json-server": "^0.17.4",
     "jsonwebtoken": "^9.0.2"

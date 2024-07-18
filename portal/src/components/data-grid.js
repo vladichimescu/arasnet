@@ -4,6 +4,8 @@ import { AgGridReact } from "@ag-grid-community/react"
 import React, { useMemo } from "react"
 import { toast } from "react-toastify"
 
+import { consultationStatuses } from "@arasnet/types"
+
 import { useActions } from "./actions-provider"
 
 import "@ag-grid-community/styles/ag-grid.css"
@@ -114,7 +116,7 @@ function DataGrid({
 }
 
 export default DataGrid
-export { valueFormatterDate, onCellValueChanged }
+export { dateFormatter, statusFormatter, onCellValueChanged }
 
 //#region
 function getGridRowId({ data: { id } = {} }) {
@@ -209,7 +211,7 @@ function formatIncludesDate({ gte, lte }) {
   }
 }
 
-function valueFormatterDate({ value }) {
+function dateFormatter({ value }) {
   // TODO: set LOCALE format based on i18n
   return value
     ? new Intl.DateTimeFormat("ro-RO", {
@@ -217,6 +219,10 @@ function valueFormatterDate({ value }) {
         timeStyle: "short",
       }).format(new Date(value))
     : value
+}
+
+function statusFormatter({ value }) {
+  return value ? consultationStatuses[value].label : value
 }
 
 async function onCellValueChanged({ api, data, oldValue, context }) {

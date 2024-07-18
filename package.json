@@ -4,7 +4,8 @@
   "workspaces": {
     "packages": [
       "portal",
-      "server"
+      "server",
+      "libs/*"
     ]
   },
   "private": true,

@@ -41,9 +41,8 @@ function create({ body: consultation = {} }, res, next) {
     })
   }
 
-  // TODO: expose .env variables as enum with i18n suport
   if (!consultation.status) {
-    consultation.status = "pending"
+    consultation.status = "acffc089-0508-4c3f-945b-afd74376df92"
   }
 
   next()

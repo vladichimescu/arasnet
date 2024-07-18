@@ -82,6 +82,7 @@ __metadata:
     "@ag-grid-community/infinite-row-model": "npm:^31.3.4"
     "@ag-grid-community/react": "npm:^31.3.4"
     "@ag-grid-community/styles": "npm:^31.3.4"
+    "@arasnet/types": "npm:*"
     "@craco/craco": "npm:^7.1.0"
     "@fortawesome/fontawesome-free": "npm:^6.6.0"
     axios: "npm:^1.7.2"
@@ -107,10 +108,23 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@arasnet/server@workspace:server"
   dependencies:
+    "@arasnet/types": "npm:*"
     "@faker-js/faker": "npm:^8.4.1"
     dotenv-cli: "npm:^7.4.2"
     json-server: "npm:^0.17.4"
     jsonwebtoken: "npm:^9.0.2"
+  languageName: unknown
+  linkType: soft
+
+"@arasnet/types@npm:*, @arasnet/types@workspace:libs/types":
+  version: 0.0.0-use.local
+  resolution: "@arasnet/types@workspace:libs/types"
+  languageName: unknown
+  linkType: soft
+
+"@arasnet/validations@workspace:libs/validations":
+  version: 0.0.0-use.local
+  resolution: "@arasnet/validations@workspace:libs/validations"
   languageName: unknown
   linkType: soft
 

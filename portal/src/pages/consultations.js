@@ -2,18 +2,18 @@ import { ModuleRegistry } from "@ag-grid-community/core"
 import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
 import React, { Fragment } from "react"
 
+import { consultationStatuses } from "@arasnet/types"
+
 import ConsultationsApi from "../apis/consultations-api"
 import { useAuth } from "../components/auth-provider"
 import CreateConsultation from "../components/create-consultation"
 import DataGrid, {
+  dateFormatter,
   onCellValueChanged,
-  valueFormatterDate,
+  statusFormatter,
 } from "../components/data-grid"
 
 ModuleRegistry.registerModules([InfiniteRowModelModule])
-
-const consultationStatuses =
-  process.env.REACT_APP_CONSULTATION_STATUSES.split(",")
 
 const columnDefs = [
   {
@@ -27,7 +27,7 @@ const columnDefs = [
   {
     field: "date",
     headerName: "Appointment",
-    valueFormatter: valueFormatterDate,
+    valueFormatter: dateFormatter,
     filter: "agDateColumnFilter",
     filterParams: {
       filterOptions: ["greaterThan", "lessThan", "inRange"],
@@ -36,19 +36,19 @@ const columnDefs = [
   {
     field: "status",
     headerName: "Status",
+    valueFormatter: statusFormatter,
     filter: "agTextColumnFilter",
     filterParams: {
       filterOptions: ["contains"],
     },
     editable: true,
-    cellEditorSelector:
-      consultationStatuses.length > 1
-        ? () => ({
-            component: "agSelectCellEditor",
-            params: { values: consultationStatuses },
-          })
-        : null,
-    cellClass: consultationStatuses.length > 1 ? "ag-cell-editable" : null,
+    cellEditorSelector: () => ({
+      component: "agSelectCellEditor",
+      params: {
+        values: Object.keys(consultationStatuses),
+      },
+    }),
+    cellClass: "ag-cell-editable",
     onCellValueChanged,
   },
   {
@@ -67,7 +67,7 @@ const columnDefs = [
   {
     field: "createdAt",
     headerName: "Created at",
-    valueFormatter: valueFormatterDate,
+    valueFormatter: dateFormatter,
   },
   {
     field: "createdBy",
@@ -109,7 +109,7 @@ function ConfirmationButtons({ data }) {
     return null
   }
 
-  const message = `Salutare,\nTe rugam sa confirmi programarea pentru testarea de ${valueFormatterDate({ value: data.date })}.\nCheckpoint ARAS Bucuresti (Bd. Eroii Sanitari, nr. 49).`
+  const message = `Salutare,\nTe rugam sa confirmi programarea pentru testarea de ${dateFormatter({ value: data.date })}.\nCheckpoint ARAS Bucuresti (Bd. Eroii Sanitari, nr. 49).`
 
   return (
     <Fragment>

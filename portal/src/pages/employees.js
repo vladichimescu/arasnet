@@ -5,7 +5,7 @@ import React, { Fragment, useState } from "react"
 import EmployeesApi from "../apis/employees-api"
 import { useAuth } from "../components/auth-provider"
 import CreateEmployee from "../components/create-employee"
-import DataGrid, { valueFormatterDate } from "../components/data-grid"
+import DataGrid, { dateFormatter } from "../components/data-grid"
 import UpdatePermissions from "../components/update-permissions"
 
 ModuleRegistry.registerModules([InfiniteRowModelModule])
@@ -51,7 +51,7 @@ const columnDefs = [
   {
     field: "createdAt",
     headerName: "Created",
-    valueFormatter: valueFormatterDate,
+    valueFormatter: dateFormatter,
   },
   {
     field: "createdBy",

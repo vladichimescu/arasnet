@@ -1,8 +1,9 @@
 import { faker } from "@faker-js/faker"
 import fs from "fs"
 
+import { consultationStatuses } from "@arasnet/types"
+
 const locations = process.env.LOCATIONS.split(",")
-const consultationStatuses = process.env.CONSULTATION_STATUSES.split(",")
 
 const data = {
   employees: [
@@ -130,7 +131,10 @@ function mockConsultation(_, index) {
             : faker.date.soon(),
     location: locations[Math.floor(Math.random() * 2)],
     createdAt: new Date().toISOString(),
-    status: consultationStatuses[Math.floor(Math.random() * 3)],
+    status:
+      Object.keys(consultationStatuses)[
+        Math.floor(Math.random() * Object.keys(consultationStatuses).length)
+      ],
   }
 }
 //#endregion

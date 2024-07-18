@@ -1,0 +1,10 @@
+{
+  "name": "@arasnet/types",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./index.js",
+  "volta": {
+    "extends": "../package.json"
+  }
+}
