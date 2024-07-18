@@ -20,20 +20,8 @@ const columnDefs = [
     },
   },
   {
-    field: "first",
-    headerName: "First",
-    filter: "agTextColumnFilter",
-    filterParams: {
-      filterOptions: ["contains"],
-    },
-  },
-  {
-    field: "last",
-    headerName: "Last",
-    filter: "agTextColumnFilter",
-    filterParams: {
-      filterOptions: ["contains"],
-    },
+    headerName: "Name",
+    valueGetter: ({ data: { first, last } = {} }) => `${first} ${last}`,
   },
   {
     field: "email",
@@ -46,16 +34,20 @@ const columnDefs = [
   {
     field: "permissions",
     cellRenderer: PermissionsButton,
-    sortable: false,
   },
   {
     field: "createdAt",
     headerName: "Created",
     valueFormatter: dateFormatter,
+    sortable: true,
   },
   {
     field: "createdBy",
     headerName: "Created by",
+    filter: "agTextColumnFilter",
+    filterParams: {
+      filterOptions: ["contains"],
+    },
   },
 ]
 

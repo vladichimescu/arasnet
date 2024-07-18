@@ -66,8 +66,8 @@ const data = {
     },
     {
       id: 2,
-      first: "Bucuresti",
-      last: "Dalvit",
+      first: "Admin",
+      last: "Bucuresti",
       phone: "0777777777",
       email: "admin@bucuresti.ro",
       password: "pass",
@@ -85,8 +85,8 @@ const data = {
     },
     {
       id: 3,
-      first: "Bucuresti",
-      last: "Dalvit",
+      first: "User",
+      last: "Bucuresti",
       phone: "0777777777",
       email: "user@bucuresti.ro",
       password: "pass",

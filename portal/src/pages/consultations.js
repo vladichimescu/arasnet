@@ -33,15 +33,14 @@ const columnDefs = [
     filterParams: {
       filterOptions: ["greaterThan", "lessThan", "inRange"],
     },
+    sortable: true,
   },
   {
+    // TODO: filter select
     field: "status",
     headerName: "Status",
     valueFormatter: statusFormatter,
-    filter: "agTextColumnFilter",
-    filterParams: {
-      filterOptions: ["contains"],
-    },
+
     editable: true,
     cellEditorSelector: () => ({
       component: "agSelectCellEditor",
@@ -55,21 +54,22 @@ const columnDefs = [
   {
     field: "confirmation",
     cellRenderer: ConfirmationButtons,
-    sortable: false,
   },
   {
+    // TODO: filter select
     field: "location",
     headerName: "Location",
     valueFormatter: locationFormatter,
-    filter: "agTextColumnFilter",
-    filterParams: {
-      filterOptions: ["contains"],
-    },
   },
   {
     field: "createdAt",
     headerName: "Created at",
     valueFormatter: dateFormatter,
+    sortable: true,
+    filter: "agDateColumnFilter",
+    filterParams: {
+      filterOptions: ["greaterThan", "lessThan", "inRange"],
+    },
   },
   {
     field: "createdBy",

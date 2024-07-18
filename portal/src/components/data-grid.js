@@ -22,6 +22,7 @@ const defaultGridColDef = {
     debounceMs: 500,
     maxNumConditions: 1,
   },
+  sortable: false,
 }
 
 const datasource = {
