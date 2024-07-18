@@ -47,7 +47,7 @@ function redirect(req, res, next) {
     ["PUT", "DELETE"].includes(req.method) &&
     req.originalUrl.split("/").length === 2
   ) {
-    res.redirect(302, `${req.originalUrl}/${req.body?.id}`)
+    res.redirect(308, `${req.originalUrl}/${req.body?.id}`)
     return
   }
 
