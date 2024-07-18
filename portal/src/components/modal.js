@@ -1,9 +1,16 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
+import { ToastContainer } from "react-toastify"
+
+import { useActions } from "./actions-provider"
 
 function Modal({ children, open, onClose = () => {} }) {
   const ref = useRef()
 
-  const [isOpened, setIsOpened] = useState(open)
+  const {
+    actions: [toastGlobal],
+  } = useActions("toast-global")
+
+  const [isOpened, setIsOpened] = useState(false)
 
   const handleClose = useCallback(() => {
     onClose()
@@ -12,8 +19,10 @@ function Modal({ children, open, onClose = () => {} }) {
   }, [onClose])
 
   useEffect(() => {
+    toastGlobal?.handler(!open)
+
     setIsOpened(open)
-  }, [open])
+  }, [open, toastGlobal])
 
   useEffect(() => {
     if (!isOpened) {
@@ -29,6 +38,8 @@ function Modal({ children, open, onClose = () => {} }) {
 
   return (
     <dialog ref={ref} onClose={handleClose}>
+      <ToastContainer autoClose={3500} closeOnClick position="top-center" />
+
       {children}
     </dialog>
   )

@@ -1,5 +1,5 @@
 import NProgress from "nprogress"
-import React, { Fragment, Suspense, lazy } from "react"
+import React, { Fragment, Suspense, lazy, useEffect, useState } from "react"
 import ReactDOM from "react-dom/client"
 import {
   Outlet,
@@ -10,7 +10,7 @@ import {
 } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 
-import ActionsProvider from "./components/actions-provider"
+import ActionsProvider, { useActions } from "./components/actions-provider"
 import AuthProvider from "./components/auth-provider"
 import ErrorBoundary from "./components/error-boundary"
 import Loading from "./components/loading"
@@ -56,11 +56,6 @@ root.render(
       <AuthProvider>
         <ActionsProvider>
           <Suspense fallback={<Loading fullPage />}>
-            <ToastContainer
-              autoClose={3500}
-              closeOnClick
-              position="top-center"
-            />
             <RouterProvider router={router} />
           </Suspense>
         </ActionsProvider>
@@ -71,9 +66,29 @@ root.render(
 
 //#region
 function Layout() {
+  const { addAction, removeAction } = useActions()
+
+  const [isToastGlobal, setIsToastGlobal] = useState(true)
+
+  useEffect(() => {
+    const actionId = addAction({
+      handler: setIsToastGlobal,
+      type: "toast-global",
+    })
+
+    return () => {
+      removeAction(actionId)
+    }
+  }, [addAction, removeAction])
+
   return (
     <Fragment>
+      {isToastGlobal ? (
+        <ToastContainer autoClose={3500} closeOnClick position="top-center" />
+      ) : null}
+
       <TopBar />
+
       <main>
         <Outlet />
       </main>
