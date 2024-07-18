@@ -1,13 +1,13 @@
 import React, { Fragment } from "react"
 
+import { locations } from "@arasnet/types"
+
 import EmployeesApi from "../../apis/employees-api"
 import { useAuth } from "../auth-provider"
 import Form from "../form/form"
 import Modal from "../modal"
 
 import styles from "./update-permissions.module.scss"
-
-const locations = process.env.REACT_APP_LOCATIONS.split(",")
 
 const apis = [
   process.env.REACT_APP_SERVER_PATH_EMPLOYEES,
@@ -29,7 +29,7 @@ function UpdatePermissions({ open, onClose, employee }) {
                 const updatedEmployee = {
                   ...employee,
                   permissions: Object.keys(data).reduce((acc, key) => {
-                    const [location, api, action] = key.split("-")
+                    const [location, api, action] = key.split("_")
 
                     return {
                       ...acc,
@@ -65,34 +65,36 @@ function UpdatePermissions({ open, onClose, employee }) {
               <label key={action}>{action}</label>
             ))}
 
-            {locations.map((location) => (
-              <Fragment key={location}>
-                <h4>{location}</h4>
+            {Object.entries(locations).map(
+              ([locationId, { label: locationLabel }]) => (
+                <Fragment key={locationId}>
+                  <h4>{locationLabel}</h4>
 
-                {apis.map((api) => (
-                  <Fragment key={`${location}-${api}`}>
-                    <label>{api}</label>
+                  {apis.map((api) => (
+                    <Fragment key={`${locationId}_${api}`}>
+                      <label>{api}</label>
 
-                    {actions.map((action) => (
-                      <Fragment key={`${location}-${api}-${action}`}>
-                        <input
-                          type="checkbox"
-                          name={`${location}-${api}-${action}`}
-                          defaultChecked={employee.permissions[location]?.[
-                            api
-                          ]?.includes(action)}
-                          readOnly={!canUpdateEmployees}
-                          disabled={
-                            canUpdateEmployees &&
-                            !permissions[location]?.[api]?.includes(action)
-                          }
-                        />
-                      </Fragment>
-                    ))}
-                  </Fragment>
-                ))}
-              </Fragment>
-            ))}
+                      {actions.map((action) => (
+                        <Fragment key={`${locationId}_${api}_${action}`}>
+                          <input
+                            type="checkbox"
+                            name={`${locationId}_${api}_${action}`}
+                            defaultChecked={employee.permissions[locationId]?.[
+                              api
+                            ]?.includes(action)}
+                            readOnly={!canUpdateEmployees}
+                            disabled={
+                              canUpdateEmployees &&
+                              !permissions[locationId]?.[api]?.includes(action)
+                            }
+                          />
+                        </Fragment>
+                      ))}
+                    </Fragment>
+                  ))}
+                </Fragment>
+              )
+            )}
           </section>
         }
       />

@@ -1,3 +1,5 @@
+import { locations } from "@arasnet/types"
+
 import jsonServerDB from "../index.js"
 import { checkMandatoryProps } from "../libs/check-mandatory-props.js"
 
@@ -36,7 +38,7 @@ function create({ body: consultation = {} }, res, next) {
         code: "date_invalid",
         message: `already exists on ${new Intl.DateTimeFormat("ro-RO", {
           dateStyle: "full",
-        }).format(consultationDate)} in ${dbConsultation.location}`,
+        }).format(consultationDate)} in ${locations[dbConsultation.location].label}`,
       },
     })
   }

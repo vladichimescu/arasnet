@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken"
 
+import { locations } from "@arasnet/types"
+
 import jsonServerDB from "../index.js"
 
 const secret = process.env.SECRET
-
-const locations = process.env.LOCATIONS.split(",")
 
 const apis = [
   process.env.SERVER_PATH_EMPLOYEES,
@@ -80,7 +80,7 @@ function authorize(
 
     const permittedLocations = Object.keys(dbUser.permissions).filter(
       (location) =>
-        locations.includes(location) &&
+        Object.keys(locations).includes(location) &&
         dbUser.permissions[location][api].includes(action)
     )
 
@@ -92,7 +92,7 @@ function authorize(
     }
 
     const locationFilters =
-      permittedLocations.length === locations.length
+      permittedLocations.length === Object.keys(locations).length
         ? []
         : ["location", permittedLocations]
 

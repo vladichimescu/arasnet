@@ -48,11 +48,17 @@ function Form({
             />
           ) : type === "select" ? (
             <select name={name} {...props}>
-              {list.map((item) => (
-                <option key={item} value={item}>
-                  {item}
-                </option>
-              ))}
+              {list.map((item) =>
+                typeof item === "string" ? (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ) : (
+                  <option key={item[0]} value={item[0]}>
+                    {item[1].label}
+                  </option>
+                )
+              )}
             </select>
           ) : (
             <input id={name} name={name} type={type} {...props} />

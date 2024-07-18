@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react"
 
+import { consultationLocations } from "@arasnet/types"
+
 import ConsultationsApi from "../apis/consultations-api"
 
 import { useActions } from "./actions-provider"
@@ -7,8 +9,6 @@ import Form from "./form/form"
 import Modal from "./modal"
 
 const isMobile = navigator.maxTouchPoints > 0
-
-const locations = process.env.REACT_APP_LOCATIONS.split(",")
 
 function CreateConsultation() {
   const { addAction, removeAction } = useActions()
@@ -76,7 +76,7 @@ function CreateConsultation() {
             label: "Location",
             name: "location",
             required: true,
-            list: locations,
+            list: Object.entries(consultationLocations),
           },
         ]}
       />

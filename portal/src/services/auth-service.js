@@ -1,10 +1,10 @@
+import { locations } from "@arasnet/types"
+
 import StorageService from "./storage-service"
 
 const storageKeys = StorageService.getKeys()
 const authKey = storageKeys.APP_AUTH_JWT
 const permissionsKey = storageKeys.APP_AUTH_PERMISSIONS
-
-const locations = process.env.REACT_APP_LOCATIONS.split(",")
 
 const apis = [
   process.env.REACT_APP_SERVER_PATH_EMPLOYEES,
@@ -39,7 +39,8 @@ const getAccessMatrix = () => {
           [toCamelCase(`can ${action} ${api}`)]:
             Object.entries(permissions).filter(
               ([location, apis]) =>
-                locations.includes(location) && apis[api]?.includes(action)
+                Object.keys(locations).includes(location) &&
+                apis[api]?.includes(action)
             ).length !== 0,
         }),
         {}

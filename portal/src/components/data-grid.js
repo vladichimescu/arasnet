@@ -4,7 +4,7 @@ import { AgGridReact } from "@ag-grid-community/react"
 import React, { useMemo } from "react"
 import { toast } from "react-toastify"
 
-import { consultationStatuses } from "@arasnet/types"
+import { consultationLocations, consultationStatuses } from "@arasnet/types"
 
 import { useActions } from "./actions-provider"
 
@@ -116,7 +116,7 @@ function DataGrid({
 }
 
 export default DataGrid
-export { dateFormatter, statusFormatter, onCellValueChanged }
+export { dateFormatter, statusFormatter, locationFormatter, onCellValueChanged }
 
 //#region
 function getGridRowId({ data: { id } = {} }) {
@@ -223,6 +223,10 @@ function dateFormatter({ value }) {
 
 function statusFormatter({ value }) {
   return value ? consultationStatuses[value].label : value
+}
+
+function locationFormatter({ value }) {
+  return value ? consultationLocations[value].label : value
 }
 
 async function onCellValueChanged({ api, data, oldValue, context }) {

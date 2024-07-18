@@ -1,11 +1,11 @@
 import jwt from "jsonwebtoken"
 
+import { locations } from "@arasnet/types"
+
 import jsonServerDB from "../index.js"
 import { checkMandatoryProps } from "../libs/check-mandatory-props.js"
 
 const employeeMandatoryFields = process.env.EMPLOYEE_MANDATORY_FIELDS.split(",")
-
-const locations = process.env.LOCATIONS.split(",")
 
 const apis = [
   process.env.SERVER_PATH_EMPLOYEES,
@@ -48,7 +48,7 @@ function create({ body: employee = {} }, res, next) {
   }
 
   if (!employee.permissions) {
-    employee.permissions = locations.reduce(
+    employee.permissions = Object.keys(locations).reduce(
       (acc, location) => ({
         ...acc,
         [location]: apis.reduce(
@@ -92,7 +92,7 @@ function update(
     .getState()
     .employees.find(({ id } = {}) => id === employee.id)
 
-  employee.permissions = locations.reduce(
+  employee.permissions = Object.keys(locations).reduce(
     (acc, location) => ({
       ...acc,
       [location]: apis.reduce(

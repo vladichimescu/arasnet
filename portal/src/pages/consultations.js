@@ -9,6 +9,7 @@ import { useAuth } from "../components/auth-provider"
 import CreateConsultation from "../components/create-consultation"
 import DataGrid, {
   dateFormatter,
+  locationFormatter,
   onCellValueChanged,
   statusFormatter,
 } from "../components/data-grid"
@@ -59,6 +60,7 @@ const columnDefs = [
   {
     field: "location",
     headerName: "Location",
+    valueFormatter: locationFormatter,
     filter: "agTextColumnFilter",
     filterParams: {
       filterOptions: ["contains"],
