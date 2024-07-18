@@ -82,9 +82,8 @@ function UpdatePermissions({ open, onClose, employee }) {
                             defaultChecked={employee.permissions[locationId]?.[
                               api
                             ]?.includes(action)}
-                            readOnly={!canUpdateEmployees}
                             disabled={
-                              canUpdateEmployees &&
+                              !canUpdateEmployees ||
                               !permissions[locationId]?.[api]?.includes(action)
                             }
                           />
