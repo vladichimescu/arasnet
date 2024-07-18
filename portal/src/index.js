@@ -60,7 +60,6 @@ root.render(
               autoClose={3500}
               closeOnClick
               position="top-center"
-              theme="colored"
             />
             <RouterProvider router={router} />
           </Suspense>
