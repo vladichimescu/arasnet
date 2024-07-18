@@ -29,7 +29,7 @@ input {
 dialog {
   border: none;
   color: #606c76; // var(--$color-secondary)
-  width: min(90vw, 400px);
+  min-width: min(90vw, 400px);
 
   &::backdrop {
     background-color: white;
