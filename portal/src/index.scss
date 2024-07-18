@@ -109,6 +109,17 @@ input[type="submit"] {
   white-space: pre-line;
 }
 
+.Toastify__close-button {
+  height: inherit;
+  line-height: normal;
+
+  &:hover,
+  &:focus {
+    color: black;
+    background-color: transparent;
+  }
+}
+
 .react-tel-input {
   margin-bottom: 1.5rem;
 
