@@ -28,8 +28,8 @@ function create({ body: employee = {} }, res, next) {
   if (dbEmployeeByEmail) {
     return res.status(400).send({
       email: {
-        code: "email_invalid",
-        message: "email already used",
+        code: "email invalid",
+        message: "Email is already used",
       },
     })
   }
@@ -41,8 +41,8 @@ function create({ body: employee = {} }, res, next) {
   if (dbEmployeeByPhone) {
     return res.status(400).send({
       phone: {
-        code: "phone_invalid",
-        message: "phone already used",
+        code: "phone invalid",
+        message: "Phone number is already used",
       },
     })
   }

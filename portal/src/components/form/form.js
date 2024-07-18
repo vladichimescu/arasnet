@@ -64,7 +64,7 @@ function Form({
             <input id={name} name={name} type={type} {...props} />
           )}
 
-          <small>{errors?.[name]?.message}</small>
+          <small>{errors?.[name]?.code}</small>
         </fieldset>
       ))}
 
@@ -73,7 +73,7 @@ function Form({
       <fieldset style={{ marginBottom: 0 }}>
         {onSubmit ? <button type="submit">Submit</button> : null}
 
-        <small>{errors?.message}</small>
+        <small>{errors?.code}</small>
       </fieldset>
 
       {onCancel ? (

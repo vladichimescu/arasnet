@@ -38,7 +38,7 @@ api.interceptors.response.use(
   },
   async ({ response: { status, data = {} } = {}, config: requestConfig }) => {
     if (status === 401) {
-      if (data.code === "authentication_expired") {
+      if (data.code === "authentication expired") {
         if (isResigning) {
           return new Promise((resolve, reject) => {
             stalledRequestConfigs.push({
@@ -65,9 +65,15 @@ api.interceptors.response.use(
         return api(requestConfig)
       }
 
+      toast.error(data.message)
+
       window.location.href = "/logout"
     } else if (status === 403) {
-      toast.warn(data.message)
+      toast.error(data.message)
+    } else if (status === 400) {
+      Object.values(data)
+        .map(({ message }) => message)
+        .forEach(toast.warn)
     }
 
     NProgress.done()

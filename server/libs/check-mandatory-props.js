@@ -9,8 +9,8 @@ function checkMandatoryProps(obj = {}, mandatoryProps = []) {
       (iProp === "phone" && obj[iProp].length < 10)
     ) {
       errors[iProp] = {
-        code: `${iProp}_required`,
-        message: `${iProp} required`,
+        code: `${iProp} required`,
+        message: `${iProp.charAt(0).toUpperCase()}${iProp.slice(1)} is required`,
       }
     }
   })

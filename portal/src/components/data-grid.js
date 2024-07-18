@@ -2,7 +2,6 @@ import { ModuleRegistry } from "@ag-grid-community/core"
 import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
 import { AgGridReact } from "@ag-grid-community/react"
 import React, { useMemo } from "react"
-import { toast } from "react-toastify"
 
 import { consultationLocations, consultationStatuses } from "@arasnet/types"
 
@@ -238,7 +237,6 @@ async function onCellValueChanged({ api, data, oldValue, context }) {
       ...data,
       status: oldValue,
     })
-    toast.error(`Updating error\nreason: ${err.message}`)
   }
 }
 //#endregion

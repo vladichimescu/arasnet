@@ -24,8 +24,8 @@ function authenticate({ headers: { authorization = "" } = {} }, res, next) {
 
   if (!token) {
     return res.status(401).send({
-      code: "authentication_failed",
-      message: "authentication failed",
+      code: "authentication failed",
+      message: "Authentication has failed",
     })
   }
 
@@ -33,14 +33,14 @@ function authenticate({ headers: { authorization = "" } = {} }, res, next) {
     if (err) {
       if (err.name === "TokenExpiredError") {
         return res.status(401).send({
-          code: "authentication_expired",
-          message: "authentication expired",
+          code: "authentication expired",
+          message: "Authentication has expired",
         })
       }
 
       return res.status(401).send({
-        code: "authentication_failed",
-        message: "authentication failed",
+        code: "authentication failed",
+        message: "Authentication has failed",
       })
     }
 
@@ -52,8 +52,8 @@ function authenticate({ headers: { authorization = "" } = {} }, res, next) {
 
     if (!dbUser) {
       return res.status(401).send({
-        code: "authentication_failed",
-        message: "authentication failed",
+        code: "authentication failed",
+        message: "Authentication has failed",
       })
     }
 
@@ -86,8 +86,8 @@ function authorize(
 
     if (permittedLocations.length === 0) {
       return res.status(403).send({
-        code: "authorization_failed",
-        message: "authorization failed",
+        code: "authorization failed",
+        message: "Authorization has failed",
       })
     }
 
@@ -109,8 +109,8 @@ function authorize(
 
       if (!payloadPermitted) {
         return res.status(403).send({
-          code: "authorization_failed",
-          message: "authorization failed",
+          code: "authorization failed",
+          message: "Authorization has failed",
         })
       }
     }
@@ -135,8 +135,8 @@ function login({ body: employee = {} }, res) {
   if (!dbEmployee) {
     return res.status(400).send({
       email: {
-        code: "email_invalid",
-        message: "email invalid",
+        code: "email invalid",
+        message: "Email is invalid",
       },
     })
   }
@@ -146,8 +146,8 @@ function login({ body: employee = {} }, res) {
   if (!isPasswordValid) {
     return res.status(400).send({
       password: {
-        code: "password_invalid",
-        message: "password invalid",
+        code: "password invalid",
+        message: "Password is invalid",
       },
     })
   }
@@ -173,16 +173,16 @@ function resign({ headers: { authorization = "" } = {} }, res) {
 
   if (!token) {
     return res.status(401).send({
-      code: "authentication_failed",
-      message: "authentication failed",
+      code: "authentication failed",
+      message: "Authentication has failed",
     })
   }
 
   jwt.verify(token, secret, function (err) {
     if (err && err.name !== "TokenExpiredError") {
       return res.status(401).send({
-        code: "authentication_failed",
-        message: "authentication failed",
+        code: "authentication failed",
+        message: "Authentication has failed",
       })
     }
 
