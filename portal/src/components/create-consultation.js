@@ -21,13 +21,11 @@ function CreateConsultation() {
   )
 
   useEffect(() => {
-    const createConsultation = () => {
-      setIsOpened(true)
-    }
-
     const actionId = addAction({
       label: "Create consultation",
-      handler: createConsultation,
+      handler: () => {
+        setIsOpened(true)
+      },
       type: isMobile ? "data-grid" : "top-bar",
     })
 

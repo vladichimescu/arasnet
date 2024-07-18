@@ -14,13 +14,11 @@ function CreateEmployee() {
   const [isOpened, setIsOpened] = useState(false)
 
   useEffect(() => {
-    const createEmployee = () => {
-      setIsOpened(true)
-    }
-
     const actionId = addAction({
       label: "Add employee",
-      handler: createEmployee,
+      handler: () => {
+        setIsOpened(true)
+      },
       type: isMobile ? "data-grid" : "top-bar",
     })
 
