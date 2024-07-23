@@ -1,13 +1,7 @@
 import NProgress from "nprogress"
 import React, { Fragment, Suspense, lazy, useEffect, useState } from "react"
 import ReactDOM from "react-dom/client"
-import {
-  Outlet,
-  Route,
-  RouterProvider,
-  createBrowserRouter,
-  createRoutesFromElements,
-} from "react-router-dom"
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 
 import ActionsProvider, { useActions } from "./components/actions-provider"
@@ -28,26 +22,45 @@ const Home = lazy(() => import("./pages/home"))
 
 NProgress.configure({ showSpinner: false })
 
-const router = createBrowserRouter(
-  createRoutesFromElements(
-    <Fragment>
-      <Route element={<Layout />}>
-        <Route index element={<Home />} />
-
-        {/* <Route path="landing" element={<Landing />} /> */}
-
-        {/* <Route path="dashboard" element={<Dashboard />} /> */}
-        <Route path="consultations" element={<Consultations />} />
-        <Route path="employees" element={<Employees />} />
-
-        <Route path="logout" element={<Logout />} />
-        <Route path="login" element={<Login />} />
-
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Fragment>
-  )
-)
+const router = createBrowserRouter([
+  {
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      // {
+      //   path: "landing",
+      //   element: <Landing />,
+      // },
+      // {
+      //   path: "dashboard",
+      //   element: <Dashboard />,
+      // },
+      {
+        path: "consultations",
+        element: <Consultations />,
+      },
+      {
+        path: "employees",
+        element: <Employees />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "logout",
+        element: <Logout />,
+      },
+      {
+        path: "*",
+        element: <NotFound />,
+      },
+    ],
+  },
+])
 
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
