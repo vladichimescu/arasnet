@@ -25,7 +25,7 @@ const defaultGridColDef = {
 }
 
 const datasource = {
-  getRows: ({
+  getRows: async ({
     startRow: _start,
     endRow: _end,
     successCallback,
@@ -40,37 +40,34 @@ const datasource = {
       context.gridApi.showLoadingOverlay()
     }
 
-    context
-      .read({
+    try {
+      const data = await context.read({
         _start,
         _end,
         _sort,
         _order,
         ...filters,
       })
-      .then(
-        (data) => {
-          successCallback(
-            data,
-            data.length !== pageSize ? _start + data.length : null
-          )
 
-          context.gridApi.hideOverlay()
-
-          if (_start === 0) {
-            if (data.length === 0) {
-              context.gridApi.showNoRowsOverlay()
-            } else {
-              setTimeout(() => context.gridApi.autoSizeAllColumns(), 50)
-            }
-          }
-        },
-        () => {
-          failCallback()
-
-          context.gridApi.hideOverlay()
-        }
+      successCallback(
+        data,
+        data.length !== pageSize ? _start + data.length : null
       )
+
+      context.gridApi.hideOverlay()
+
+      if (_start === 0) {
+        if (data.length === 0) {
+          context.gridApi.showNoRowsOverlay()
+        } else {
+          setTimeout(() => context.gridApi.autoSizeAllColumns(), 50)
+        }
+      }
+    } catch {
+      failCallback()
+
+      context.gridApi.hideOverlay()
+    }
   },
 }
 
