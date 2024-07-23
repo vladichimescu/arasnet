@@ -65,7 +65,7 @@ p,
 pre,
 table,
 ul {
-  &:last-child {
+  &:last-child:not(:first-child) {
     margin-bottom: 0;
   }
 }
