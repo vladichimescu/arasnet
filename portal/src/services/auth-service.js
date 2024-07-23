@@ -24,11 +24,7 @@ const removeToken = () => StorageService.removeItem({ id: authKey })
 const getPermissions = () => StorageService.getItem({ id: permissionsKey })
 
 const getAccessMatrix = () => {
-  const permissions = getPermissions()
-
-  if (!permissions) {
-    return
-  }
+  const permissions = getPermissions() || {}
 
   const access = apis.reduce(
     (acc, api) => ({
