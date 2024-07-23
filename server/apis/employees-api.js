@@ -23,7 +23,9 @@ function create({ body: employee = {} }, res, next) {
 
   const dbEmployeeByEmail = jsonServerDB
     .getState()
-    .employees.find(({ email } = {}) => email === employee.email)
+    .employees.find(
+      ({ email: employeeEmail } = {}) => employeeEmail === employee.email
+    )
 
   if (dbEmployeeByEmail) {
     return res.status(400).send({
@@ -86,7 +88,9 @@ function update(
 
   const dbUser = jsonServerDB
     .getState()
-    .employees.find(({ email } = {}) => email === userEmail)
+    .employees.find(
+      ({ email: employeeEmail } = {}) => employeeEmail === userEmail
+    )
 
   const dbEmployee = jsonServerDB
     .getState()

@@ -48,7 +48,9 @@ function authenticate({ headers: { authorization = "" } = {} }, res, next) {
 
     const dbUser = jsonServerDB
       .getState()
-      .employees.find(({ email } = {}) => email === userEmail)
+      .employees.find(
+        ({ email: employeeEmail } = {}) => employeeEmail === userEmail
+      )
 
     if (!dbUser) {
       return res.status(401).send({
@@ -73,7 +75,9 @@ function authorize(
 
     const dbUser = jsonServerDB
       .getState()
-      .employees.find(({ email } = {}) => email === userEmail)
+      .employees.find(
+        ({ email: employeeEmail } = {}) => employeeEmail === userEmail
+      )
 
     const api = apis.find((path) => originalUrl.startsWith(`/${path}`))
     const action = actions[method]
@@ -127,10 +131,10 @@ function authorize(
   })
 }
 
-function login({ body: employee = {} }, res) {
+function login({ body: { email, password } = {} }, res) {
   const dbEmployee = jsonServerDB
     .getState()
-    .employees.find(({ email } = {}) => email === employee.email)
+    .employees.find(({ email: employeeEmail } = {}) => employeeEmail === email)
 
   if (!dbEmployee) {
     return res.status(400).send({
@@ -141,7 +145,7 @@ function login({ body: employee = {} }, res) {
     })
   }
 
-  const isPasswordValid = dbEmployee.password === employee.password
+  const isPasswordValid = dbEmployee.password === password
 
   if (!isPasswordValid) {
     return res.status(400).send({
@@ -154,11 +158,11 @@ function login({ body: employee = {} }, res) {
 
   const token = jwt.sign(
     {
-      data: employee.email,
+      data: email,
     },
     secret,
     {
-      expiresIn: "1h",
+      expiresIn: "30s",
     }
   )
 
@@ -186,14 +190,15 @@ function resign({ headers: { authorization = "" } = {} }, res) {
       })
     }
 
-    const decodedToken = jwt.decode(token)
+    const { data: userEmail } = jwt.decode(token)
+
     const newToken = jwt.sign(
       {
-        data: decodedToken.data,
+        data: userEmail,
       },
       secret,
       {
-        expiresIn: "1h",
+        expiresIn: "30s",
       }
     )
 
