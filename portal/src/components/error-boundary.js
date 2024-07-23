@@ -12,12 +12,21 @@ class ErrorBoundary extends Component {
     return { error }
   }
 
+  componentDidCatch(error, info) {
+    // TODO: log error system
+  }
+
   render() {
-    if (this.state.error) {
-      return <ErrorFallback error={this.state.error} />
+    const {
+      state: { error },
+      props: { children },
+    } = this
+
+    if (error) {
+      return <ErrorFallback error={error} />
     }
 
-    return this.props.children
+    return children
   }
 }
 
