@@ -1,21 +1,21 @@
-import api from "./api"
+import Api from "./api"
 
 const consultationApiPath = process.env.REACT_APP_SERVER_PATH_CONSULTATIONS
 
 async function create(payload) {
-  return await api.post(consultationApiPath, payload)
+  return await Api.post(consultationApiPath, payload)
 }
 
 async function read(params) {
-  return await api.get(consultationApiPath, { params })
+  return await Api.get(consultationApiPath, { params })
 }
 
 async function update(payload) {
-  return await api.put(consultationApiPath, payload)
+  return await Api.put(consultationApiPath, payload)
 }
 
 async function remove(payload) {
-  return await api.delete(consultationApiPath, payload)
+  return await Api.delete(consultationApiPath, payload)
 }
 
 const ConsultationsApi = {

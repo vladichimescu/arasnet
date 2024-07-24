@@ -202,7 +202,16 @@ function resign({ headers: { authorization = "" } = {} }, res) {
       }
     )
 
-    return res.status(200).send(newToken)
+    const dbUser = jsonServerDB
+      .getState()
+      .employees.find(
+        ({ email: employeeEmail } = {}) => employeeEmail === userEmail
+      )
+
+    return res.status(200).send({
+      token: newToken,
+      permissions: dbUser.permissions,
+    })
   })
 }
 
