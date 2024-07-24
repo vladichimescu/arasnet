@@ -11,8 +11,6 @@ import AuthService from "../services/auth-service"
 import EventService from "../services/event-service"
 import StorageService from "../services/storage-service"
 
-const storageKeys = StorageService.getKeys()
-
 const Context = createContext()
 
 function AuthProvider(props) {
@@ -40,13 +38,13 @@ function AuthProvider(props) {
   }, [])
 
   useEffect(() => {
-    const eventId = EventService.subscribeEvent(
-      `${storageKeys.APP_AUTH_PERMISSIONS}:${EventService.events.UPDATED}`,
+    const eventId = EventService.subscribe(
+      StorageService.keys.APP_AUTH_PERMISSIONS,
       () => setPermissions(AuthService.getAccessMatrix())
     )
 
     return () => {
-      EventService.unsubscribeEvent(eventId)
+      EventService.unsubscribe(eventId)
     }
   }, [])
 

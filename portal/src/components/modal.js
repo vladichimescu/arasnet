@@ -1,14 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { ToastContainer } from "react-toastify"
 
-import { useActions } from "./actions-provider"
+import EventService from "../services/event-service"
 
 function Modal({ children, open, onClose = () => {} }) {
   const ref = useRef()
-
-  const {
-    actions: [toastGlobal],
-  } = useActions("toast-global")
 
   const [isOpened, setIsOpened] = useState(false)
 
@@ -19,10 +15,10 @@ function Modal({ children, open, onClose = () => {} }) {
   }, [onClose])
 
   useEffect(() => {
-    toastGlobal?.handler(!open)
+    EventService.publish("toast-global", !open)
 
     setIsOpened(open)
-  }, [open, toastGlobal])
+  }, [open])
 
   useEffect(() => {
     if (!isOpened) {

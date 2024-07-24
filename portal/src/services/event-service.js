@@ -1,13 +1,6 @@
-const events = {
-  CREATED: "CREATED",
-  READ: "READ",
-  UPDATED: "UPDATED",
-  REMOVED: "REMOVED",
-}
-
 const eventRegistry = {}
 
-function subscribeEvent(id, handler) {
+function subscribe(id, handler) {
   const eventId = crypto.randomUUID()
 
   eventRegistry[eventId] = {
@@ -18,23 +11,20 @@ function subscribeEvent(id, handler) {
   return eventId
 }
 
-function unsubscribeEvent(eventId) {
+function unsubscribe(eventId) {
   delete eventRegistry[eventId]
 }
 
-function publishEvent(id) {
+function publish(id, payload) {
   Object.values(eventRegistry).forEach(({ type, handler }) =>
-    type === id ? handler() : null
+    type === id ? handler(payload) : null
   )
 }
 
 const EventService = {
-  get events() {
-    return events
-  },
-  subscribeEvent,
-  unsubscribeEvent,
-  publishEvent,
+  subscribe,
+  unsubscribe,
+  publish,
 }
 
 export default EventService

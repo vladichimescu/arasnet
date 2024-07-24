@@ -4,13 +4,13 @@ import ReactDOM from "react-dom/client"
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom"
 import { ToastContainer } from "react-toastify"
 
-import ActionsProvider, { useActions } from "./components/actions-provider"
 import AuthProvider from "./components/auth-provider"
 import ErrorBoundary from "./components/error-boundary"
 import Loading from "./components/loading"
 import TopBar from "./components/top-bar"
 import "./index.scss"
 import NotFound from "./pages/not-found"
+import EventService from "./services/event-service"
 
 const Consultations = lazy(() => import("./pages/consultations"))
 const Employees = lazy(() => import("./pages/employees"))
@@ -67,11 +67,9 @@ root.render(
   <React.StrictMode>
     <ErrorBoundary>
       <AuthProvider>
-        <ActionsProvider>
-          <Suspense fallback={<Loading fullPage />}>
-            <RouterProvider router={router} />
-          </Suspense>
-        </ActionsProvider>
+        <Suspense fallback={<Loading fullPage />}>
+          <RouterProvider router={router} />
+        </Suspense>
       </AuthProvider>
     </ErrorBoundary>
   </React.StrictMode>
@@ -79,20 +77,17 @@ root.render(
 
 //#region
 function Layout() {
-  const { addAction, removeAction } = useActions()
-
   const [isToastGlobal, setIsToastGlobal] = useState(true)
 
   useEffect(() => {
-    const actionId = addAction({
-      handler: setIsToastGlobal,
-      type: "toast-global",
+    const eventId = EventService.subscribe("toast-global", (payload) => {
+      setIsToastGlobal(payload)
     })
 
     return () => {
-      removeAction(actionId)
+      EventService.unsubscribe(eventId)
     }
-  }, [addAction, removeAction])
+  }, [])
 
   return (
     <Fragment>

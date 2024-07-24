@@ -2,26 +2,25 @@ import { locations } from "@arasnet/types"
 
 import StorageService from "./storage-service"
 
-const storageKeys = StorageService.getKeys()
-const authKey = storageKeys.APP_AUTH_JWT
-const permissionsKey = storageKeys.APP_AUTH_PERMISSIONS
-
 const apis = [
   process.env.REACT_APP_SERVER_PATH_EMPLOYEES,
   process.env.REACT_APP_SERVER_PATH_CONSULTATIONS,
 ]
 const actions = ["create", "read", "update", "delete"]
 
-const getToken = () => StorageService.getItem({ id: authKey })
+const getToken = () =>
+  StorageService.getItem({ id: StorageService.keys.APP_AUTH_JWT })
 
 const getAuthHeader = () => `Bearer ${getToken()}`
 
 const saveToken = (token) =>
-  StorageService.setItem({ id: authKey, data: token })
+  StorageService.setItem({ id: StorageService.keys.APP_AUTH_JWT, data: token })
 
-const removeToken = () => StorageService.removeItem({ id: authKey })
+const removeToken = () =>
+  StorageService.removeItem({ id: StorageService.keys.APP_AUTH_JWT })
 
-const getPermissions = () => StorageService.getItem({ id: permissionsKey })
+const getPermissions = () =>
+  StorageService.getItem({ id: StorageService.keys.APP_AUTH_PERMISSIONS })
 
 const getAccessMatrix = () => {
   const permissions = getPermissions() || {}
@@ -52,10 +51,13 @@ const getAccessMatrix = () => {
 }
 
 const savePermissions = (permissions) =>
-  StorageService.setItem({ id: permissionsKey, data: permissions })
+  StorageService.setItem({
+    id: StorageService.keys.APP_AUTH_PERMISSIONS,
+    data: permissions,
+  })
 
 const removePermissions = () =>
-  StorageService.removeItem({ id: permissionsKey })
+  StorageService.removeItem({ id: StorageService.keys.APP_AUTH_PERMISSIONS })
 
 const AuthService = {
   getToken,

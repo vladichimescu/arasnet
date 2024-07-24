@@ -1,17 +1,27 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 
-import { useActions } from "./actions-provider"
+import ActionService from "../services/action-service"
+import EventService from "../services/event-service"
+
 import { useAuth } from "./auth-provider"
 
 const isMobile = navigator.maxTouchPoints > 0
 
 const TopBar = () => {
-  const { isLogged, canReadConsultations, canReadEmployees } = useAuth()
-  const { actions } = useActions("top-bar")
-
   const navigate = useNavigate()
+
   const { pathname } = useLocation()
+
+  const { isLogged, canReadConsultations, canReadEmployees } = useAuth()
+
+  const [actions, setActions] = useState(ActionService.actions)
+
+  useEffect(() => {
+    EventService.subscribe("actions", () => {
+      setActions(ActionService.actions.filter(({ type }) => type === "top-bar"))
+    })
+  }, [])
 
   if (isMobile) {
     return (

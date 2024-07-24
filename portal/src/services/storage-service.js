@@ -1,18 +1,18 @@
 import EventService from "./event-service"
 
-const appStorageKeyPrefix = "__arasnet__"
-const vwoStorageKeyPrefix = "__vwo__"
-const trackingStorageKeyPrefix = "__tracking__"
+const appKeyPrefix = "__arasnet__"
+const vwoKeyPrefix = "__vwo__"
+const trackingKeyPrefix = "__tracking__"
 
 const storageKeys = {
-  APP_AUTH_JWT: `${appStorageKeyPrefix}.auth_jwt`,
-  APP_AUTH_PERMISSIONS: `${appStorageKeyPrefix}.auth_permissions`,
-  APP_TERMS_AND_CONDITIONS_DISMISSED: `${appStorageKeyPrefix}.terms_and_conditions-dismissed`,
-  APP_CONTACT_SERVICE_USAGE_DISMISSED: `${appStorageKeyPrefix}.contact.service_usage-dismissed`,
+  APP_AUTH_JWT: `${appKeyPrefix}__auth_jwt`,
+  APP_AUTH_PERMISSIONS: `${appKeyPrefix}__auth_permissions`,
+  APP_TERMS_AND_CONDITIONS_DISMISSED: `${appKeyPrefix}__terms_and_conditions--dismissed`,
+  APP_CONTACT_SERVICE_USAGE_DISMISSED: `${appKeyPrefix}__contact_service_usage--dismissed`,
 
-  TRACKING_PAGES: `${trackingStorageKeyPrefix}.tracking.pages`,
+  TRACKING_PAGES: `${trackingKeyPrefix}__tracking_pages`,
 
-  VWO_THEME_VARIANT: `${vwoStorageKeyPrefix}.theme_variant`,
+  VWO_THEME_VARIANT: `${vwoKeyPrefix}__theme_variant`,
 }
 
 // TODO: add cookie support
@@ -20,10 +20,6 @@ const storageTypes = {
   LOCAL: "localStorage",
   SESSION: "sessionStorage",
 }
-
-const getKeys = () => storageKeys
-
-const getTypes = () => storageTypes
 
 const getItem = ({ id, storageType = storageTypes.LOCAL }) => {
   const data =
@@ -41,20 +37,13 @@ const getItem = ({ id, storageType = storageTypes.LOCAL }) => {
 }
 
 const setItem = ({ id, data: payload, storageType = storageTypes.LOCAL }) => {
-  const storageData = window[storageType][id]
   const data = typeof payload === "string" ? payload : JSON.stringify(payload)
 
   storageType instanceof Array
     ? storageType.forEach((storage) => window[storage].setItem(id, data))
     : window[storageType].setItem(id, data)
 
-  if (data !== storageData) {
-    if (storageData) {
-      EventService.publishEvent(`${id}:${EventService.events.UPDATED}`)
-    } else {
-      EventService.publishEvent(`${id}:${EventService.events.CREATED}`)
-    }
-  }
+  EventService.publish(id)
 }
 
 const removeItem = ({ id, storageType = storageTypes.LOCAL }) => {
@@ -68,8 +57,12 @@ const removeAll = ({ storageType = storageTypes.LOCAL }) => {
 }
 
 const StorageService = {
-  getTypes,
-  getKeys,
+  get types() {
+    return storageTypes
+  },
+  get keys() {
+    return storageKeys
+  },
   getItem,
   setItem,
   removeItem,

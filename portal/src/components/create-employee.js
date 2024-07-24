@@ -1,31 +1,29 @@
 import React, { useEffect, useState } from "react"
 
 import EmployeesApi from "../apis/employees-api"
+import ActionService from "../services/action-service"
 
-import { useActions } from "./actions-provider"
 import Form from "./form/form"
 import Modal from "./modal"
 
 const isMobile = navigator.maxTouchPoints > 0
 
 function CreateEmployee() {
-  const { addAction, removeAction } = useActions()
-
   const [isOpened, setIsOpened] = useState(false)
 
   useEffect(() => {
-    const actionId = addAction({
-      label: "Add employee",
-      handler: () => {
+    const actionId = ActionService.create(
+      isMobile ? "data-grid" : "top-bar",
+      () => {
         setIsOpened(true)
       },
-      type: isMobile ? "data-grid" : "top-bar",
-    })
+      "Add employee"
+    )
 
     return () => {
-      removeAction(actionId)
+      ActionService.remove(actionId)
     }
-  }, [addAction, removeAction])
+  }, [])
 
   return (
     <Modal

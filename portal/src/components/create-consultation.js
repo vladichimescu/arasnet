@@ -3,16 +3,14 @@ import React, { useEffect, useState } from "react"
 import { consultationLocations } from "@arasnet/types"
 
 import ConsultationsApi from "../apis/consultations-api"
+import ActionService from "../services/action-service"
 
-import { useActions } from "./actions-provider"
 import Form from "./form/form"
 import Modal from "./modal"
 
 const isMobile = navigator.maxTouchPoints > 0
 
 function CreateConsultation() {
-  const { addAction, removeAction } = useActions()
-
   const [isOpened, setIsOpened] = useState(false)
 
   const minDatetimeLocal = new Date()
@@ -21,18 +19,18 @@ function CreateConsultation() {
   )
 
   useEffect(() => {
-    const actionId = addAction({
-      label: "Create consultation",
-      handler: () => {
+    const actionId = ActionService.create(
+      isMobile ? "data-grid" : "top-bar",
+      () => {
         setIsOpened(true)
       },
-      type: isMobile ? "data-grid" : "top-bar",
-    })
+      "Create consultation"
+    )
 
     return () => {
-      removeAction(actionId)
+      ActionService.remove(actionId)
     }
-  }, [addAction, removeAction])
+  }, [])
 
   return (
     <Modal

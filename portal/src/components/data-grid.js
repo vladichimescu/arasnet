@@ -1,11 +1,12 @@
 import { ModuleRegistry } from "@ag-grid-community/core"
 import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
 import { AgGridReact } from "@ag-grid-community/react"
-import React, { useMemo } from "react"
+import React, { useEffect, useState } from "react"
 
 import { consultationLocations, consultationStatuses } from "@arasnet/types"
 
-import { useActions } from "./actions-provider"
+import ActionService from "../services/action-service"
+import EventService from "../services/event-service"
 
 import "@ag-grid-community/styles/ag-grid.css"
 import "@ag-grid-community/styles/ag-theme-quartz.css"
@@ -77,14 +78,19 @@ function DataGrid({
   getRowId = getGridRowId,
   context,
 }) {
-  const { actions } = useActions("data-grid")
+  const [actions, setActions] = useState(ActionService.actions)
 
   columnDefs[0].cellRenderer = LoadingCell
 
-  const pinnedBottomRowData = useMemo(
-    () => actions.map((action) => ({ ...action, fullWidth: true })),
-    [actions]
-  )
+  useEffect(() => {
+    EventService.subscribe("actions", () => {
+      setActions(
+        ActionService.actions
+          .filter(({ type }) => type === "data-grid")
+          .map((action) => ({ ...action, fullWidth: true }))
+      )
+    })
+  }, [])
 
   return (
     <AgGridReact
@@ -92,7 +98,7 @@ function DataGrid({
       suppressMenuHide
       columnDefs={columnDefs}
       defaultColDef={defaultColDef}
-      pinnedBottomRowData={pinnedBottomRowData}
+      pinnedBottomRowData={actions}
       isFullWidthRow={isFullWidthRow}
       fullWidthCellRenderer={ActionButton}
       context={context}
