@@ -1,3 +1,5 @@
+import EventService from "./event-service"
+
 const appStorageKeyPrefix = "__arasnet__"
 const vwoStorageKeyPrefix = "__vwo__"
 const trackingStorageKeyPrefix = "__tracking__"
@@ -39,11 +41,20 @@ const getItem = ({ id, storageType = storageTypes.LOCAL }) => {
 }
 
 const setItem = ({ id, data: payload, storageType = storageTypes.LOCAL }) => {
+  const storageData = window[storageType][id]
   const data = typeof payload === "string" ? payload : JSON.stringify(payload)
 
   storageType instanceof Array
     ? storageType.forEach((storage) => window[storage].setItem(id, data))
     : window[storageType].setItem(id, data)
+
+  if (data !== storageData) {
+    if (storageData) {
+      EventService.publishEvent(`${id}:${EventService.events.UPDATED}`)
+    } else {
+      EventService.publishEvent(`${id}:${EventService.events.CREATED}`)
+    }
+  }
 }
 
 const removeItem = ({ id, storageType = storageTypes.LOCAL }) => {

@@ -1,7 +1,17 @@
-import React, { createContext, useCallback, useContext, useState } from "react"
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from "react"
 
 import AuthApi from "../apis/auth-api"
 import AuthService from "../services/auth-service"
+import EventService from "../services/event-service"
+import StorageService from "../services/storage-service"
+
+const storageKeys = StorageService.getKeys()
 
 const Context = createContext()
 
@@ -27,6 +37,17 @@ function AuthProvider(props) {
     setPermissions(AuthService.getAccessMatrix())
 
     setIsLogged(false)
+  }, [])
+
+  useEffect(() => {
+    const eventId = EventService.subscribeEvent(
+      `${storageKeys.APP_AUTH_PERMISSIONS}:${EventService.events.UPDATED}`,
+      () => setPermissions(AuthService.getAccessMatrix())
+    )
+
+    return () => {
+      EventService.unsubscribeEvent(eventId)
+    }
   }, [])
 
   return (
