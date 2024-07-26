@@ -1,10 +1,8 @@
 import React from "react"
 import { Navigate } from "react-router-dom"
 
-import { useAuth } from "../../components/auth-provider"
-import Form from "../../components/form/form"
-
-import styles from "./login.module.scss"
+import { useAuth } from "../components/auth-provider"
+import Form from "../components/form/form"
 
 function Login() {
   const { isLogged, login } = useAuth()
@@ -15,12 +13,23 @@ function Login() {
 
   return (
     <Form
-      className={styles.form}
+      style={{
+        alignSelf: "center",
+        marginLeft: "auto",
+        marginRight: "auto",
+        width: "min(90vw, 400px)",
+      }}
       onSubmit={login}
       heading={
         <h1>
           ARAS<small>NET</small>
-          <small>ADMIN</small>
+          <small
+            style={{
+              marginLeft: "auto",
+            }}
+          >
+            ADMIN
+          </small>
         </h1>
       }
       inputs={[

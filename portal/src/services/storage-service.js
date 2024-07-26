@@ -21,13 +21,11 @@ const storageTypes = {
   SESSION: "sessionStorage",
 }
 
-const getItem = ({ id, storageType = storageTypes.LOCAL }) => {
+function getItem({ id, type = storageTypes.LOCAL }) {
   const data =
-    storageType instanceof Array
-      ? window[
-          storageType.find((storage) => window[storage].getItem(id))
-        ]?.getItem(id)
-      : window[storageType].getItem(id)
+    type instanceof Array
+      ? window[type.find((storage) => window[storage].getItem(id))]?.getItem(id)
+      : window[type].getItem(id)
 
   try {
     return JSON.parse(data)
@@ -36,24 +34,24 @@ const getItem = ({ id, storageType = storageTypes.LOCAL }) => {
   }
 }
 
-const setItem = ({ id, data: payload, storageType = storageTypes.LOCAL }) => {
+function setItem({ id, data: payload, type = storageTypes.LOCAL }) {
   const data = typeof payload === "string" ? payload : JSON.stringify(payload)
 
-  storageType instanceof Array
-    ? storageType.forEach((storage) => window[storage].setItem(id, data))
-    : window[storageType].setItem(id, data)
+  type instanceof Array
+    ? type.forEach((storage) => window[storage].setItem(id, data))
+    : window[type].setItem(id, data)
 
   EventService.publish(id)
 }
 
-const removeItem = ({ id, storageType = storageTypes.LOCAL }) => {
-  storageType instanceof Array
-    ? storageType.forEach((storage) => window[storage].removeItem(id))
-    : window[storageType].removeItem(id)
+function removeItem({ id, type = storageTypes.LOCAL }) {
+  type instanceof Array
+    ? type.forEach((storage) => window[storage].removeItem(id))
+    : window[type].removeItem(id)
 }
 
-const removeAll = ({ storageType = storageTypes.LOCAL }) => {
-  Object.values(storageKeys).forEach((id) => removeItem({ id, storageType }))
+function removeAll({ type = storageTypes.LOCAL }) {
+  Object.values(storageKeys).forEach((id) => removeItem({ id, type }))
 }
 
 const StorageService = {

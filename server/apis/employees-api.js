@@ -1,21 +1,17 @@
 import jwt from "jsonwebtoken"
 
-import { locations } from "@arasnet/types"
+import { validateRequiredFields } from "@arasnet/functions"
+import {
+  apiActions,
+  apiEndpoints,
+  employeeRequiredFields,
+  locations,
+} from "@arasnet/types"
 
 import jsonServerDB from "../index.js"
-import { checkMandatoryProps } from "../libs/check-mandatory-props.js"
-
-const employeeMandatoryFields = process.env.EMPLOYEE_MANDATORY_FIELDS.split(",")
-
-const apis = [
-  process.env.SERVER_PATH_EMPLOYEES,
-  process.env.SERVER_PATH_CONSULTATIONS,
-]
-
-const actions = ["create", "read", "update", "delete"]
 
 function create({ body: employee = {} }, res, next) {
-  const errors = checkMandatoryProps(employee, employeeMandatoryFields)
+  const errors = validateRequiredFields(employee, employeeRequiredFields)
 
   if (Object.keys(errors).length) {
     return res.status(400).send(errors)
@@ -53,7 +49,7 @@ function create({ body: employee = {} }, res, next) {
     employee.permissions = Object.keys(locations).reduce(
       (acc, location) => ({
         ...acc,
-        [location]: apis.reduce(
+        [location]: apiEndpoints.reduce(
           (acc, api) => ({
             ...acc,
             [api]: [],
@@ -77,7 +73,7 @@ function update(
   res,
   next
 ) {
-  const errors = checkMandatoryProps(employee, employeeMandatoryFields)
+  const errors = validateRequiredFields(employee, employeeRequiredFields)
 
   if (Object.keys(errors).length) {
     return res.status(400).send(errors)
@@ -99,10 +95,10 @@ function update(
   employee.permissions = Object.keys(locations).reduce(
     (acc, location) => ({
       ...acc,
-      [location]: apis.reduce(
+      [location]: apiEndpoints.reduce(
         (acc, api) => ({
           ...acc,
-          [api]: actions.reduce((acc, action) => {
+          [api]: apiActions.reduce((acc, action) => {
             if (dbUser.permissions[location]?.[api]?.includes(action)) {
               if (!employee.permissions[location]?.[api]?.includes(action)) {
                 return acc.filter((item) => item !== action)
@@ -121,15 +117,6 @@ function update(
     }),
     {}
   )
-
-  // const isPermissionExceeded = !Object.entries(employee.permissions).every(
-  //   ([location, apis]) =>
-  //     Object.entries(apis).every(([api, actions]) =>
-  //       actions.every((action) =>
-  //         dbUser.permissions[location][api].includes(action)
-  //       )
-  //     )
-  // )
 
   next()
 }

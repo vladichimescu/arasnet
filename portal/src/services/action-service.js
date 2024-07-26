@@ -11,7 +11,7 @@ function create(id, handler, label) {
     label,
   }
 
-  EventService.publish("actions")
+  EventService.publish("actions", Object.values(actionRegistry))
 
   return actionId
 }
@@ -19,7 +19,7 @@ function create(id, handler, label) {
 function remove(actionId) {
   delete actionRegistry[actionId]
 
-  EventService.publish("actions")
+  EventService.publish("actions", Object.values(actionRegistry))
 }
 
 const ActionService = {

@@ -3,7 +3,7 @@ import React, { useEffect } from "react"
 
 import classes from "./loading.module.scss"
 
-function Loading({ fullPage, isLoading = true }) {
+function Loading({ isLoading = true }) {
   useEffect(() => {
     NProgress.start()
 
@@ -16,16 +16,18 @@ function Loading({ fullPage, isLoading = true }) {
     return null
   }
 
-  if (fullPage) {
-    return (
-      <div className={classes.fullPage}>
-        <div className={classes.backdrop} />
-        <div className={classes.loader} />
-      </div>
-    )
-  }
-
-  return <div className={classes.loader} />
+  return (
+    <div className={classes.loading}>
+      <h1>Loading</h1>
+      <section>
+        <small>updating modules</small>
+        <small>generating structure</small>
+        <small>loading api data</small>
+        <small>processing models</small>
+        <small>rendering ui views</small>
+      </section>
+    </div>
+  )
 }
 
 export default Loading

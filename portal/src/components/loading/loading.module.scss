@@ -1,48 +1,63 @@
-.fullPage {
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
+@use "sass:math";
 
-.backdrop {
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
-}
+$small-elements: 5;
 
-.loader {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 120px;
-  height: 60px;
-  padding: 10px;
-  box-sizing: border-box;
-  display: flex;
-  justify-content: space-between;
-  background: #fff;
-  filter: blur(5px) contrast(10) hue-rotate(60deg);
-  mix-blend-mode: darken;
+.loading {
+  flex: 1;
+  max-width: 90%;
+  align-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
 
-  &:before,
-  &:after {
-    content: "";
-    width: 40px;
-    border-radius: 50%;
-    background: #ff00ff;
-    animation: l3 1s infinite alternate;
+  h1 {
+    animation: fade 2s infinite;
   }
 
-  &:after {
-    --s: -1;
+  section {
+    position: relative;
+    height: 1.5em;
+  }
+
+  small {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -100%;
+    opacity: 0;
+    animation: slide-down #{$small-elements}s infinite;
+  }
+
+  @for $i from 0 to $small-elements {
+    small:nth-child(#{$i + 1}) {
+      animation-delay: #{$i}s;
+    }
   }
 }
 
-@keyframes l3 {
-  90%,
+@keyframes fade {
+  0%,
   100% {
-    transform: translate(calc(var(--s, 1) * 30px));
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-down {
+  0% {
+    opacity: 0;
+    top: -100%;
+  }
+
+  #{math.div(100%, $small-elements) - 1%} {
+    opacity: 1;
+  }
+
+  #{math.div(100%, $small-elements)} {
+    opacity: 0;
+    top: 0;
   }
 }

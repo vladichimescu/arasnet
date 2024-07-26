@@ -8,9 +8,6 @@ import { consultationLocations, consultationStatuses } from "@arasnet/types"
 import ActionService from "../services/action-service"
 import EventService from "../services/event-service"
 
-import "@ag-grid-community/styles/ag-grid.css"
-import "@ag-grid-community/styles/ag-theme-quartz.css"
-
 ModuleRegistry.registerModules([InfiniteRowModelModule])
 
 const pageSize = 20
@@ -50,6 +47,10 @@ const datasource = {
         ...filters,
       })
 
+      if (context.gridApi.isDestroyed()) {
+        return
+      }
+
       successCallback(
         data,
         data.length !== pageSize ? _start + data.length : null
@@ -61,10 +62,16 @@ const datasource = {
         if (data.length === 0) {
           context.gridApi.showNoRowsOverlay()
         } else {
-          setTimeout(() => context.gridApi.autoSizeAllColumns(), 50)
+          setTimeout(() => {
+            context.gridApi.autoSizeAllColumns()
+          }, 50)
         }
       }
     } catch {
+      if (context.gridApi.isDestroyed()) {
+        return
+      }
+
       failCallback()
 
       context.gridApi.hideOverlay()
@@ -83,9 +90,9 @@ function DataGrid({
   columnDefs[0].cellRenderer = LoadingCell
 
   useEffect(() => {
-    EventService.subscribe("actions", () => {
+    EventService.subscribe("actions", (actions) => {
       setActions(
-        ActionService.actions
+        actions
           .filter(({ type }) => type === "data-grid")
           .map((action) => ({ ...action, fullWidth: true }))
       )
@@ -193,6 +200,12 @@ function ActionButton({ data: { label, handler } = {} }) {
   return (
     <button
       type="button"
+      style={{
+        borderRadius: 0,
+        width: "100%",
+        height: "100%",
+        textAlign: "center",
+      }}
       className="full-width-cell-renderer"
       onClick={handler}
     >

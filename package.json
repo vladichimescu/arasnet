@@ -21,11 +21,11 @@
     "serve": "yarn workspaces foreach --all --parallel run serve"
   },
   "engines": {
-    "node": "20.15.1",
+    "node": "20.16.0",
     "yarn": "4.3.1"
   },
   "volta": {
-    "node": "20.15.1",
+    "node": "20.16.0",
     "yarn": "4.3.1"
   },
   "prettier": {

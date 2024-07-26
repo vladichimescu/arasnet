@@ -1,13 +1,13 @@
-import { locations } from "@arasnet/types"
+import { validateRequiredFields } from "@arasnet/functions"
+import { consultationRequiredFields, locations } from "@arasnet/types"
 
 import jsonServerDB from "../index.js"
-import { checkMandatoryProps } from "../libs/check-mandatory-props.js"
-
-const consultationMandatoryFields =
-  process.env.CONSULTATION_MANDATORY_FIELDS.split(",")
 
 function create({ body: consultation = {} }, res, next) {
-  const errors = checkMandatoryProps(consultation, consultationMandatoryFields)
+  const errors = validateRequiredFields(
+    consultation,
+    consultationRequiredFields
+  )
 
   if (Object.keys(errors).length) {
     return res.status(400).send(errors)
@@ -60,7 +60,10 @@ function read({ body: consultation = {}, query }, res, next) {
 }
 
 function update({ body: consultation = {} }, res, next) {
-  const errors = checkMandatoryProps(consultation, consultationMandatoryFields)
+  const errors = validateRequiredFields(
+    consultation,
+    consultationRequiredFields
+  )
 
   if (Object.keys(errors).length) {
     return res.status(400).send(errors)

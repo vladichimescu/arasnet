@@ -21,7 +21,8 @@ const columnDefs = [
   },
   {
     headerName: "Name",
-    valueGetter: ({ data: { first, last } = {} }) => `${first} ${last}`,
+    valueGetter: ({ data: { first, last } = {} }) =>
+      `${first || ""} ${last || ""} `.trim(),
   },
   {
     field: "email",
@@ -78,7 +79,9 @@ function PermissionsButton({ data }) {
       <button
         type="button"
         className="button-outline button-small"
-        onClick={() => setIsOpened(true)}
+        onClick={() => {
+          setIsOpened(true)
+        }}
       >
         Permissions
       </button>
@@ -86,7 +89,9 @@ function PermissionsButton({ data }) {
       {isOpened ? (
         <UpdatePermissions
           open={isOpened}
-          onClose={() => setIsOpened(false)}
+          onClose={() => {
+            setIsOpened(false)
+          }}
           employee={data}
         />
       ) : null}

@@ -7,8 +7,11 @@ import { ToastContainer } from "react-toastify"
 import AuthProvider from "./components/auth-provider"
 import ErrorBoundary from "./components/error-boundary"
 import Loading from "./components/loading"
-import TopBar from "./components/top-bar"
+import NavBar from "./components/nav-bar"
 import "./index.scss"
+import Home from "./pages/home"
+import Login from "./pages/login"
+import Logout from "./pages/logout"
 import NotFound from "./pages/not-found"
 import EventService from "./services/event-service"
 
@@ -16,9 +19,6 @@ const Consultations = lazy(() => import("./pages/consultations"))
 const Employees = lazy(() => import("./pages/employees"))
 // const Dashboard = lazy(() => import("./pages/dashboard"))
 // const Landing = lazy(() => import("./pages/landing"))
-const Login = lazy(() => import("./pages/login"))
-const Logout = lazy(() => import("./pages/logout"))
-const Home = lazy(() => import("./pages/home"))
 
 NProgress.configure({ showSpinner: false })
 
@@ -67,9 +67,7 @@ root.render(
   <React.StrictMode>
     <ErrorBoundary>
       <AuthProvider>
-        <Suspense fallback={<Loading fullPage />}>
-          <RouterProvider router={router} />
-        </Suspense>
+        <RouterProvider router={router} />
       </AuthProvider>
     </ErrorBoundary>
   </React.StrictMode>
@@ -95,11 +93,13 @@ function Layout() {
         <ToastContainer autoClose={3500} closeOnClick position="top-center" />
       ) : null}
 
-      <TopBar />
+      <NavBar />
 
-      <main>
-        <Outlet />
-      </main>
+      <Suspense fallback={<Loading />}>
+        <main>
+          <Outlet />
+        </main>
+      </Suspense>
     </Fragment>
   )
 }

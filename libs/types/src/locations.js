@@ -1,11 +1,15 @@
-const locations = {
+const configured = (
+  process.env.LOCATIONS || process.env.REACT_APP_LOCATIONS
+)?.split(",")
+
+const data = {
   "0d9625c8-f9bd-4b0c-9de5-960fff50b30c": {
     label: "PrEPpoint ARAS București",
     city: "București",
     address: "Str. Ocolului nr. 20",
     phone: "+40751010539",
     email: "preppoint@arasnet.ro",
-    // businessHours: "day hours:minutes hours:minutes" UTC
+    // businessHours: "day (start)hours:minutes (end)hours:minutes" UTC
     businessHours: ["2 14:00 18:00"],
     services: ["prep"],
   },
@@ -42,5 +46,18 @@ const locations = {
     services: ["consultation"],
   },
 }
+
+const locations = configured
+  ? configured.reduce(
+      (acc, id) =>
+        data[id]
+          ? {
+              ...acc,
+              [id]: data[id],
+            }
+          : acc,
+      {}
+    )
+  : data
 
 export default locations

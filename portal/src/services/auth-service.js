@@ -1,34 +1,37 @@
-import { locations } from "@arasnet/types"
+import { toCamelCase } from "@arasnet/functions"
+import { apiActions, apiEndpoints, locations } from "@arasnet/types"
 
 import StorageService from "./storage-service"
 
-const apis = [
-  process.env.REACT_APP_SERVER_PATH_EMPLOYEES,
-  process.env.REACT_APP_SERVER_PATH_CONSULTATIONS,
-]
-const actions = ["create", "read", "update", "delete"]
+function getToken() {
+  return StorageService.getItem({
+    id: StorageService.keys.APP_AUTH_JWT,
+  })
+}
 
-const getToken = () =>
-  StorageService.getItem({ id: StorageService.keys.APP_AUTH_JWT })
+function saveToken(token) {
+  StorageService.setItem({
+    id: StorageService.keys.APP_AUTH_JWT,
+    data: token,
+  })
+}
 
-const getAuthHeader = () => `Bearer ${getToken()}`
+function removeToken() {
+  StorageService.removeItem({
+    id: StorageService.keys.APP_AUTH_JWT,
+  })
+}
 
-const saveToken = (token) =>
-  StorageService.setItem({ id: StorageService.keys.APP_AUTH_JWT, data: token })
+function getPermissions() {
+  const permissions =
+    StorageService.getItem({
+      id: StorageService.keys.APP_AUTH_PERMISSIONS,
+    }) || {}
 
-const removeToken = () =>
-  StorageService.removeItem({ id: StorageService.keys.APP_AUTH_JWT })
-
-const getPermissions = () =>
-  StorageService.getItem({ id: StorageService.keys.APP_AUTH_PERMISSIONS })
-
-const getAccessMatrix = () => {
-  const permissions = getPermissions() || {}
-
-  const access = apis.reduce(
+  const access = apiEndpoints.reduce(
     (acc, api) => ({
       ...acc,
-      ...actions.reduce(
+      ...apiActions.reduce(
         (acc, action) => ({
           ...acc,
           [toCamelCase(`can ${action} ${api}`)]:
@@ -50,35 +53,26 @@ const getAccessMatrix = () => {
   }
 }
 
-const savePermissions = (permissions) =>
+function savePermissions(permissions) {
   StorageService.setItem({
     id: StorageService.keys.APP_AUTH_PERMISSIONS,
     data: permissions,
   })
+}
 
-const removePermissions = () =>
-  StorageService.removeItem({ id: StorageService.keys.APP_AUTH_PERMISSIONS })
+function removePermissions() {
+  StorageService.removeItem({
+    id: StorageService.keys.APP_AUTH_PERMISSIONS,
+  })
+}
 
 const AuthService = {
   getToken,
-  getAuthHeader,
   saveToken,
   removeToken,
   getPermissions,
-  getAccessMatrix,
   savePermissions,
   removePermissions,
 }
 
 export default AuthService
-
-//#region
-function toCamelCase(string, delimiter = " ") {
-  return string
-    .split(delimiter)
-    .map((word, index) =>
-      index === 0 ? word : `${word[0].toUpperCase()}${word.slice(1)}`
-    )
-    .join("")
-}
-//#endregion

@@ -2,11 +2,11 @@ import axios from "axios"
 import NProgress from "nprogress"
 import { toast } from "react-toastify"
 
+import { apiServerUrl } from "@arasnet/types"
+
 import AuthService from "../services/auth-service"
 
 import AuthApi from "./auth-api"
-
-const apiServerUrl = process.env.REACT_APP_SERVER_URL
 
 const Api = axios.create({
   baseURL: apiServerUrl,
@@ -22,7 +22,7 @@ export default Api
 function interceptRequestSuccess(config) {
   NProgress.start()
 
-  config.headers.authorization = AuthService.getAuthHeader()
+  config.headers.authorization = `Bearer ${AuthService.getToken()}`
 
   return config
 }

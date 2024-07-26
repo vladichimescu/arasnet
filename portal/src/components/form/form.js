@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react"
 import PhoneInput from "react-phone-input-2"
+import { toast } from "react-toastify"
 
 import styles from "./form.module.scss"
 
 function Form({
   className,
+  style,
   heading,
   content,
   footer,
@@ -14,15 +16,23 @@ function Form({
 }) {
   const focusRef = useRef()
 
-  const [errors, setErrors] = useState()
+  const [errors, setErrors] = useState(null)
+
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+
+    toast.dismiss()
+    setErrors(null)
+    setIsSubmitting(true)
 
     try {
       await onSubmit(Object.fromEntries(new FormData(event.target)))
     } catch (err) {
       setErrors(err)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -31,7 +41,11 @@ function Form({
   }, [])
 
   return (
-    <form onSubmit={handleSubmit} className={`${styles.form} ${className}`}>
+    <form
+      onSubmit={handleSubmit}
+      className={`${styles.form} ${className}`}
+      style={style}
+    >
       {heading}
 
       {inputs?.map(({ type, label, name, list, ...props }) => (
@@ -39,6 +53,10 @@ function Form({
           <label htmlFor={name}>{label}</label>
           {type === "phone-input" ? (
             <PhoneInput
+              enableSearch={true}
+              country="ro"
+              autoFormat={false}
+              disableSearchIcon={true}
               {...props}
               inputProps={{
                 id: name,
@@ -70,11 +88,20 @@ function Form({
 
       {content}
 
-      <fieldset style={{ marginBottom: 0 }}>
-        {onSubmit ? <button type="submit">Submit</button> : null}
+      {onSubmit ? (
+        <fieldset style={{ marginBottom: 0 }}>
+          <button
+            type="submit"
+            className={isSubmitting ? "isLoading" : null}
+            // className="isLoading"
+            disabled={isSubmitting}
+          >
+            Submit
+          </button>
 
-        <small>{errors?.code}</small>
-      </fieldset>
+          <small>{errors?.code}</small>
+        </fieldset>
+      ) : null}
 
       {onCancel ? (
         <button
@@ -82,7 +109,9 @@ function Form({
           type="button"
           className="button-outline"
           value="cancel"
-          onClick={() => onCancel()}
+          onClick={() => {
+            onCancel()
+          }}
         >
           Cancel
         </button>

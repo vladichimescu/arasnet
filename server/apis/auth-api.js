@@ -1,22 +1,17 @@
 import jwt from "jsonwebtoken"
 
-import { locations } from "@arasnet/types"
+import { apiEndpoints, locations } from "@arasnet/types"
 
 import jsonServerDB from "../index.js"
 
 const secret = process.env.SECRET
 
-const apis = [
-  process.env.SERVER_PATH_EMPLOYEES,
-  process.env.SERVER_PATH_CONSULTATIONS,
-]
-
 const actions = {
-  GET: "read",
   POST: "create",
+  GET: "read",
   PUT: "update",
-  DELETE: "delete",
   PATCH: "update",
+  DELETE: "remove",
 }
 
 function authenticate({ headers: { authorization = "" } = {} }, res, next) {
@@ -79,7 +74,7 @@ function authorize(
         ({ email: employeeEmail } = {}) => employeeEmail === userEmail
       )
 
-    const api = apis.find((path) => originalUrl.startsWith(`/${path}`))
+    const api = apiEndpoints.find((path) => originalUrl.startsWith(`/${path}`))
     const action = actions[method]
 
     const permittedLocations = Object.keys(dbUser.permissions).filter(

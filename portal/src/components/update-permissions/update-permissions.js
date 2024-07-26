@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 
-import { locations } from "@arasnet/types"
+import { apiActions, apiEndpoints, locations } from "@arasnet/types"
 
 import EmployeesApi from "../../apis/employees-api"
 import { useAuth } from "../auth-provider"
@@ -8,12 +8,6 @@ import Form from "../form/form"
 import Modal from "../modal"
 
 import styles from "./update-permissions.module.scss"
-
-const apis = [
-  process.env.REACT_APP_SERVER_PATH_EMPLOYEES,
-  process.env.REACT_APP_SERVER_PATH_CONSULTATIONS,
-]
-const actions = ["create", "read", "update", "delete"]
 
 function UpdatePermissions({ open, onClose, employee }) {
   const { canUpdateEmployees, permissions } = useAuth()
@@ -61,20 +55,20 @@ function UpdatePermissions({ open, onClose, employee }) {
         }
         content={
           <section>
-            {actions.map((action) => (
+            {apiActions.map((action) => (
               <label key={action}>{action}</label>
             ))}
 
             {Object.entries(locations).map(
               ([locationId, { label: locationLabel }]) => (
                 <Fragment key={locationId}>
-                  <h4>{locationLabel}</h4>
+                  <h5>{locationLabel}</h5>
 
-                  {apis.map((api) => (
+                  {apiEndpoints.map((api) => (
                     <Fragment key={`${locationId}_${api}`}>
                       <label>{api}</label>
 
-                      {actions.map((action) => (
+                      {apiActions.map((action) => (
                         <Fragment key={`${locationId}_${api}_${action}`}>
                           <input
                             type="checkbox"

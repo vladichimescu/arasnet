@@ -1,22 +1,18 @@
-import React, { useEffect } from "react"
-import { toast } from "react-toastify"
+import React from "react"
 
-const ErrorFallback = ({ error }) => {
-  useEffect(() => {
-    toast.warn("Try again, refresh the page")
-  }, [])
-
+function ErrorFallback({ error }) {
   return (
     <div
       style={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        height: "100dvh",
+        flex: 1,
+        maxWidth: "90%",
+        alignContent: "center",
+        marginLeft: "auto",
+        marginRight: "auto",
+        textAlign: "center",
       }}
     >
-      <h1>Ooops, something went wrong</h1>
+      <h1>Oops, not ok!</h1>
       <small>{`${error}`}</small>
     </div>
   )

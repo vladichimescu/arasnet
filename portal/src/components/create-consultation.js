@@ -20,7 +20,7 @@ function CreateConsultation() {
 
   useEffect(() => {
     const actionId = ActionService.create(
-      isMobile ? "data-grid" : "top-bar",
+      isMobile ? "data-grid" : "nav-bar",
       () => {
         setIsOpened(true)
       },
@@ -56,9 +56,6 @@ function CreateConsultation() {
             label: "Phone",
             name: "phone",
             required: true,
-            enableSearch: true,
-            country: "ro",
-            autoFormat: false,
           },
           {
             type: "datetime-local",

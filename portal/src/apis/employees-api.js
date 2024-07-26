@@ -1,21 +1,21 @@
+import { apiEmployeesEndpoint } from "@arasnet/types"
+
 import Api from "./api"
 
-const employeesApiPath = process.env.REACT_APP_SERVER_PATH_EMPLOYEES
-
 async function create(payload) {
-  return await Api.post(employeesApiPath, payload)
+  return await Api.post(apiEmployeesEndpoint, payload)
 }
 
 async function read(params) {
-  return await Api.get(employeesApiPath, { params })
+  return await Api.get(apiEmployeesEndpoint, { params })
 }
 
 async function update(payload) {
-  return await Api.put(employeesApiPath, payload)
+  return await Api.put(apiEmployeesEndpoint, payload)
 }
 
 async function remove(payload) {
-  return await Api.delete(employeesApiPath, payload)
+  return await Api.delete(apiEmployeesEndpoint, payload)
 }
 
 const EmployeesApi = {

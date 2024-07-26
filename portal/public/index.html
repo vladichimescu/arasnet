@@ -1,17 +1,113 @@
 <!doctype html>
 <html lang="en">
   <head>
+    <style>
+      /* NOTE: csstools/normalize */
+      /* NOTE: milligram */
+      html {
+        line-height: 1.15;
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+        box-sizing: border-box;
+        font-size: 62.5%;
+      }
+      body {
+        color: #606c76;
+        font-family: "Roboto", "Helvetica Neue", "Helvetica", "Arial",
+          sans-serif;
+        font-size: 1.6em;
+        font-weight: 300;
+        letter-spacing: 0.01em;
+        line-height: 1.6;
+      }
+
+      /* NOTE: app styles */
+      body {
+        margin: 0;
+      }
+      #root {
+        display: flex;
+        flex-direction: column;
+        height: 100dvh;
+      }
+
+      /* NOTE: <Loading /> */
+      .initial-loading {
+        flex: 1 1;
+        max-width: 90%;
+        align-content: center;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+      }
+      .initial-loading h1 {
+        font-size: 4.6rem;
+        line-height: 1.2;
+        font-weight: 300;
+        letter-spacing: -0.1rem;
+        margin-bottom: 2rem;
+        margin-top: 0;
+        animation: initial-loading--fade 2s infinite;
+      }
+      .initial-loading section {
+        position: relative;
+        height: 1.5em;
+      }
+      .initial-loading small {
+        display: block;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -100%;
+        opacity: 0;
+        animation: initial-loading--slide-down 5s infinite;
+      }
+      .initial-loading small:nth-child(1) {
+        animation-delay: 0s;
+      }
+      .initial-loading small:nth-child(2) {
+        animation-delay: 1s;
+      }
+      .initial-loading small:nth-child(3) {
+        animation-delay: 2s;
+      }
+      .initial-loading small:nth-child(4) {
+        animation-delay: 3s;
+      }
+      .initial-loading small:nth-child(5) {
+        animation-delay: 4s;
+      }
+      @keyframes initial-loading--fade {
+        0%,
+        100% {
+          opacity: 0.2;
+        }
+        50% {
+          opacity: 1;
+        }
+      }
+      @keyframes initial-loading--slide-down {
+        0% {
+          opacity: 0;
+          top: -100%;
+        }
+        19% {
+          opacity: 1;
+        }
+        20% {
+          opacity: 0;
+          top: 0;
+        }
+      }
+    </style>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1"
     />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
+    <meta name="theme-color" content="#9b4dca" />
+    <meta name="description" content="ARASnet admin" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
@@ -27,11 +123,22 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>React App</title>
+    <title>ARASnet admin</title>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <div class="initial-loading">
+        <h1>Loading</h1>
+        <section>
+          <small>updating modules</small>
+          <small>generating structure</small>
+          <small>loading api data</small>
+          <small>processing models</small>
+          <small>rendering ui views</small>
+        </section>
+      </div>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

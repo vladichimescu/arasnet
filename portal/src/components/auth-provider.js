@@ -15,7 +15,8 @@ const Context = createContext()
 
 function AuthProvider(props) {
   const [isLogged, setIsLogged] = useState(!!AuthService.getToken())
-  const [permissions, setPermissions] = useState(AuthService.getAccessMatrix())
+
+  const [permissions, setPermissions] = useState(AuthService.getPermissions())
 
   const login = useCallback(async (account) => {
     const { token, permissions } = await AuthApi.login(account)
@@ -23,7 +24,7 @@ function AuthProvider(props) {
     AuthService.saveToken(token)
     AuthService.savePermissions(permissions)
 
-    setPermissions(AuthService.getAccessMatrix())
+    setPermissions(AuthService.getPermissions())
 
     setIsLogged(true)
   }, [])
@@ -32,7 +33,7 @@ function AuthProvider(props) {
     AuthService.removeToken()
     AuthService.removePermissions()
 
-    setPermissions(AuthService.getAccessMatrix())
+    setPermissions(AuthService.getPermissions())
 
     setIsLogged(false)
   }, [])
@@ -40,7 +41,9 @@ function AuthProvider(props) {
   useEffect(() => {
     const eventId = EventService.subscribe(
       StorageService.keys.APP_AUTH_PERMISSIONS,
-      () => setPermissions(AuthService.getAccessMatrix())
+      () => {
+        setPermissions(AuthService.getPermissions())
+      }
     )
 
     return () => {
@@ -61,5 +64,7 @@ function AuthProvider(props) {
   )
 }
 
+const useAuth = () => useContext(Context)
+
 export default AuthProvider
-export const useAuth = () => useContext(Context)
+export { useAuth }

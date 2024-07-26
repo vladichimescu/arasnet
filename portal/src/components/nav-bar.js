@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 
 import ActionService from "../services/action-service"
@@ -8,25 +8,38 @@ import { useAuth } from "./auth-provider"
 
 const isMobile = navigator.maxTouchPoints > 0
 
-const TopBar = () => {
+function NavBar() {
   const navigate = useNavigate()
 
   const { pathname } = useLocation()
+
+  const ref = useRef()
 
   const { isLogged, canReadConsultations, canReadEmployees } = useAuth()
 
   const [actions, setActions] = useState(ActionService.actions)
 
   useEffect(() => {
-    EventService.subscribe("actions", () => {
-      setActions(ActionService.actions.filter(({ type }) => type === "top-bar"))
+    EventService.subscribe("actions", (actions) => {
+      setActions(actions.filter(({ type }) => type === "nav-bar"))
     })
   }, [])
 
+  if (pathname === "/") {
+    return null
+  }
+
   if (isMobile) {
+    const isMobileMenuEmpty = !ref.current || ref.current.length === 0
+
     return (
       <select
+        ref={ref}
         className="button"
+        style={{
+          display: isMobileMenuEmpty ? "none" : null,
+          borderRadius: 0,
+        }}
         value={pathname}
         onChange={({ target: { value } }) =>
           value.startsWith("/") ? navigate(value) : actions[value].handler()
@@ -58,9 +71,11 @@ const TopBar = () => {
           </optgroup>
         )}
 
-        <optgroup>
-          <option value="/logout">Logout</option>
-        </optgroup>
+        {isLogged ? (
+          <optgroup>
+            <option value="/logout">Logout</option>
+          </optgroup>
+        ) : null}
       </select>
     )
   }
@@ -120,4 +135,4 @@ const TopBar = () => {
   )
 }
 
-export default TopBar
+export default NavBar

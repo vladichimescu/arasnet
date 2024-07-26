@@ -1,14 +1,17 @@
 import jsonServer from "json-server"
 
+import {
+  apiAuthEndpoint,
+  apiConsultationsEndpoint,
+  apiEmployeesEndpoint,
+} from "@arasnet/types"
+
 import AuthApi from "./apis/auth-api.js"
 import ConsultationsApi from "./apis/consultations-api.js"
 import EmployeesApi from "./apis/employees-api.js"
 
 const port = process.env.SERVER_PORT
 const file = process.env.DB_FILE
-const authApiPath = `/${process.env.SERVER_PATH_AUTH}`
-const employeesApiPath = `/${process.env.SERVER_PATH_EMPLOYEES}`
-const consultationsApiPath = `/${process.env.SERVER_PATH_CONSULTATIONS}`
 
 const server = jsonServer.create()
 const middlewares = jsonServer.defaults()
@@ -19,8 +22,8 @@ server.use(jsonServer.bodyParser)
 server.use(timestamp)
 
 //#region Public APIs
-server.post(authApiPath, AuthApi.login)
-server.get(authApiPath, AuthApi.resign)
+server.post(`/${apiAuthEndpoint}`, AuthApi.login)
+server.get(`/${apiAuthEndpoint}`, AuthApi.resign)
 //#endregion
 
 //#region Private APIs
@@ -28,15 +31,17 @@ server.use(redirect)
 server.use(AuthApi.authenticate)
 server.use(AuthApi.authorize)
 
-server.use(employeesApiPath, EmployeesApi.middleware)
-server.use(consultationsApiPath, ConsultationsApi.middleware)
+server.use(`/${apiEmployeesEndpoint}`, EmployeesApi.middleware)
+server.use(`/${apiConsultationsEndpoint}`, ConsultationsApi.middleware)
 //#endregion
 
 server.use(router)
 
 server.use(errors)
 
-server.listen(port, () => console.log(`ARASnet Server started on port ${port}`))
+server.listen(port, () => {
+  console.log(`ARASnet Server started on port ${port}`)
+})
 
 const jsonServerDB = router.db
 export default jsonServerDB

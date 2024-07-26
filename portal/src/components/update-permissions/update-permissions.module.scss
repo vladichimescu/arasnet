@@ -16,18 +16,20 @@
     margin-bottom: 3rem;
 
     label {
+      font-weight: lighter;
+
       &:first-child {
         grid-column: 1 / span 2;
       }
 
       &:nth-child(-n + 4) {
-        font-weight: normal;
+        font-size: 1.4rem;
         font-weight: lighter;
         margin-bottom: 0;
       }
     }
 
-    h4 {
+    h5 {
       grid-column: 1 / span 5;
       margin-top: 1rem;
       margin-bottom: 1rem;

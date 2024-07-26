@@ -13,7 +13,7 @@ function CreateEmployee() {
 
   useEffect(() => {
     const actionId = ActionService.create(
-      isMobile ? "data-grid" : "top-bar",
+      isMobile ? "data-grid" : "nav-bar",
       () => {
         setIsOpened(true)
       },
@@ -61,9 +61,6 @@ function CreateEmployee() {
             label: "Phone",
             name: "phone",
             required: true,
-            enableSearch: true,
-            country: "ro",
-            autoFormat: false,
           },
           {
             type: "email",

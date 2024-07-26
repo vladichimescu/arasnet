@@ -1,13 +1,13 @@
+import { apiAuthEndpoint } from "@arasnet/types"
+
 import Api from "./api"
 
-const authApiPath = process.env.REACT_APP_SERVER_PATH_AUTH
-
 async function login(account) {
-  return await Api.post(authApiPath, account)
+  return await Api.post(apiAuthEndpoint, account)
 }
 
 async function resign() {
-  return await Api.get(authApiPath)
+  return await Api.get(apiAuthEndpoint)
 }
 
 const AuthApi = {
