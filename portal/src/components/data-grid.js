@@ -1,7 +1,7 @@
 import { ModuleRegistry } from "@ag-grid-community/core"
 import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
-import { AgGridReact } from "@ag-grid-community/react"
-import React, { useEffect, useState } from "react"
+import { AgGridReact, useGridFilter } from "@ag-grid-community/react"
+import React, { useCallback, useEffect, useState } from "react"
 
 import { consultationLocations, consultationStatuses } from "@arasnet/types"
 
@@ -121,12 +121,19 @@ function DataGrid({
       onBodyScrollEnd={({ api }) => {
         api.autoSizeAllColumns()
       }}
+      reactiveCustomComponents
     />
   )
 }
 
 export default DataGrid
-export { dateFormatter, statusFormatter, locationFormatter, onCellValueChanged }
+export {
+  dateFormatter,
+  statusFormatter,
+  locationFormatter,
+  onCellValueChanged,
+  DropdownColumnFilter,
+}
 
 //#region
 function getGridRowId({ data: { id } = {} }) {
@@ -138,45 +145,96 @@ function isFullWidthRow({ rowNode: { data: { fullWidth } = {} } }) {
 }
 
 function mapFilters(filterModel) {
-  return Object.entries(filterModel).reduce(
-    (
-      acc,
-      [
-        key,
-        { filterType, type: operand, filter: filterValue, dateFrom, dateTo },
-      ]
-    ) => {
-      const filter = {
-        text: {
-          contains: {
-            [`${key}_like`]: filterValue,
-          },
-        },
-        number: {
-          contains: {
-            [`${key}_like`]: filterValue,
-          },
-        },
-        date: {
-          greaterThan: {
-            [`${key}_gte`]: formatIncludesDate({ gte: dateFrom }),
-          },
-          lessThan: {
-            [`${key}_lte`]: formatIncludesDate({ lte: dateFrom }),
-          },
-          inRange: {
-            [`${key}_gte`]: formatIncludesDate({ gte: dateFrom }),
-            [`${key}_lte`]: formatIncludesDate({ lte: dateTo }),
-          },
-        },
-      }[filterType][operand]
+  return Object.entries(filterModel).reduce((acc, [key, value]) => {
+    const {
+      filterType = "text",
+      type: operand = "equals",
+      filter: filterValue,
+      dateFrom,
+      dateTo,
+    } = typeof value === "string"
+      ? {
+          filter: value,
+        }
+      : value
 
-      return {
-        ...acc,
-        ...filter,
-      }
-    },
-    {}
+    const filter = {
+      text: {
+        equals: {
+          [key]: filterValue,
+        },
+        contains: {
+          [`${key}_like`]: filterValue,
+        },
+      },
+      number: {
+        contains: {
+          [`${key}_like`]: filterValue,
+        },
+      },
+      date: {
+        greaterThan: {
+          [`${key}_gte`]: formatIncludesDate({ gte: dateFrom }),
+        },
+        lessThan: {
+          [`${key}_lte`]: formatIncludesDate({ lte: dateFrom }),
+        },
+        inRange: {
+          [`${key}_gte`]: formatIncludesDate({ gte: dateFrom }),
+          [`${key}_lte`]: formatIncludesDate({ lte: dateTo }),
+        },
+      },
+    }[filterType][operand]
+
+    return {
+      ...acc,
+      ...filter,
+    }
+  }, {})
+}
+
+function DropdownColumnFilter({ options, model, onModelChange }) {
+  const [closeFilter, setCloseFilter] = useState()
+
+  const afterGuiAttached = useCallback(({ hidePopup }) => {
+    setCloseFilter(() => hidePopup)
+  }, [])
+
+  useGridFilter({
+    afterGuiAttached,
+  })
+
+  return (
+    <div className="ag-filter-body-wrapper ag-simple-filter-body-wrapper">
+      <select
+        className="ag-picker-field-wrapper"
+        value={model || "all"}
+        onChange={({ target: { value } }) => {
+          onModelChange(value === "all" ? null : value)
+
+          if (closeFilter) {
+            closeFilter()
+          }
+        }}
+      >
+        <option>all</option>
+
+        {(options instanceof Array
+          ? options
+          : Object.entries(options).map(([value, { label }]) => [label, value])
+        ).map((option) =>
+          typeof option === "string" ? (
+            <option key={option} value={option}>
+              {option}
+            </option>
+          ) : (
+            <option key={option[1]} value={option[1]}>
+              {option[0]}
+            </option>
+          )
+        )}
+      </select>
+    </div>
   )
 }
 

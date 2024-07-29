@@ -8,6 +8,7 @@ import ConsultationsApi from "../apis/consultations-api"
 import { useAuth } from "../components/auth-provider"
 import CreateConsultation from "../components/create-consultation"
 import DataGrid, {
+  DropdownColumnFilter,
   dateFormatter,
   locationFormatter,
   onCellValueChanged,
@@ -36,11 +37,10 @@ const columnDefs = [
     sortable: true,
   },
   {
-    // TODO: filter select
     field: "status",
     headerName: "Status",
     valueFormatter: statusFormatter,
-
+    filter: StatusColumnFilter,
     editable: true,
     cellEditorSelector: () => ({
       component: "agSelectCellEditor",
@@ -145,5 +145,9 @@ function ConfirmationButtons({ data }) {
       </a>
     </Fragment>
   )
+}
+
+function StatusColumnFilter(props) {
+  return <DropdownColumnFilter options={consultationStatuses} {...props} />
 }
 //#endregion
