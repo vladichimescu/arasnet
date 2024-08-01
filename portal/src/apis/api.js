@@ -43,7 +43,11 @@ function interceptResponseError({
   response: { status, data = {} } = {},
   config,
 }) {
-  if (status === 401) {
+  if (status === 400) {
+    Object.values(data)
+      .map(({ message }) => message)
+      .forEach(toast.warn)
+  } else if (status === 401) {
     if (data.code === "authentication expired") {
       return resign(config)
     }
@@ -53,10 +57,8 @@ function interceptResponseError({
     window.location.href = "/logout"
   } else if (status === 403) {
     toast.error(data.message)
-  } else if (status === 400) {
-    Object.values(data)
-      .map(({ message }) => message)
-      .forEach(toast.warn)
+  } else if (status === 500) {
+    toast.error(data.message)
   }
 
   NProgress.done()
