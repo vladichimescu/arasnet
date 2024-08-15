@@ -7,7 +7,7 @@ const configured = (
 
 const data = Object.entries(locations).reduce(
   (acc, [id, location]) =>
-    location.services.includes("consultation")
+    location.services.includes("consultations")
       ? {
           ...acc,
           [id]: location,
