@@ -10,9 +10,14 @@ async function resign() {
   return await Api.get(apiAuthEndpoint)
 }
 
+async function restart() {
+  return await Api.delete(apiAuthEndpoint)
+}
+
 const AuthApi = {
   login,
   resign,
+  restart,
 }
 
 export default AuthApi

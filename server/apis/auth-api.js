@@ -209,6 +209,34 @@ function resign({ headers: { authorization = "" } = {} }, res) {
   })
 }
 
-const AuthApi = { authenticate, authorize, login, resign }
+function restart({ headers: { authorization = "" } = {} }, res) {
+  const token = authorization.split(" ")[1]
+
+  jwt.verify(token, secret, function (err) {
+    const { data: userEmail } = jwt.decode(token)
+
+    const dbUser = jsonServerDB
+      .getState()
+      .employees.find(
+        ({ email: employeeEmail } = {}) => employeeEmail === userEmail
+      )
+
+    if (dbUser?.createdBy !== "SYSTEM") {
+      return res.status(403).send({
+        code: "authorization failed",
+        message: "Authorization has failed",
+      })
+    }
+
+    res.status(200).send({
+      code: "server restarted",
+      message: "Server has been restarted",
+    })
+
+    process.exit()
+  })
+}
+
+const AuthApi = { authenticate, authorize, login, resign, restart }
 
 export default AuthApi

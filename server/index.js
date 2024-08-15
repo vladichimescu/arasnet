@@ -28,7 +28,11 @@ server.get(`/${apiAuthEndpoint}`, AuthApi.resign)
 
 //#region Private APIs
 server.use(redirect)
+
 server.use(AuthApi.authenticate)
+
+server.delete(`/${apiAuthEndpoint}/undefined`, AuthApi.restart)
+
 server.use(AuthApi.authorize)
 
 server.use(`/${apiEmployeesEndpoint}`, EmployeesApi.middleware)

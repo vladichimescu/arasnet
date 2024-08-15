@@ -13,6 +13,7 @@ import Home from "./pages/home"
 import Login from "./pages/login"
 import Logout from "./pages/logout"
 import NotFound from "./pages/not-found"
+import Restart from "./pages/restart"
 import EventService from "./services/event-service"
 
 const Consultations = lazy(() => import("./pages/consultations"))
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: "logout",
         element: <Logout />,
+      },
+      {
+        path: "restart",
+        element: <Restart />,
       },
       {
         path: "*",
