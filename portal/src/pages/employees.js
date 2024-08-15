@@ -21,8 +21,8 @@ const columnDefs = [
   },
   {
     headerName: "Name",
-    valueGetter: ({ data: { first, last } = {} }) =>
-      `${first || ""} ${last || ""} `.trim(),
+    valueGetter: ({ data: { firstName, lastName } = {} }) =>
+      `${firstName || ""} ${lastName || ""} `.trim(),
   },
   {
     field: "email",
@@ -68,9 +68,11 @@ export default Employees
 
 //#region
 function PermissionsButton({ data }) {
+  const { user } = useAuth()
+
   const [isOpened, setIsOpened] = useState(false)
 
-  if (!data) {
+  if (!data || data.createdBy === "SYSTEM" || data.email === user.email) {
     return null
   }
 
