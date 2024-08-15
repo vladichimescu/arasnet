@@ -43,7 +43,9 @@ function interceptResponseError({
   response: { status, data = {} } = {},
   config,
 }) {
-  if (status === 400) {
+  if (!status) {
+    toast.error("Oops, something went wrong with the network")
+  } else if (status === 400) {
     Object.values(data)
       .map(({ message }) => message)
       .forEach(toast.warn)

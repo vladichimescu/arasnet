@@ -74,7 +74,7 @@ function timestamp(req, res, next) {
 function errors(err, req, res, next) {
   res.status(500).send({
     code: "server error",
-    message: "Oops, something went wrong",
+    message: "Oops, something went wrong on the server",
     error: err.toString(),
   })
 }
