@@ -5,12 +5,15 @@ import { consultationLocations } from "@arasnet/types"
 import ConsultationsApi from "../apis/consultations-api"
 import ActionService from "../services/action-service"
 
+import { useAuth } from "./auth-provider"
 import Form from "./form/form"
 import Modal from "./modal"
 
 const isMobile = navigator.maxTouchPoints > 0
 
 function CreateConsultation() {
+  const { permissions } = useAuth()
+
   const [isOpened, setIsOpened] = useState(false)
 
   const minDatetimeLocal = new Date()
@@ -69,7 +72,19 @@ function CreateConsultation() {
             label: "Location",
             name: "location",
             required: true,
-            list: Object.entries(consultationLocations),
+            list: Object.entries(consultationLocations).filter(([locationId]) =>
+              permissions.consultations.find(
+                ([permittedAction, ...filters]) =>
+                  permittedAction === "create" &&
+                  (filters.length === 0
+                    ? true
+                    : filters.find(([filter, values]) =>
+                        filter === "location"
+                          ? values.includes(locationId)
+                          : true
+                      ))
+              )
+            ),
           },
         ]}
       />

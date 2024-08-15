@@ -2,13 +2,14 @@ import jwt from "jsonwebtoken"
 
 import { validateRequiredFields } from "@arasnet/functions"
 import {
-  apiActions,
-  apiEndpoints,
+  apiConsultationsEndpoint,
+  apiEmployeesEndpoint,
   employeeRequiredFields,
-  locations,
 } from "@arasnet/types"
 
 import jsonServerDB from "../index.js"
+
+const apiEndpoints = [apiConsultationsEndpoint, apiEmployeesEndpoint]
 
 function create({ body: employee = {} }, res, next) {
   const errors = validateRequiredFields(employee, employeeRequiredFields)
@@ -46,16 +47,10 @@ function create({ body: employee = {} }, res, next) {
   }
 
   if (!employee.permissions) {
-    employee.permissions = Object.keys(locations).reduce(
-      (acc, location) => ({
+    employee.permissions = apiEndpoints.reduce(
+      (acc, api) => ({
         ...acc,
-        [location]: apiEndpoints.reduce(
-          (acc, api) => ({
-            ...acc,
-            [api]: [],
-          }),
-          {}
-        ),
+        [api]: [],
       }),
       {}
     )
@@ -82,41 +77,211 @@ function update(
   const token = authorization.split(" ")[1]
   const { data: userEmail } = jwt.decode(token)
 
-  const dbUser = jsonServerDB
+  const { createdBy, permissions: employeePermissions } = jsonServerDB
+    .getState()
+    .employees.find(({ id } = {}) => id === employee.id)
+
+  if (createdBy === "SYSTEM") {
+    return res.status(403).send({
+      code: "authorization failed",
+      message: "Authorization has failed",
+    })
+  }
+
+  const { permissions: userPermissions } = jsonServerDB
     .getState()
     .employees.find(
       ({ email: employeeEmail } = {}) => employeeEmail === userEmail
     )
 
-  const dbEmployee = jsonServerDB
-    .getState()
-    .employees.find(({ id } = {}) => id === employee.id)
+  const { permissions } = employee
 
-  employee.permissions = Object.keys(locations).reduce(
-    (acc, location) => ({
-      ...acc,
-      [location]: apiEndpoints.reduce(
-        (acc, api) => ({
+  const readonlyPermissions = Object.entries(employeePermissions).reduce(
+    (acc, [api, actions]) => {
+      if (!userPermissions[api]) {
+        return {
           ...acc,
-          [api]: apiActions.reduce((acc, action) => {
-            if (dbUser.permissions[location]?.[api]?.includes(action)) {
-              if (!employee.permissions[location]?.[api]?.includes(action)) {
-                return acc.filter((item) => item !== action)
+          [api]: employeePermissions[api],
+        }
+      }
+
+      return {
+        ...acc,
+        [api]: actions.reduce((accActions, actionPermissions) => {
+          const [action, ...filters] = actionPermissions
+
+          const userActionPermissions = userPermissions[api].find(
+            ([permittedAction]) => permittedAction === action
+          )
+
+          if (!userActionPermissions) {
+            return [...accActions, actionPermissions]
+          }
+
+          const [_userAction, ...userFilters] = userActionPermissions
+
+          if (userFilters.length === 0) {
+            return accActions
+          }
+
+          if (filters.length === 0) {
+            return accActions
+          }
+
+          const actionFilters = filters.reduce(
+            (accFilters, [filterType, filterValues]) => {
+              const userFilter = userFilters.find(
+                ([userFilterType]) => userFilterType === filterType
+              )
+
+              if (!userFilter) {
+                return [...accFilters, filterType, filterValues]
               }
 
-              if (!acc.includes(action)) {
-                return [...acc, action]
-              }
-            }
+              const [_userFilterType, userFilterValues] = userFilter
 
-            return acc
-          }, dbEmployee.permissions[location]?.[api] || []),
-        }),
-        {}
-      ),
-    }),
+              return [
+                ...accFilters,
+                filterType,
+                filterValues.filter(
+                  (filterValue) => !userFilterValues.includes(filterValue)
+                ),
+              ]
+            },
+            []
+          )
+
+          if (actionFilters.length === 0 || actionFilters[1].length === 0) {
+            return accActions
+          }
+
+          return [...accActions, [action, actionFilters]]
+        }, []),
+      }
+    },
     {}
   )
+
+  const editedPermissions = Object.entries(permissions).reduce(
+    (acc, [api, actions]) => {
+      if (!userPermissions[api]) {
+        return acc
+      }
+
+      return {
+        ...acc,
+        [api]: actions.reduce((accActions, actionPermissions) => {
+          const [action, ...filters] = actionPermissions
+
+          const userActionPermissions = userPermissions[api].find(
+            ([permittedAction]) => permittedAction === action
+          )
+
+          if (!userActionPermissions) {
+            return accActions
+          }
+
+          const [_userAction, ...userFilters] = userActionPermissions
+
+          if (userFilters.length === 0) {
+            return [...accActions, actionPermissions]
+          }
+
+          if (filters.length === 0) {
+            return [...accActions, userActionPermissions]
+          }
+
+          const actionFilters = filters.reduce(
+            (accFilters, [filterType, filterValues]) => {
+              const userFilter = userFilters.find(
+                ([userFilterType]) => userFilterType === filterType
+              )
+
+              if (!userFilter) {
+                return accFilters
+              }
+
+              const [_userFilterType, userFilterValues] = userFilter
+
+              return [
+                ...accFilters,
+                filterType,
+                filterValues.filter((filterValue) =>
+                  userFilterValues.includes(filterValue)
+                ),
+              ]
+            },
+            []
+          )
+
+          if (actionFilters.length === 0 || actionFilters[1].length === 0) {
+            return accActions
+          }
+
+          return [...accActions, [action, actionFilters]]
+        }, []),
+      }
+    },
+    {}
+  )
+
+  const updatedPermissions = [
+    ...Object.keys(readonlyPermissions),
+    ...Object.keys(editedPermissions),
+  ]
+    .filter((item, index, list) => list.indexOf(item) === index)
+    .reduce(
+      (apis, api) => ({
+        ...apis,
+        [api]: [
+          ...(readonlyPermissions[api] || []),
+          ...(editedPermissions[api] || []),
+        ].reduce((actions, actionPermissions) => {
+          const [action, ...filters] = actionPermissions
+
+          const actionIndex = actions.findIndex(
+            ([addedAction]) => addedAction === action
+          )
+
+          if (actionIndex === -1) {
+            return [...actions, actionPermissions]
+          }
+
+          const [_action, ...addedFilters] = actions[actionIndex]
+
+          const editedFilters = [...addedFilters, ...filters].reduce(
+            (accFilters, [filterType, filterValues]) => {
+              const filterIndex = accFilters.findIndex(
+                ([addedFilterType]) => addedFilterType === filterType
+              )
+
+              if (filterIndex === -1) {
+                return [...accFilters, [filterType, filterValues]]
+              }
+
+              const [_filterType, addedFilterValues] = accFilters[filterIndex]
+
+              accFilters[filterIndex] = [
+                filterType,
+                [...addedFilterValues, ...filterValues].filter(
+                  (item, index, list) => list.indexOf(item) === index
+                ),
+              ]
+
+              return accFilters
+            },
+            []
+          )
+
+          actions[actionIndex] = [action, ...editedFilters]
+
+          return actions
+        }, []),
+      }),
+      {}
+    )
+
+  employee.permissions = updatedPermissions
 
   next()
 }

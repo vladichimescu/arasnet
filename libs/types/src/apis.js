@@ -11,8 +11,6 @@ const apiEmployeesEndpoint =
   process.env.SERVER_EMPLOYEES_ENDPOINT ||
   process.env.REACT_APP_SERVER_EMPLOYEES_ENDPOINT
 
-const apiEndpoints = [apiConsultationsEndpoint, apiEmployeesEndpoint]
-
 const apiActions = ["create", "read", "update", "remove"]
 
 export {
@@ -20,6 +18,5 @@ export {
   apiAuthEndpoint,
   apiConsultationsEndpoint,
   apiEmployeesEndpoint,
-  apiEndpoints,
   apiActions,
 }

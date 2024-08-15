@@ -1,6 +1,6 @@
 import React, { Fragment } from "react"
 
-import { apiActions, apiEndpoints, locations } from "@arasnet/types"
+import { apiActions, apiEmployeesEndpoint, locations } from "@arasnet/types"
 
 import EmployeesApi from "../../apis/employees-api"
 import { useAuth } from "../auth-provider"
@@ -23,17 +23,44 @@ function UpdatePermissions({ open, onClose, employee }) {
                 const updatedEmployee = {
                   ...employee,
                   permissions: Object.keys(data).reduce((acc, key) => {
-                    const [location, api, action] = key.split("_")
+                    const [api, action, filterType, filterValue] =
+                      key.split("_")
 
-                    return {
-                      ...acc,
-                      [location]: {
-                        ...acc[location],
-                        [api]: (acc[location]?.[api] || []).concat(action),
-                      },
+                    const permission =
+                      filterType && filterValue
+                        ? [action, [filterType, [filterValue]]]
+                        : [action]
+
+                    if (!acc[api]) {
+                      acc[api] = []
                     }
+
+                    const actionIndex = acc[api].findIndex(
+                      ([curAction]) => curAction === action
+                    )
+
+                    if (actionIndex === -1) {
+                      acc[api].push(permission)
+                    } else {
+                      const filterIndex = acc[api][actionIndex].findIndex(
+                        ([curFilter]) => curFilter === filterType
+                      )
+
+                      if (filterIndex === -1) {
+                        acc[api][actionIndex] = [
+                          ...acc[api][actionIndex],
+                          [filterType, [filterValue]],
+                        ]
+                      } else {
+                        acc[api][actionIndex][filterIndex][1].push(filterValue)
+                      }
+                    }
+
+                    return acc
                   }, {}),
                 }
+
+                console.log(updatedEmployee.permissions)
 
                 await EmployeesApi.update(updatedEmployee)
 
@@ -59,26 +86,64 @@ function UpdatePermissions({ open, onClose, employee }) {
               <label key={action}>{action}</label>
             ))}
 
+            <label>{apiEmployeesEndpoint}</label>
+
+            {apiActions.map((action) => (
+              <Fragment key={`${apiEmployeesEndpoint}_${action}`}>
+                <input
+                  type="checkbox"
+                  name={`${apiEmployeesEndpoint}_${action}`}
+                  defaultChecked={employee.permissions[
+                    apiEmployeesEndpoint
+                  ]?.find(([permittedAction]) => permittedAction === action)}
+                  disabled={
+                    !canUpdateEmployees ||
+                    !permissions[apiEmployeesEndpoint]?.find(
+                      ([permittedAction]) => permittedAction === action
+                    )
+                  }
+                />
+              </Fragment>
+            ))}
+
             {Object.entries(locations).map(
-              ([locationId, { label: locationLabel }]) => (
+              ([locationId, { label: locationLabel, services }]) => (
                 <Fragment key={locationId}>
                   <h5>{locationLabel}</h5>
 
-                  {apiEndpoints.map((api) => (
-                    <Fragment key={`${locationId}_${api}`}>
+                  {services.map((api) => (
+                    <Fragment key={`${api}_${locationId}`}>
                       <label>{api}</label>
 
                       {apiActions.map((action) => (
-                        <Fragment key={`${locationId}_${api}_${action}`}>
+                        <Fragment key={`${api}_${action}_${locationId}`}>
                           <input
                             type="checkbox"
-                            name={`${locationId}_${api}_${action}`}
-                            defaultChecked={employee.permissions[locationId]?.[
-                              api
-                            ]?.includes(action)}
+                            name={`${api}_${action}_location_${locationId}`}
+                            defaultChecked={employee.permissions[api]?.find(
+                              ([permittedAction, ...filters]) =>
+                                permittedAction === action &&
+                                (filters.length === 0
+                                  ? true
+                                  : filters.find(
+                                      ([filter, values]) =>
+                                        filter === "location" &&
+                                        values.includes(locationId)
+                                    ))
+                            )}
                             disabled={
                               !canUpdateEmployees ||
-                              !permissions[locationId]?.[api]?.includes(action)
+                              !permissions[api]?.find(
+                                ([permittedAction, ...filters]) =>
+                                  permittedAction === action &&
+                                  (filters.length === 0
+                                    ? true
+                                    : filters.find(
+                                        ([filter, values]) =>
+                                          filter === "location" &&
+                                          values.includes(locationId)
+                                      ))
+                              )
                             }
                           />
                         </Fragment>

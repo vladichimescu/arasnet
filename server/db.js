@@ -17,26 +17,8 @@ const data = {
       email: "admin@arasnet.ro",
       password: "pass",
       permissions: {
-        "0d9625c8-f9bd-4b0c-9de5-960fff50b30c": {
-          consultations: apiActions,
-          employees: apiActions,
-        },
-        "e3a607c9-7bce-459e-9ae2-25d30d8db95c": {
-          consultations: apiActions,
-          employees: apiActions,
-        },
-        "8eb5ded5-7694-4783-ad37-bbdb26e0f659": {
-          consultations: apiActions,
-          employees: apiActions,
-        },
-        "6bec1930-2983-40fb-a4f1-0bed8f4e609e": {
-          consultations: apiActions,
-          employees: apiActions,
-        },
-        "c7947f5c-6323-4ef5-81ab-60b1c9e69cf5": {
-          consultations: apiActions,
-          employees: apiActions,
-        },
+        employees: [["create"], ["read"], ["update"], ["remove"]],
+        consultations: [["create"], ["read"], ["update"], ["remove"]],
       },
       createdAt: new Date().toISOString(),
       createdBy: "SYSTEM",
@@ -49,21 +31,7 @@ const data = {
       email: "website@arasnet.ro",
       password: "pass",
       permissions: {
-        "0d9625c8-f9bd-4b0c-9de5-960fff50b30c": {
-          consultations: ["create"],
-        },
-        "e3a607c9-7bce-459e-9ae2-25d30d8db95c": {
-          consultations: ["create"],
-        },
-        "8eb5ded5-7694-4783-ad37-bbdb26e0f659": {
-          consultations: ["create"],
-        },
-        "6bec1930-2983-40fb-a4f1-0bed8f4e609e": {
-          consultations: ["create"],
-        },
-        "c7947f5c-6323-4ef5-81ab-60b1c9e69cf5": {
-          consultations: ["create"],
-        },
+        consultations: [["create"]],
       },
       createdAt: new Date().toISOString(),
       createdBy: "SYSTEM",
@@ -76,14 +44,49 @@ const data = {
       email: "admin@bucuresti.ro",
       password: "pass",
       permissions: {
-        "0d9625c8-f9bd-4b0c-9de5-960fff50b30c": {
-          consultations: apiActions,
-          employees: apiActions,
-        },
-        "e3a607c9-7bce-459e-9ae2-25d30d8db95c": {
-          consultations: apiActions,
-          employees: apiActions,
-        },
+        employees: [["create"], ["read"], ["update"], ["remove"]],
+        consultations: [
+          [
+            "create",
+            [
+              "location",
+              [
+                "0d9625c8-f9bd-4b0c-9de5-960fff50b30c",
+                "e3a607c9-7bce-459e-9ae2-25d30d8db95c",
+              ],
+            ],
+          ],
+          [
+            "read",
+            [
+              "location",
+              [
+                "0d9625c8-f9bd-4b0c-9de5-960fff50b30c",
+                "e3a607c9-7bce-459e-9ae2-25d30d8db95c",
+              ],
+            ],
+          ],
+          [
+            "update",
+            [
+              "location",
+              [
+                "0d9625c8-f9bd-4b0c-9de5-960fff50b30c",
+                "e3a607c9-7bce-459e-9ae2-25d30d8db95c",
+              ],
+            ],
+          ],
+          [
+            "remove",
+            [
+              "location",
+              [
+                "0d9625c8-f9bd-4b0c-9de5-960fff50b30c",
+                "e3a607c9-7bce-459e-9ae2-25d30d8db95c",
+              ],
+            ],
+          ],
+        ],
       },
       createdAt: new Date().toISOString(),
     },
@@ -95,14 +98,19 @@ const data = {
       email: "user@bucuresti.ro",
       password: "pass",
       permissions: {
-        "0d9625c8-f9bd-4b0c-9de5-960fff50b30c": {
-          consultations: ["read"],
-          employees: ["read"],
-        },
-        "e3a607c9-7bce-459e-9ae2-25d30d8db95c": {
-          consultations: ["read"],
-          employees: ["read"],
-        },
+        employees: [["read"]],
+        consultations: [
+          [
+            "read",
+            [
+              "location",
+              [
+                "0d9625c8-f9bd-4b0c-9de5-960fff50b30c",
+                "e3a607c9-7bce-459e-9ae2-25d30d8db95c",
+              ],
+            ],
+          ],
+        ],
       },
       createdAt: new Date().toISOString(),
     },
@@ -123,12 +131,24 @@ function mockEmployee(_, index) {
     email: faker.internet.email().toLowerCase(),
     password: faker.internet.password(),
     permissions: {
-      [Object.keys(consultationLocations)[
-        Math.floor(Math.random() * Object.keys(consultationLocations).length)
-      ]]: {
-        consultations: apiActions.slice(0, Math.floor(Math.random() * 4)),
-        employees: apiActions.slice(0, Math.floor(Math.random() * 4)),
-      },
+      employees: apiActions
+        .slice(0, Math.floor(Math.random() * 4))
+        .map((action) => [action]),
+      consultations: apiActions
+        .slice(0, Math.floor(Math.random() * 4))
+        .map((action) => [
+          action,
+          [
+            "location",
+            [
+              Object.keys(consultationLocations)[
+                Math.floor(
+                  Math.random() * Object.keys(consultationLocations).length
+                )
+              ],
+            ],
+          ],
+        ]),
     },
     createdAt: new Date().toISOString(),
   }

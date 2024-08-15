@@ -27,6 +27,10 @@
         font-weight: lighter;
         margin-bottom: 0;
       }
+
+      &:not(:nth-child(-n + 4)) {
+        justify-self: start;
+      }
     }
 
     h5 {

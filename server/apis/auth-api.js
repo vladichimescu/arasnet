@@ -1,10 +1,12 @@
 import jwt from "jsonwebtoken"
 
-import { apiEndpoints, locations } from "@arasnet/types"
+import { apiConsultationsEndpoint, apiEmployeesEndpoint } from "@arasnet/types"
 
 import jsonServerDB from "../index.js"
 
 const secret = process.env.SECRET
+
+const apiEndpoints = [apiConsultationsEndpoint, apiEmployeesEndpoint]
 
 const actions = {
   POST: "create",
@@ -77,25 +79,18 @@ function authorize(
     const api = apiEndpoints.find((path) => originalUrl.startsWith(`/${path}`))
     const action = actions[method]
 
-    const permittedLocations = Object.keys(dbUser.permissions).filter(
-      (location) =>
-        Object.keys(locations).includes(location) &&
-        dbUser.permissions[location][api].includes(action)
+    const userApiPermissions = dbUser.permissions[api]
+
+    const [permittedAction, ...filters] = userApiPermissions.find(
+      ([permittedAction]) => permittedAction === action
     )
 
-    if (permittedLocations.length === 0) {
+    if (!permittedAction) {
       return res.status(403).send({
         code: "authorization failed",
         message: "Authorization has failed",
       })
     }
-
-    const locationFilters =
-      permittedLocations.length === Object.keys(locations).length
-        ? []
-        : ["location", permittedLocations]
-
-    const filters = [...locationFilters]
 
     if (action === "read") {
       filters.forEach(([key, value]) => {

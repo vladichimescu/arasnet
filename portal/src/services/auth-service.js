@@ -1,7 +1,13 @@
 import { toCamelCase } from "@arasnet/functions"
-import { apiActions, apiEndpoints, locations } from "@arasnet/types"
+import {
+  apiActions,
+  apiConsultationsEndpoint,
+  apiEmployeesEndpoint,
+} from "@arasnet/types"
 
 import StorageService from "./storage-service"
+
+const apiEndpoints = [apiConsultationsEndpoint, apiEmployeesEndpoint]
 
 function getToken() {
   return StorageService.getItem({
@@ -53,12 +59,9 @@ function getPermissions() {
       ...apiActions.reduce(
         (acc, action) => ({
           ...acc,
-          [toCamelCase(`can ${action} ${api}`)]:
-            Object.entries(permissions).filter(
-              ([location, apis]) =>
-                Object.keys(locations).includes(location) &&
-                apis[api]?.includes(action)
-            ).length !== 0,
+          [toCamelCase(`can ${action} ${api}`)]: !!permissions[api]?.find(
+            ([permittedAction]) => permittedAction === action
+          ),
         }),
         {}
       ),
