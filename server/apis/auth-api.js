@@ -163,6 +163,10 @@ function login({ body: { email, password } = {} }, res) {
 
   return res.status(200).send({
     token,
+    user: {
+      email,
+      name: `${dbEmployee.first} ${dbEmployee.last}`,
+    },
     permissions: dbEmployee.permissions,
   })
 }

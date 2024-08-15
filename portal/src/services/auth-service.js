@@ -22,6 +22,25 @@ function removeToken() {
   })
 }
 
+function getUser() {
+  return StorageService.getItem({
+    id: StorageService.keys.APP_AUTH_USER,
+  })
+}
+
+function saveUser(user) {
+  StorageService.setItem({
+    id: StorageService.keys.APP_AUTH_USER,
+    data: user,
+  })
+}
+
+function removeUser() {
+  StorageService.removeItem({
+    id: StorageService.keys.APP_AUTH_USER,
+  })
+}
+
 function getPermissions() {
   const permissions =
     StorageService.getItem({
@@ -70,6 +89,9 @@ const AuthService = {
   getToken,
   saveToken,
   removeToken,
+  getUser,
+  saveUser,
+  removeUser,
   getPermissions,
   savePermissions,
   removePermissions,
