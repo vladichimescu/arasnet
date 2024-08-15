@@ -11,11 +11,11 @@ const data = {
   employees: [
     {
       id: 0,
-      first: "Admin",
-      last: "ARASnet",
-      phone: "0777777777",
+      firstName: "Admin",
+      lastName: "ARASnet",
+      phone: "+40000000000",
       email: "admin@arasnet.ro",
-      password: "pass",
+      password: "reswyd-4fodka-wywZik",
       permissions: {
         employees: [["create"], ["read"], ["update"], ["remove"]],
         consultations: [["create"], ["read"], ["update"], ["remove"]],
@@ -25,11 +25,11 @@ const data = {
     },
     {
       id: 1,
-      first: "Website",
-      last: "ARASnet",
-      phone: "0777777777",
+      firstName: "Website",
+      lastName: "ARASnet",
+      phone: "+40000000000",
       email: "website@arasnet.ro",
-      password: "pass",
+      password: "sodvoj-1vuqby-buNgab",
       permissions: {
         consultations: [["create"]],
       },
@@ -38,8 +38,8 @@ const data = {
     },
     {
       id: 2,
-      first: "Admin",
-      last: "Bucuresti",
+      firstName: "Admin",
+      lastName: "Bucuresti",
       phone: "0777777777",
       email: "admin@bucuresti.ro",
       password: "pass",
@@ -92,8 +92,8 @@ const data = {
     },
     {
       id: 3,
-      first: "User",
-      last: "Bucuresti",
+      firstName: "User",
+      lastName: "Bucuresti",
       phone: "0777777777",
       email: "user@bucuresti.ro",
       password: "pass",
@@ -125,8 +125,8 @@ fs.writeFileSync(process.env.DB_FILE, JSON.stringify(data, null, 2), "utf-8")
 function mockEmployee(_, index) {
   return {
     id: index + 4,
-    first: faker.person.firstName(),
-    last: faker.person.lastName(),
+    firstName: faker.person.firstName(),
+    lastName: faker.person.lastName(),
     phone: faker.helpers.fromRegExp("[0-9]{10}"),
     email: faker.internet.email().toLowerCase(),
     password: faker.internet.password(),

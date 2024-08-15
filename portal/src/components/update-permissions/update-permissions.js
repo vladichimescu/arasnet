@@ -75,7 +75,7 @@ function UpdatePermissions({ open, onClose, employee }) {
         heading={
           <Fragment>
             <h4>
-              {employee.first} {employee.last}
+              {employee.firstName} {employee.lastName}
             </h4>
             <small>{employee.email}</small>
           </Fragment>

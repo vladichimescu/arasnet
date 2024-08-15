@@ -47,13 +47,13 @@ function CreateEmployee() {
           {
             type: "text",
             label: "First name",
-            name: "first",
+            name: "firstName",
             required: true,
           },
           {
             type: "text",
             label: "Last name",
-            name: "last",
+            name: "lastName",
             required: true,
           },
           {

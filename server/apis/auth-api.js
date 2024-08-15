@@ -160,7 +160,7 @@ function login({ body: { email, password } = {} }, res) {
     token,
     user: {
       email,
-      name: `${dbEmployee.first} ${dbEmployee.last}`,
+      name: `${dbEmployee.firstName} ${dbEmployee.lastName}`,
     },
     permissions: dbEmployee.permissions,
   })
