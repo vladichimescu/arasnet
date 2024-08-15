@@ -36,19 +36,13 @@ form {
 //#endregion
 
 //#region react-toastify
-.Toastify__toast-body {
-  white-space: pre-line;
+.Toastify {
+  line-height: 1.6;
+  font-size: 1.6rem;
 }
 
-.Toastify__close-button {
-  height: inherit;
-  line-height: normal;
-
-  &:hover,
-  &:focus {
-    color: black;
-    background-color: transparent;
-  }
+.Toastify__toast-body {
+  white-space: pre-line;
 }
 //#endregion
 
