@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 
-import { validateRequiredFields } from "@arasnet/functions"
+import { encrypt, validateRequiredFields } from "@arasnet/functions"
 import {
   apiConsultationsEndpoint,
   apiEmployeesEndpoint,
@@ -11,7 +11,7 @@ import jsonServerDB from "../index.js"
 
 const apiEndpoints = [apiConsultationsEndpoint, apiEmployeesEndpoint]
 
-function create({ body: employee = {} }, res, next) {
+async function create({ body: employee = {} }, res, next) {
   const errors = validateRequiredFields(employee, employeeRequiredFields)
 
   if (Object.keys(errors).length) {
@@ -55,6 +55,8 @@ function create({ body: employee = {} }, res, next) {
       {}
     )
   }
+
+  employee.password = await encrypt(employee.password)
 
   next()
 }

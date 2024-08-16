@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken"
 
+import { verify } from "@arasnet/functions"
 import { apiConsultationsEndpoint, apiEmployeesEndpoint } from "@arasnet/types"
 
 import jsonServerDB from "../index.js"
@@ -121,7 +122,7 @@ function authorize(
   })
 }
 
-function login({ body: { email, password } = {} }, res) {
+async function login({ body: { email, password } = {} }, res) {
   const dbEmployee = jsonServerDB
     .getState()
     .employees.find(({ email: employeeEmail } = {}) => employeeEmail === email)
@@ -135,7 +136,7 @@ function login({ body: { email, password } = {} }, res) {
     })
   }
 
-  const isPasswordValid = dbEmployee.password === password
+  const isPasswordValid = await verify(dbEmployee.password, password)
 
   if (!isPasswordValid) {
     return res.status(400).send({
@@ -160,7 +161,7 @@ function login({ body: { email, password } = {} }, res) {
     token,
     user: {
       email,
-      name: `${dbEmployee.firstName} ${dbEmployee.lastName}`,
+      name: `${dbEmployee.firstName} ${dbEmployee.lastName}`.trim(),
     },
     permissions: dbEmployee.permissions,
   })
