@@ -8,6 +8,8 @@ import {
   consultationStatuses,
 } from "@arasnet/types"
 
+const password = await encrypt("pass")
+
 const data = {
   employees: [
     {
@@ -16,7 +18,7 @@ const data = {
       lastName: "ARASnet",
       phone: "+40000000000",
       email: "admin@arasnet.ro",
-      password: await encrypt("pass"),
+      password,
       permissions: {
         employees: [["create"], ["read"], ["update"], ["remove"]],
         consultations: [["create"], ["read"], ["update"], ["remove"]],
@@ -30,7 +32,7 @@ const data = {
       lastName: "ARASnet",
       phone: "+40000000000",
       email: "website@arasnet.ro",
-      password: await encrypt("pass"),
+      password,
       permissions: {
         consultations: [["create"]],
       },
@@ -43,7 +45,7 @@ const data = {
       lastName: "Bucuresti",
       phone: "0777777777",
       email: "admin@bucuresti.ro",
-      password: await encrypt("pass"),
+      password,
       permissions: {
         employees: [["create"], ["read"], ["update"], ["remove"]],
         consultations: [
@@ -97,7 +99,7 @@ const data = {
       lastName: "Bucuresti",
       phone: "0777777777",
       email: "user@bucuresti.ro",
-      password: await encrypt("pass"),
+      password,
       permissions: {
         employees: [["read"]],
         consultations: [
@@ -123,14 +125,14 @@ const data = {
 fs.writeFileSync(process.env.DB_FILE, JSON.stringify(data, null, 2), "utf-8")
 
 //#region
-async function mockEmployee(_, index) {
+function mockEmployee(_, index) {
   return {
     id: index + 4,
     firstName: faker.person.firstName(),
     lastName: faker.person.lastName(),
     phone: faker.helpers.fromRegExp("[0-9]{10}"),
     email: faker.internet.email().toLowerCase(),
-    password: await encrypt(faker.internet.password()),
+    password,
     permissions: {
       employees: apiActions
         .slice(0, Math.floor(Math.random() * 4))
