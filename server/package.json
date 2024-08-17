@@ -9,7 +9,7 @@
     "start": "dotenv -e ../.env -e .env -- pm2 start index.js --name @arasnet/server --watch",
     "build": "dotenv -e ../.env -e .env -c production -- esbuild index.js --platform=node --format=esm --packages=external --bundle --minify --outfile=dist/index.js",
     "serve": "dotenv -e ../.env -e .env -c production -- pm2 start dist/index.js --name @arasnet/server",
-    "stop": "pm2 stop @arasnet/server"
+    "stop": "pm2 delete @arasnet/server"
   },
   "dependencies": {
     "@arasnet/functions": "*",
