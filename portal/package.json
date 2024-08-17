@@ -22,18 +22,19 @@
     "react-phone-input-2": "^2.15.1",
     "react-router-dom": "^6.26.1",
     "react-scripts": "5.0.1",
-    "react-toastify": "^10.0.5",
-    "serve": "^14.2.3"
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
     "@craco/craco": "^7.1.0",
     "dotenv-cli": "^7.4.2",
+    "pm2": "^5.4.2",
     "sass": "^1.77.8"
   },
   "scripts": {
     "start": "dotenv -e ../.env -e .env -- craco start",
-    "build": "dotenv -e ../.env -e .env -c production -- craco build",
-    "serve": "dotenv -e ../.env -e .env -c production -- serve -s build"
+    "build": "dotenv -e ../.env -e .env -c production -v BUILD_PATH='dist' -- craco build",
+    "serve": "dotenv -e ../.env -e .env -c production -- pm2 serve dist --name @arasnet/portal --spa",
+    "stop": "pm2 stop @arasnet/portal"
   },
   "eslintConfig": {
     "extends": [

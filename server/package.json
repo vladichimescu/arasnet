@@ -5,19 +5,23 @@
   "private": true,
   "scripts": {
     "postinstall": "dotenv -e ../.env -e .env -- node db",
-    "debug": "dotenv -e ../.env -e .env -- node --experimental-json-modules --inspect index.js",
-    "start": "dotenv -e ../.env -e .env -- node --experimental-json-modules index.js",
-    "serve": "dotenv -e ../.env -e .env -c production -- node --experimental-json-modules index.js"
+    "debug": "dotenv -e ../.env -e .env -- pm2 start index.js --name @arasnet/server --watch --no-daemon --node-args='--inspect'",
+    "start": "dotenv -e ../.env -e .env -- pm2 start index.js --name @arasnet/server --watch",
+    "build": "dotenv -e ../.env -e .env -c production -- esbuild index.js --platform=node --format=esm --packages=external --bundle --minify --outfile=dist/index.js",
+    "serve": "dotenv -e ../.env -e .env -c production -- pm2 start dist/index.js --name @arasnet/server",
+    "stop": "pm2 stop @arasnet/server"
   },
   "dependencies": {
     "@arasnet/functions": "*",
     "@arasnet/types": "*",
-    "@faker-js/faker": "^8.4.1",
     "json-server": "^0.17.4",
     "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
-    "dotenv-cli": "^7.4.2"
+    "@faker-js/faker": "^8.4.1",
+    "dotenv-cli": "^7.4.2",
+    "esbuild": "^0.23.0",
+    "pm2": "^5.4.2"
   },
   "volta": {
     "extends": "../package.json"

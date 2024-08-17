@@ -14,11 +14,14 @@
     "prettier": "^3.3.3"
   },
   "scripts": {
-    "clean": "rm -rf .yarn portal/build && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
+    "clean": "rm -rf .yarn dist portal/dist server/dist && find . -name 'node_modules' -type d -prune -exec rm -rf '{}' +",
     "format": "prettier --write \"**/*.{css,scss,js,jsx,json,md}\"",
     "start": "yarn workspaces foreach --all --parallel run start",
     "build": "yarn workspaces foreach --all --parallel run build",
-    "serve": "yarn workspaces foreach --all --parallel run serve"
+    "serve": "yarn workspaces foreach --all --parallel run serve",
+    "stop": "yarn workspaces foreach --all --parallel run stop",
+    "deploy": "rm -rf dist && mkdir -p dist/portal dist/server && yarn deploy:copy",
+    "deploy:copy": "cp -R {package.json,.yarnrc.yml,libs} dist/ && cp -R portal/{package.json,dist} dist/portal/ && cp -R server/{package.json,dist} dist/server/"
   },
   "engines": {
     "node": "20.16.0",

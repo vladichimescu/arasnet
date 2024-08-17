@@ -234,7 +234,9 @@ function restart({ headers: { authorization = "" } = {} }, res) {
       message: "Server has been restarted",
     })
 
-    process.exit()
+    setTimeout(() => {
+      process.exit()
+    }, 50)
   })
 }
 
