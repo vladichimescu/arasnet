@@ -5,7 +5,7 @@ const masterKey = await crypto.subtle.digest(
   new TextEncoder().encode(process.env.SECRET)
 )
 
-const criptoKey = await crypto.subtle.importKey(
+const cryptoKey = await crypto.subtle.importKey(
   "raw",
   masterKey,
   { name: algorithm },
@@ -24,7 +24,7 @@ async function encrypt(data) {
       name: algorithm,
       iv,
     },
-    criptoKey,
+    cryptoKey,
     encodedData
   )
 
@@ -59,7 +59,7 @@ async function decrypt(data) {
       name: algorithm,
       iv,
     },
-    criptoKey,
+    cryptoKey,
     encryptedData
   )
 
