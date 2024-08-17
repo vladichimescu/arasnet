@@ -20,8 +20,8 @@
     "build": "yarn workspaces foreach --all --parallel run build",
     "serve": "yarn workspaces foreach --all --parallel run serve",
     "stop": "yarn workspaces foreach --all --parallel run stop",
-    "deploy": "rm -rf dist && mkdir -p dist/portal dist/server && yarn deploy:copy",
-    "deploy:copy": "cp -R {package.json,.yarnrc.yml,libs} dist/ && cp -R portal/{package.json,dist} dist/portal/ && cp -R server/{package.json,dist} dist/server/"
+    "prepare": "rm -rf dist && mkdir -p dist/portal dist/server && cp -R libs dist/ && cp -R portal/dist dist/portal/ && cp -R server/dist dist/server/",
+    "deploy": "scp -r dist/* admin@arasnet.redirectme.net:/home/admin/arasnet/"
   },
   "engines": {
     "node": "20.16.0",
