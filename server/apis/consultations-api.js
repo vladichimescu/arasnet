@@ -1,7 +1,5 @@
 import { validateRequiredFields } from "@arasnet/functions"
-import { consultationRequiredFields, locations } from "@arasnet/types"
-
-import jsonServerDB from "../index.js"
+import { consultationRequiredFields } from "@arasnet/types"
 
 function create({ body: consultation = {} }, res, next) {
   const errors = validateRequiredFields(
@@ -24,29 +22,29 @@ function create({ body: consultation = {} }, res, next) {
     })
   }
 
-  const dbConsultation = jsonServerDB
-    .getState()
-    .consultations.find(
-      ({ phone, date } = {}) =>
-        phone === consultation.phone &&
-        new Date(date).toDateString() === consultationDate.toDateString()
-    )
+  // const dbConsultation = jsonServerDB
+  //   .getState()
+  //   .consultations.find(
+  //     ({ phone, date } = {}) =>
+  //       phone === consultation.phone &&
+  //       new Date(date).toDateString() === consultationDate.toDateString()
+  //   )
 
-  if (dbConsultation) {
-    return res.status(400).send({
-      date: {
-        code: "date invalid",
-        message: `Consultations already exists on ${new Intl.DateTimeFormat(
-          "ro-RO",
-          {
-            dateStyle: "full",
-          }
-        ).format(
-          consultationDate
-        )} in ${locations[dbConsultation.location].label}`,
-      },
-    })
-  }
+  // if (dbConsultation) {
+  //   return res.status(400).send({
+  //     date: {
+  //       code: "date invalid",
+  //       message: `Consultation already exists on ${new Intl.DateTimeFormat(
+  //         "ro-RO",
+  //         {
+  //           dateStyle: "full",
+  //         }
+  //       ).format(
+  //         consultationDate
+  //       )} in ${locations[dbConsultation.location].label}`,
+  //     },
+  //   })
+  // }
 
   if (!consultation.status) {
     consultation.status = "acffc089-0508-4c3f-945b-afd74376df92"
