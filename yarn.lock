@@ -95,7 +95,7 @@ __metadata:
     "@fortawesome/fontawesome-free": "npm:^6.6.0"
     axios: "npm:^1.7.4"
     dotenv-cli: "npm:^7.4.2"
-    i18next: "npm:^23.12.6"
+    i18next: "npm:^23.14.0"
     i18next-icu: "npm:^2.3.0"
     intl-messageformat: "npm:^10.5.14"
     milligram: "npm:^1.4.1"
@@ -120,7 +120,7 @@ __metadata:
     "@arasnet/types": "npm:*"
     "@faker-js/faker": "npm:^8.4.1"
     dotenv-cli: "npm:^7.4.2"
-    esbuild: "npm:^0.23.0"
+    esbuild: "npm:^0.23.1"
     json-server: "npm:^0.17.4"
     jsonwebtoken: "npm:^9.0.2"
     pm2: "npm:^5.4.2"
@@ -3369,11 +3369,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 22.4.0
-  resolution: "@types/node@npm:22.4.0"
+  version: 22.4.1
+  resolution: "@types/node@npm:22.4.1"
   dependencies:
     undici-types: "npm:~6.19.2"
-  checksum: 10c0/84cd094b19a27e0db425f1d02614e4f7ac59b5eb3b21e288c8f8d4d0a4c9ad370107bc1a649d4c2b4e810cd133feea26e0bbf7e7c617f93e9e139d6d2568cf50
+  checksum: 10c0/e42607438fcbd3a6aebd09084868fa0b22a4b0daf9eda79ed615df7ff8ae95e35ea56e090e1f3140ebae76b640abe42d4a6d5b60c0819eadf499adca737305b6
   languageName: node
   linkType: hard
 
@@ -6215,9 +6215,9 @@ __metadata:
   linkType: hard
 
 "electron-to-chromium@npm:^1.5.4":
-  version: 1.5.10
-  resolution: "electron-to-chromium@npm:1.5.10"
-  checksum: 10c0/f28f28be7e0e50e5ea2b6e26750c1ab3456b03aa2a8262f85ac6a1cd2cbc1f6e05e21bae65b08c6031ddf798f785463bf2f6cbca181d31e9deb675c12a999ef4
+  version: 1.5.11
+  resolution: "electron-to-chromium@npm:1.5.11"
+  checksum: 10c0/87b4c0c959009d3fa1120c73eb277c3fced527e4348c798384daf044b15cfb30bbaa5004e772ef016c5b2a70ee06bb8f756fb85fe3986d66c12d9f702c1fc5bc
   languageName: node
   linkType: hard
 
@@ -6503,7 +6503,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"esbuild@npm:^0.23.0":
+"esbuild@npm:^0.23.1":
   version: 0.23.1
   resolution: "esbuild@npm:0.23.1"
   dependencies:
@@ -8129,12 +8129,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"i18next@npm:^23.12.6":
-  version: 23.13.0
-  resolution: "i18next@npm:23.13.0"
+"i18next@npm:^23.14.0":
+  version: 23.14.0
+  resolution: "i18next@npm:23.14.0"
   dependencies:
     "@babel/runtime": "npm:^7.23.2"
-  checksum: 10c0/359c8ea9fc7c2046b349ccf4c1e836d38a69814b69f9691e63521779871cb1c6cdfc5c9b5897086e2a6d2480f3c10d5a27ef59391d81b973a4c52c66699dd9d2
+  checksum: 10c0/c26638a816e6213e515c158b17894ca3c54693911e1dc637cd279e11d53f8ded2494c3dcc6e2e94c639987ef63718193a1e2b4f3d5873fbcf89f266582140cd5
   languageName: node
   linkType: hard
 
@@ -10243,14 +10243,14 @@ __metadata:
   linkType: hard
 
 "mini-css-extract-plugin@npm:^2.4.5":
-  version: 2.9.0
-  resolution: "mini-css-extract-plugin@npm:2.9.0"
+  version: 2.9.1
+  resolution: "mini-css-extract-plugin@npm:2.9.1"
   dependencies:
     schema-utils: "npm:^4.0.0"
     tapable: "npm:^2.2.1"
   peerDependencies:
     webpack: ^5.0.0
-  checksum: 10c0/46e20747ea250420db8a82801b9779299ce3cd5ec4d6dd75e00904c39cc80f0f01decaa534b8cb9658d7d3b656b919cb2cc84b1ba7e2394d2d6548578a5c2901
+  checksum: 10c0/19361902ef028b9875aafa3931d99643c2d95824ba343a501c83ff61d069a430fcfc523ca796765798b564570da2199f5a28cd51b9528ddbcfdc9271c61400d0
   languageName: node
   linkType: hard
 

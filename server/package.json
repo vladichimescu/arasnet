@@ -20,7 +20,7 @@
   "devDependencies": {
     "@faker-js/faker": "^8.4.1",
     "dotenv-cli": "^7.4.2",
-    "esbuild": "^0.23.0",
+    "esbuild": "^0.23.1",
     "pm2": "^5.4.2"
   },
   "volta": {
