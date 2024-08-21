@@ -3,6 +3,7 @@ import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
 import { AgGridReact, useGridFilter } from "@ag-grid-community/react"
 import React, { useCallback, useEffect, useState } from "react"
 
+import { i18n } from "@arasnet/i18n"
 import { consultationLocations, consultationStatuses } from "@arasnet/types"
 
 import ActionService from "../services/action-service"
@@ -286,9 +287,8 @@ function formatIncludesDate({ gte, lte }) {
 }
 
 function dateFormatter({ value }) {
-  // TODO: set LOCALE format based on i18n
   return value
-    ? new Intl.DateTimeFormat("ro-RO", {
+    ? new Intl.DateTimeFormat(i18n.resolvedLanguage, {
         dateStyle: "full",
         timeStyle: "short",
       }).format(new Date(value))

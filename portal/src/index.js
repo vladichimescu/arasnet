@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify"
 
 import AuthProvider from "./components/auth-provider"
 import ErrorBoundary from "./components/error-boundary"
+import I18nProvider from "./components/i18n-provider"
 import Loading from "./components/loading"
 import NavBar from "./components/nav-bar"
 import "./index.scss"
@@ -70,11 +71,13 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"))
 root.render(
   <React.StrictMode>
-    <ErrorBoundary>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-    </ErrorBoundary>
+    <I18nProvider>
+      <ErrorBoundary>
+        <AuthProvider>
+          <RouterProvider router={router} />
+        </AuthProvider>
+      </ErrorBoundary>
+    </I18nProvider>
   </React.StrictMode>
 )
 

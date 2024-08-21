@@ -2,6 +2,7 @@ import axios from "axios"
 import NProgress from "nprogress"
 import { toast } from "react-toastify"
 
+import { i18n } from "@arasnet/i18n"
 import { apiServerUrl } from "@arasnet/types"
 
 import AuthService from "../services/auth-service"
@@ -23,6 +24,7 @@ function interceptRequestSuccess(config) {
   NProgress.start()
 
   config.headers.authorization = `Bearer ${AuthService.getToken()}`
+  config.headers.language = i18n.resolvedLanguage
 
   return config
 }

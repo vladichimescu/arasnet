@@ -11,9 +11,6 @@
     "@arasnet/types": "*",
     "@fortawesome/fontawesome-free": "^6.6.0",
     "axios": "^1.7.4",
-    "i18next": "^23.14.0",
-    "i18next-icu": "^2.3.0",
-    "intl-messageformat": "^10.5.14",
     "milligram": "^1.4.1",
     "nprogress": "^0.2.0",
     "react": "^18.3.1",
@@ -25,6 +22,7 @@
     "react-toastify": "^10.0.5"
   },
   "devDependencies": {
+    "@babel/plugin-syntax-import-attributes": "^7.24.7",
     "@craco/craco": "^7.1.0",
     "dotenv-cli": "^7.4.2",
     "pm2": "^5.4.2",

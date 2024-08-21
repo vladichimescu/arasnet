@@ -81,6 +81,16 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@arasnet/i18n@workspace:libs/i18n":
+  version: 0.0.0-use.local
+  resolution: "@arasnet/i18n@workspace:libs/i18n"
+  dependencies:
+    i18next: "npm:^23.14.0"
+    i18next-icu: "npm:^2.3.0"
+    intl-messageformat: "npm:^10.5.14"
+  languageName: unknown
+  linkType: soft
+
 "@arasnet/portal@workspace:portal":
   version: 0.0.0-use.local
   resolution: "@arasnet/portal@workspace:portal"
@@ -91,13 +101,11 @@ __metadata:
     "@ag-grid-community/styles": "npm:^32.1.0"
     "@arasnet/functions": "npm:*"
     "@arasnet/types": "npm:*"
+    "@babel/plugin-syntax-import-attributes": "npm:^7.24.7"
     "@craco/craco": "npm:^7.1.0"
     "@fortawesome/fontawesome-free": "npm:^6.6.0"
     axios: "npm:^1.7.4"
     dotenv-cli: "npm:^7.4.2"
-    i18next: "npm:^23.14.0"
-    i18next-icu: "npm:^2.3.0"
-    intl-messageformat: "npm:^10.5.14"
     milligram: "npm:^1.4.1"
     nprogress: "npm:^0.2.0"
     pm2: "npm:^5.4.2"
@@ -14508,9 +14516,9 @@ __metadata:
   linkType: hard
 
 "undici-types@npm:~6.19.2":
-  version: 6.19.6
-  resolution: "undici-types@npm:6.19.6"
-  checksum: 10c0/9b2264c5700e7169c6c62c643aac56cd8984c5fd7e18ed31ff11780260e137f6340dee8317a2e6e0ae3c49f5e5ef6fa577ea07193cbaa535265cba76a267cae9
+  version: 6.19.8
+  resolution: "undici-types@npm:6.19.8"
+  checksum: 10c0/078afa5990fba110f6824823ace86073b4638f1d5112ee26e790155f481f2a868cc3e0615505b6f4282bdf74a3d8caad715fd809e870c2bb0704e3ea6082f344
   languageName: node
   linkType: hard
 
