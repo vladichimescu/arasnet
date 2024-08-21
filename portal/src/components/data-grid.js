@@ -209,16 +209,16 @@ function DropdownColumnFilter({ options, model, onModelChange }) {
     <div className="ag-filter-body-wrapper ag-simple-filter-body-wrapper">
       <select
         className="ag-picker-field-wrapper"
-        value={model || "all"}
+        value={model || i18n.t("generic.plural.all")}
         onChange={({ target: { value } }) => {
-          onModelChange(value === "all" ? null : value)
+          onModelChange(value === i18n.t("generic.plural.all") ? null : value)
 
           if (closeFilter) {
             closeFilter()
           }
         }}
       >
-        <option>all</option>
+        <option>{i18n.t("generic.plural.all")}</option>
 
         {(options instanceof Array
           ? options

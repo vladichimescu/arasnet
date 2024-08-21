@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react"
 import PhoneInput from "react-phone-input-2"
 import { toast } from "react-toastify"
 
+import { i18n } from "@arasnet/i18n"
+
 import styles from "./form.module.scss"
 
 function Form({
@@ -11,7 +13,9 @@ function Form({
   content,
   footer,
   onSubmit,
+  submitLabel = i18n.t("generic.action.submit"),
   onCancel,
+  cancelLabel = i18n.t("generic.action.cancel"),
   inputs,
 }) {
   const focusRef = useRef()
@@ -93,10 +97,9 @@ function Form({
           <button
             type="submit"
             className={isSubmitting ? "isLoading" : null}
-            // className="isLoading"
             disabled={isSubmitting}
           >
-            Submit
+            {submitLabel}
           </button>
 
           <small>{errors?.code}</small>
@@ -113,7 +116,7 @@ function Form({
             onCancel()
           }}
         >
-          Cancel
+          {cancelLabel}
         </button>
       ) : null}
 

@@ -73,6 +73,68 @@
         "code": "location required",
         "message": "Location is required"
       }
+    },
+    "action": {
+      "login": "Login",
+      "logout": "Logout",
+      "submit": "Submit",
+      "cancel": "Cancel"
+    },
+    "plural": {
+      "all": "all"
+    }
+  },
+  "entity": {
+    "consultation": {
+      "status": {
+        "canceled": "canceled",
+        "confirmed": "confirmed",
+        "created": "created",
+        "failed": "failed",
+        "pending": "pending",
+        "success": "success"
+      }
+    },
+    "field": {
+      "confirmation": "Confirmation",
+      "createdAt": "Created at",
+      "createdBy": "Created by",
+      "date": "Date",
+      "email": "E-mail",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "location": "Location",
+      "name": "Name",
+      "password": "Password",
+      "permissions": "Permissions",
+      "phone": "Phone",
+      "status": "Status"
+    }
+  },
+  "page": {
+    "consultations": {
+      "title": "Consultations",
+      "dataGrid": {
+        "action": {
+          "whatsapp": "Whatsapp",
+          "sms": "SMS",
+          "phone": "Call"
+        }
+      },
+      "action": {
+        "addConsultation": "Add Consultation"
+      }
+    },
+    "employees": {
+      "title": "Employees",
+      "dataGrid": {
+        "action": {
+          "permissions": "Permissions"
+        }
+      },
+      "action": {
+        "addEmployee": "Add employee"
+      }
     }
   }
 }

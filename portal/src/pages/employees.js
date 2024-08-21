@@ -2,6 +2,8 @@ import { ModuleRegistry } from "@ag-grid-community/core"
 import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
 import React, { Fragment, useState } from "react"
 
+import { i18n } from "@arasnet/i18n"
+
 import EmployeesApi from "../apis/employees-api"
 import { useAuth } from "../components/auth-provider"
 import CreateEmployee from "../components/create-employee"
@@ -13,20 +15,20 @@ ModuleRegistry.registerModules([InfiniteRowModelModule])
 const columnDefs = [
   {
     field: "phone",
-    headerName: "Phone",
+    headerName: i18n.t("entity.field.phone"),
     filter: "agNumberColumnFilter",
     filterParams: {
       filterOptions: ["contains"],
     },
   },
   {
-    headerName: "Name",
+    headerName: i18n.t("entity.field.name"),
     valueGetter: ({ data: { firstName, lastName } = {} }) =>
       `${firstName || ""} ${lastName || ""} `.trim(),
   },
   {
     field: "email",
-    headerName: "Email",
+    headerName: i18n.t("entity.field.email"),
     filter: "agTextColumnFilter",
     filterParams: {
       filterOptions: ["contains"],
@@ -34,17 +36,18 @@ const columnDefs = [
   },
   {
     field: "permissions",
+    headerName: i18n.t("entity.field.permissions"),
     cellRenderer: PermissionsButton,
   },
   {
     field: "createdAt",
-    headerName: "Created",
+    headerName: i18n.t("entity.field.createdAt"),
     valueFormatter: dateFormatter,
     sortable: true,
   },
   {
     field: "createdBy",
-    headerName: "Created by",
+    headerName: i18n.t("entity.field.createdBy"),
     filter: "agTextColumnFilter",
     filterParams: {
       filterOptions: ["contains"],
@@ -85,7 +88,7 @@ function PermissionsButton({ data }) {
           setIsOpened(true)
         }}
       >
-        Permissions
+        {i18n.t("page.employees.dataGrid.action.permissions")}
       </button>
 
       {isOpened ? (

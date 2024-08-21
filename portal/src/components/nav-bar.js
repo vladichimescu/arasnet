@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
 
+import { i18n } from "@arasnet/i18n"
+
 import ActionService from "../services/action-service"
 import EventService from "../services/event-service"
 
@@ -53,11 +55,13 @@ function NavBar() {
           )} */}
 
           {canReadConsultations ? (
-            <option value="/consultations">Consultations</option>
+            <option value="/consultations">
+              {i18n.t("page.consultations.title")}
+            </option>
           ) : null}
 
           {canReadEmployees ? (
-            <option value="/employees">Employees</option>
+            <option value="/employees">{i18n.t("page.employees.title")}</option>
           ) : null}
         </optgroup>
 
@@ -73,7 +77,7 @@ function NavBar() {
 
         {isLogged ? (
           <optgroup>
-            <option value="/logout">Logout</option>
+            <option value="/logout">{i18n.t("generic.action.logout")}</option>
           </optgroup>
         ) : null}
       </select>
@@ -102,13 +106,13 @@ function NavBar() {
 
       {canReadConsultations ? (
         <Link to="consultations" className="button button-small">
-          Consultations
+          {i18n.t("page.consultations.title")}
         </Link>
       ) : null}
 
       {canReadEmployees ? (
         <Link to="employees" className="button button-small">
-          Employees
+          {i18n.t("page.employees.title")}
         </Link>
       ) : null}
 
@@ -127,7 +131,7 @@ function NavBar() {
 
         {isLogged ? (
           <Link to="logout" className="button button-small">
-            Logout
+            {i18n.t("generic.action.logout")}
           </Link>
         ) : null}
       </div>

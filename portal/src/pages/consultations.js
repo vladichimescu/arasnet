@@ -2,7 +2,8 @@ import { ModuleRegistry } from "@ag-grid-community/core"
 import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
 import React, { Fragment } from "react"
 
-import { consultationStatuses } from "@arasnet/types"
+import { i18n } from "@arasnet/i18n"
+import { consultationLocations, consultationStatuses } from "@arasnet/types"
 
 import ConsultationsApi from "../apis/consultations-api"
 import { useAuth } from "../components/auth-provider"
@@ -20,7 +21,7 @@ ModuleRegistry.registerModules([InfiniteRowModelModule])
 const columnDefs = [
   {
     field: "phone",
-    headerName: "Phone",
+    headerName: i18n.t("entity.field.phone"),
     filter: "agNumberColumnFilter",
     filterParams: {
       filterOptions: ["contains"],
@@ -28,7 +29,7 @@ const columnDefs = [
   },
   {
     field: "date",
-    headerName: "Appointment",
+    headerName: i18n.t("entity.field.date"),
     valueFormatter: dateFormatter,
     filter: "agDateColumnFilter",
     filterParams: {
@@ -38,7 +39,7 @@ const columnDefs = [
   },
   {
     field: "status",
-    headerName: "Status",
+    headerName: i18n.t("entity.field.status"),
     valueFormatter: statusFormatter,
     filter: StatusColumnFilter,
     editable: true,
@@ -53,17 +54,18 @@ const columnDefs = [
   },
   {
     field: "confirmation",
+    headerName: i18n.t("entity.field.confirmation"),
     cellRenderer: ConfirmationButtons,
   },
   {
-    // TODO: filter select
     field: "location",
-    headerName: "Location",
+    headerName: i18n.t("entity.field.location"),
     valueFormatter: locationFormatter,
+    filter: LocationColumnFilter,
   },
   {
     field: "createdAt",
-    headerName: "Created at",
+    headerName: i18n.t("entity.field.createdAt"),
     valueFormatter: dateFormatter,
     sortable: true,
     filter: "agDateColumnFilter",
@@ -73,7 +75,7 @@ const columnDefs = [
   },
   {
     field: "createdBy",
-    headerName: "Created by",
+    headerName: i18n.t("entity.field.createdBy"),
   },
 ]
 
@@ -127,7 +129,20 @@ function ConfirmationButtons({ data }) {
         rel="noreferrer"
       >
         <i className="fa-brands fa-whatsapp" />
-        WhatsApp
+        {i18n.t("page.consultations.dataGrid.action.whatsapp")}
+      </a>
+
+      <a
+        className="button button-clear"
+        style={{
+          marginRight: "16px",
+          paddingLeft: "12px",
+          paddingRight: "12px",
+        }}
+        href={`sms:${data.phone}&body=${message.replaceAll("\n", "%0a")}`}
+      >
+        <i className="fa-solid fa-comment-sms"></i>
+        {i18n.t("page.consultations.dataGrid.action.sms")}
       </a>
 
       <a
@@ -141,7 +156,7 @@ function ConfirmationButtons({ data }) {
         rel="noreferrer"
       >
         <i className="fa-solid fa-phone" />
-        Call
+        {i18n.t("page.consultations.dataGrid.action.phone")}
       </a>
     </Fragment>
   )
@@ -149,5 +164,9 @@ function ConfirmationButtons({ data }) {
 
 function StatusColumnFilter(props) {
   return <DropdownColumnFilter options={consultationStatuses} {...props} />
+}
+
+function LocationColumnFilter(props) {
+  return <DropdownColumnFilter options={consultationLocations} {...props} />
 }
 //#endregion

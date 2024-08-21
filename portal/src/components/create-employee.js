@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react"
 
+import { i18n } from "@arasnet/i18n"
+
 import EmployeesApi from "../apis/employees-api"
 import ActionService from "../services/action-service"
 
@@ -17,7 +19,7 @@ function CreateEmployee() {
       () => {
         setIsOpened(true)
       },
-      "Add employee"
+      i18n.t("page.employees.action.addEmployee")
     )
 
     return () => {
@@ -46,31 +48,31 @@ function CreateEmployee() {
         inputs={[
           {
             type: "text",
-            label: "First name",
+            label: i18n.t("entity.field.firstName"),
             name: "firstName",
             required: true,
           },
           {
             type: "text",
-            label: "Last name",
+            label: i18n.t("entity.field.lastName"),
             name: "lastName",
             required: true,
           },
           {
             type: "phone-input",
-            label: "Phone",
+            label: i18n.t("entity.field.phone"),
             name: "phone",
             required: true,
           },
           {
             type: "email",
-            label: "Email",
+            label: i18n.t("entity.field.email"),
             name: "email",
             required: true,
           },
           {
             type: "text",
-            label: "Temp password",
+            label: i18n.t("entity.field.password"),
             name: "password",
             required: true,
           },

@@ -73,6 +73,68 @@
         "code": "locație necesară",
         "message": "Locația este necesară"
       }
+    },
+    "action": {
+      "login": "Conectare",
+      "logout": "Deconectare",
+      "submit": "Trimite",
+      "cancel": "Anulează"
+    },
+    "plural": {
+      "all": "toate"
+    }
+  },
+  "entity": {
+    "consultation": {
+      "status": {
+        "created": "creat",
+        "pending": "în aşteptare",
+        "confirmed": "confirmat",
+        "canceled": "anulat",
+        "success": "succes",
+        "failed": "eșuat"
+      }
+    },
+    "field": {
+      "confirmation": "Confirmare",
+      "createdAt": "Creat la",
+      "createdBy": "Creat de",
+      "date": "Data",
+      "email": "E-mail",
+      "firstName": "Prenume",
+      "lastName": "Nume",
+      "location": "Locație",
+      "name": "Nume",
+      "password": "Parolă",
+      "permissions": "Permisiuni",
+      "phone": "Telefon",
+      "status": "Status"
+    }
+  },
+  "page": {
+    "consultations": {
+      "title": "Consultații",
+      "dataGrid": {
+        "action": {
+          "whatsapp": "Whatsapp",
+          "sms": "SMS",
+          "phone": "Apel"
+        }
+      },
+      "action": {
+        "addConsultation": "Adăugare consult"
+      }
+    },
+    "employees": {
+      "title": "Angajați",
+      "dataGrid": {
+        "action": {
+          "permissions": "Permisiuni"
+        }
+      },
+      "action": {
+        "addEmployee": "Adăugare angajat"
+      }
     }
   }
 }

@@ -1,6 +1,8 @@
 import React from "react"
 import { Navigate } from "react-router-dom"
 
+import { i18n } from "@arasnet/i18n"
+
 import { useAuth } from "../components/auth-provider"
 import Form from "../components/form/form"
 
@@ -20,6 +22,7 @@ function Login() {
         width: "min(90vw, 400px)",
       }}
       onSubmit={login}
+      submitLabel={i18n.t("generic.action.login")}
       heading={
         <h1>
           ARAS<small>NET</small>
@@ -35,13 +38,13 @@ function Login() {
       inputs={[
         {
           type: "email",
-          label: "Email",
+          label: i18n.t("entity.field.email"),
           name: "email",
           required: true,
         },
         {
           type: "password",
-          label: "Password",
+          label: i18n.t("entity.field.password"),
           name: "password",
           required: true,
         },

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 
+import { i18n } from "@arasnet/i18n"
 import { consultationLocations } from "@arasnet/types"
 
 import ConsultationsApi from "../apis/consultations-api"
@@ -27,7 +28,7 @@ function CreateConsultation() {
       () => {
         setIsOpened(true)
       },
-      "Create consultation"
+      i18n.t("page.consultations.action.addConsultation")
     )
 
     return () => {
@@ -56,20 +57,20 @@ function CreateConsultation() {
         inputs={[
           {
             type: "phone-input",
-            label: "Phone",
+            label: i18n.t("entity.field.phone"),
             name: "phone",
             required: true,
           },
           {
             type: "datetime-local",
-            label: "Date",
+            label: i18n.t("entity.field.date"),
             name: "date",
             required: true,
             min: `${minDatetimeLocal.toISOString().slice(0, -8)}`,
           },
           {
             type: "select",
-            label: "Location",
+            label: i18n.t("entity.field.location"),
             name: "location",
             required: true,
             list: Object.entries(consultationLocations).filter(([locationId]) =>
