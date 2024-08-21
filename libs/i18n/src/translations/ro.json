@@ -9,6 +9,10 @@
         "code": "eroare server",
         "message": "Oops, ceva a mers rău pe server"
       },
+      "permissions_error": {
+        "code": "eroare permisiuni",
+        "message": "Permisiunile nu sunt valide"
+      },
       "authentication_failed": {
         "code": "autentificare eșuată",
         "message": "Autentificarea a eșuat"

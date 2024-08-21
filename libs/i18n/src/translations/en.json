@@ -9,6 +9,10 @@
         "code": "server error",
         "message": "Oops, something went wrong on the server"
       },
+      "permissions_error": {
+        "code": "permissions error",
+        "message": "Permissions are not valid"
+      },
       "authentication_failed": {
         "code": "authentication failed",
         "message": "Authentication has failed"

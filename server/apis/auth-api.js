@@ -165,6 +165,14 @@ async function login({ body: { email, password } = {} }, res) {
     }
   }
 
+  const hasPermissions = Object.values(dbEmployee.permissions).some(
+    (permissions) => permissions.length
+  )
+
+  if (!hasPermissions) {
+    return res.status(403).send("permissions_error")
+  }
+
   const token = jwt.sign(
     {
       data: email,
