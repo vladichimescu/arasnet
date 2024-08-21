@@ -20,9 +20,9 @@ const router = jsonServer.router(file)
 
 server.use(middlewares)
 server.use(jsonServer.bodyParser)
+server.use(redirect)
 server.use(timestamp)
 server.use(i18nErrors)
-server.use(redirect)
 
 //#region Public APIs
 server.post(`/${apiAuthEndpoint}`, AuthApi.login)
@@ -86,27 +86,23 @@ function i18nErrors(req, res, next) {
   const _send = res.send
 
   res.send = function (body, error) {
-    if (res.statusCode === 400) {
-      const _body = Object.entries(body).reduce(
-        (acc, [field, i18nError]) => ({
-          ...acc,
-          [field]: i18nT(`generic.error.${i18nError}`),
-        }),
-        {}
-      )
-
-      return _send.call(this, JSON.stringify(_body))
-    }
-
-    if (
-      res.statusCode === 401 ||
-      res.statusCode === 403 ||
-      res.statusCode === 500
-    ) {
-      const _body = {
-        ...i18nT(`generic.error.${body}`),
-        error,
-      }
+    if ([4, 5].includes(parseInt(res.statusCode / 100))) {
+      const _body =
+        typeof body === "string"
+          ? {
+              ...i18nT(`generic.error.${body}`),
+              error,
+            }
+          : Object.entries(body).reduce(
+              (acc, [field, i18nError]) => ({
+                ...acc,
+                [field]:
+                  typeof i18nError === "string" && !i18nError.includes(" ")
+                    ? i18nT(`generic.error.${i18nError}`)
+                    : i18nError,
+              }),
+              {}
+            )
 
       return _send.call(this, JSON.stringify(_body))
     }
