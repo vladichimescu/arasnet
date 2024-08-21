@@ -1,8 +1,8 @@
 import i18n from "i18next"
 import ICU from "i18next-icu"
 
-import en from "./translations/en.json" with { type: 'json' }
-import ro from "./translations/ro.json" with { type: 'json' }
+import en from "./translations/en.json" with { type: "json" }
+import ro from "./translations/ro.json" with { type: "json" }
 
 const languages = {
   enGB: "en-GB",

@@ -10,7 +10,7 @@
   },
   "private": true,
   "devDependencies": {
-    "@trivago/prettier-plugin-sort-imports": "^4.3.0",
+    "@miller-svt/prettier-plugin-sort-imports": "^4.4.1",
     "prettier": "^3.3.3"
   },
   "scripts": {
@@ -35,13 +35,17 @@
     "semi": false,
     "trailingComma": "es5",
     "plugins": [
-      "@trivago/prettier-plugin-sort-imports"
+      "@miller-svt/prettier-plugin-sort-imports"
     ],
     "importOrder": [
       "^@arasnet/(.*)$",
       "^../",
       "^./",
       "^./*.*.(c|sc)ss"
+    ],
+    "importOrderParserPlugins": [
+      "jsx",
+      "importAttributes"
     ],
     "importOrderSeparation": true,
     "importOrderSortSpecifiers": true
