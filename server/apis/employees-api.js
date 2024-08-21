@@ -26,10 +26,7 @@ async function create({ body: employee = {} }, res, next) {
 
   if (dbEmployeeByEmail) {
     return res.status(400).send({
-      email: {
-        code: "email invalid",
-        message: "Email is already used",
-      },
+      email: "email_used",
     })
   }
 
@@ -39,10 +36,7 @@ async function create({ body: employee = {} }, res, next) {
 
   if (dbEmployeeByPhone) {
     return res.status(400).send({
-      phone: {
-        code: "phone invalid",
-        message: "Phone number is already used",
-      },
+      phone: "phone_used",
     })
   }
 
@@ -84,10 +78,7 @@ function update(
     .employees.find(({ id } = {}) => id === employee.id)
 
   if (createdBy === "SYSTEM") {
-    return res.status(403).send({
-      code: "authorization failed",
-      message: "Authorization has failed",
-    })
+    return res.status(403).send("authorization_failed")
   }
 
   const { permissions: userPermissions } = jsonServerDB

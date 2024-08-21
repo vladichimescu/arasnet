@@ -1,1 +1,78 @@
-{}
+{
+  "generic": {
+    "error": {
+      "network_error": {
+        "code": "eroare rețea",
+        "message": "Oops, ceva a mers rău cu rețeaua"
+      },
+      "server_error": {
+        "code": "eroare server",
+        "message": "Oops, ceva a mers rău pe server"
+      },
+      "authentication_failed": {
+        "code": "autentificare eșuată",
+        "message": "Autentificarea a eșuat"
+      },
+      "authentication_expired": {
+        "code": "autentificare expirată",
+        "message": "Autentificarea a expirat"
+      },
+      "authorization_failed": {
+        "code": "autorizare eșuată",
+        "message": "Autorizarea a eșuat"
+      },
+      "email_required": {
+        "code": "email necesar",
+        "message": "E-mailul este necesar"
+      },
+      "email_invalid": {
+        "code": "email invalid",
+        "message": "E-mailul este invalid"
+      },
+      "email_used": {
+        "code": "email invalid",
+        "message": "E-mailul este deja utilizat"
+      },
+      "password_required": {
+        "code": "parolă necesară",
+        "message": "Parola este necesară"
+      },
+      "password_invalid": {
+        "code": "parolă invalidă",
+        "message": "Parola este invalidă"
+      },
+      "firstName_required": {
+        "code": "prenume necesar",
+        "message": "Prenumele este necesar"
+      },
+      "lastName_required": {
+        "code": "nume necesar",
+        "message": "Numele este necesar"
+      },
+      "date_required": {
+        "code": "dată necesară",
+        "message": "Data este necesară"
+      },
+      "date_invalid": {
+        "code": "dată invalidă",
+        "message": "Data este invalidă"
+      },
+      "date_past": {
+        "code": "dată invalidă",
+        "message": "Data nu poate fi în trecut"
+      },
+      "phone_required": {
+        "code": "telefon necesar",
+        "message": "Numărul de telefon este necesar"
+      },
+      "phone_used": {
+        "code": "telefon invalid",
+        "message": "Numărul de telefon este deja utilizat"
+      },
+      "location_required": {
+        "code": "locație necesară",
+        "message": "Locația este necesară"
+      }
+    }
+  }
+}

@@ -15,36 +15,9 @@ function create({ body: consultation = {} }, res, next) {
 
   if (new Date() > consultationDate) {
     return res.status(400).send({
-      date: {
-        code: "date invalid",
-        message: "Consultation cannot be scheduled in the past",
-      },
+      date: "date_past",
     })
   }
-
-  // const dbConsultation = jsonServerDB
-  //   .getState()
-  //   .consultations.find(
-  //     ({ phone, date } = {}) =>
-  //       phone === consultation.phone &&
-  //       new Date(date).toDateString() === consultationDate.toDateString()
-  //   )
-
-  // if (dbConsultation) {
-  //   return res.status(400).send({
-  //     date: {
-  //       code: "date invalid",
-  //       message: `Consultation already exists on ${new Intl.DateTimeFormat(
-  //         "ro-RO",
-  //         {
-  //           dateStyle: "full",
-  //         }
-  //       ).format(
-  //         consultationDate
-  //       )} in ${locations[dbConsultation.location].label}`,
-  //     },
-  //   })
-  // }
 
   if (!consultation.status) {
     consultation.status = "acffc089-0508-4c3f-945b-afd74376df92"

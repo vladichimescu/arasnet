@@ -8,10 +8,7 @@ function validateRequiredFields(obj = {}, fields = []) {
       obj[field] === "" ||
       (field === "phone" && obj[field].length < 10)
     ) {
-      errors[field] = {
-        code: `${field} required`,
-        message: `${field.charAt(0).toUpperCase()}${field.slice(1)} is required`,
-      }
+      errors[field] = `${field}_required`
     }
   })
 

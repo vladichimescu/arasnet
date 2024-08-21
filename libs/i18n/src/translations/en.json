@@ -1,1 +1,78 @@
-{}
+{
+  "generic": {
+    "error": {
+      "network_error": {
+        "code": "network error",
+        "message": "Oops, something went wrong with the network"
+      },
+      "server_error": {
+        "code": "server error",
+        "message": "Oops, something went wrong on the server"
+      },
+      "authentication_failed": {
+        "code": "authentication failed",
+        "message": "Authentication has failed"
+      },
+      "authentication_expired": {
+        "code": "authentication expired",
+        "message": "Authentication has expired"
+      },
+      "authorization_failed": {
+        "code": "authorization failed",
+        "message": "Authorization has failed"
+      },
+      "email_required": {
+        "code": "email required",
+        "message": "E-mail is required"
+      },
+      "email_invalid": {
+        "code": "email invalid",
+        "message": "E-mail is invalid"
+      },
+      "email_used": {
+        "code": "email invalid",
+        "message": "E-mail is already used"
+      },
+      "password_required": {
+        "code": "password required",
+        "message": "Password is required"
+      },
+      "password_invalid": {
+        "code": "password invalid",
+        "message": "Password is invalid"
+      },
+      "firstName_required": {
+        "code": "first name required",
+        "message": "First Name is required"
+      },
+      "lastName_required": {
+        "code": "last name required",
+        "message": "Last Name is required"
+      },
+      "date_required": {
+        "code": "date required",
+        "message": "Date is required"
+      },
+      "date_invalid": {
+        "code": "date invalid",
+        "message": "Date is invalid"
+      },
+      "date_past": {
+        "code": "date invalid",
+        "message": "Date cannot be in the past"
+      },
+      "phone_required": {
+        "code": "phone required",
+        "message": "Phone number is required"
+      },
+      "phone_used": {
+        "code": "phone invalid",
+        "message": "Phone number is already used"
+      },
+      "location_required": {
+        "code": "location required",
+        "message": "Location is required"
+      }
+    }
+  }
+}

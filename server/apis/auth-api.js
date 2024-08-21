@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 
-import { verify } from "@arasnet/functions"
+import { validateRequiredFields, verify } from "@arasnet/functions"
 import { apiConsultationsEndpoint, apiEmployeesEndpoint } from "@arasnet/types"
 
 import jsonServerDB from "../index.js"
@@ -21,25 +21,16 @@ function authenticate({ headers: { authorization = "" } = {} }, res, next) {
   const token = authorization.split(" ")[1]
 
   if (!token) {
-    return res.status(401).send({
-      code: "authentication failed",
-      message: "Authentication has failed",
-    })
+    return res.status(401).send("authentication_failed")
   }
 
   jwt.verify(token, secret, function (err) {
     if (err) {
       if (err.name === "TokenExpiredError") {
-        return res.status(401).send({
-          code: "authentication expired",
-          message: "Authentication has expired",
-        })
+        return res.status(401).send("authentication_expired")
       }
 
-      return res.status(401).send({
-        code: "authentication failed",
-        message: "Authentication has failed",
-      })
+      return res.status(401).send("authentication_failed")
     }
 
     const { data: userEmail } = jwt.decode(token)
@@ -51,10 +42,7 @@ function authenticate({ headers: { authorization = "" } = {} }, res, next) {
       )
 
     if (!dbUser) {
-      return res.status(401).send({
-        code: "authentication failed",
-        message: "Authentication has failed",
-      })
+      return res.status(401).send("authentication_failed")
     }
 
     next()
@@ -87,10 +75,7 @@ function authorize(
     )
 
     if (!permittedAction) {
-      return res.status(403).send({
-        code: "authorization failed",
-        message: "Authorization has failed",
-      })
+      return res.status(403).send("authorization_failed")
     }
 
     if (action === "read") {
@@ -103,10 +88,7 @@ function authorize(
       )
 
       if (!payloadPermitted) {
-        return res.status(403).send({
-          code: "authorization failed",
-          message: "Authorization has failed",
-        })
+        return res.status(403).send("authorization_failed")
       }
     }
 
@@ -123,16 +105,22 @@ function authorize(
 }
 
 async function login({ body: { email, password } = {} }, res) {
+  const errors = validateRequiredFields({ email, password }, [
+    "email",
+    "password",
+  ])
+
+  if (Object.keys(errors).length) {
+    return res.status(400).send(errors)
+  }
+
   const dbEmployee = jsonServerDB
     .getState()
     .employees.find(({ email: employeeEmail } = {}) => employeeEmail === email)
 
   if (!dbEmployee) {
     return res.status(400).send({
-      email: {
-        code: "email invalid",
-        message: "Email is invalid",
-      },
+      email: "email_invalid",
     })
   }
 
@@ -140,10 +128,7 @@ async function login({ body: { email, password } = {} }, res) {
 
   if (!isPasswordValid) {
     return res.status(400).send({
-      password: {
-        code: "password invalid",
-        message: "Password is invalid",
-      },
+      password: "password_invalid",
     })
   }
 
@@ -171,18 +156,12 @@ function resign({ headers: { authorization = "" } = {} }, res) {
   const token = authorization.split(" ")[1]
 
   if (!token) {
-    return res.status(401).send({
-      code: "authentication failed",
-      message: "Authentication has failed",
-    })
+    return res.status(401).send("authentication_failed")
   }
 
   jwt.verify(token, secret, function (err) {
     if (err && err.name !== "TokenExpiredError") {
-      return res.status(401).send({
-        code: "authentication failed",
-        message: "Authentication has failed",
-      })
+      return res.status(401).send("authentication_failed")
     }
 
     const { data: userEmail } = jwt.decode(token)
@@ -223,16 +202,10 @@ function restart({ headers: { authorization = "" } = {} }, res) {
       )
 
     if (dbUser?.createdBy !== "SYSTEM") {
-      return res.status(403).send({
-        code: "authorization failed",
-        message: "Authorization has failed",
-      })
+      return res.status(403).send("authorization_failed")
     }
 
-    res.status(200).send({
-      code: "server restarted",
-      message: "Server has been restarted",
-    })
+    res.status(200).send()
 
     setTimeout(() => {
       process.exit()

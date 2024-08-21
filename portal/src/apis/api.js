@@ -46,13 +46,13 @@ function interceptResponseError({
   config,
 }) {
   if (!status) {
-    toast.error("Oops, something went wrong with the network")
+    toast.error(i18n.t("generic.error.network_error"))
   } else if (status === 400) {
     Object.values(data)
       .map(({ message }) => message)
       .forEach(toast.warn)
   } else if (status === 401) {
-    if (data.code === "authentication expired") {
+    if (data.code === i18n.t("generic.error.authentication_expired").code) {
       return resign(config)
     }
 
