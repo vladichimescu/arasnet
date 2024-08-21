@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "dotenv -e ../.env -e .env -- node db",
     "debug": "dotenv -e ../.env -e .env -- pm2 start index.js --name @arasnet/server --watch --no-daemon --node-args='--inspect'",
-    "start": "dotenv -e ../.env -e .env -- pm2 start index.js --name @arasnet/server --watch",
+    "start": "dotenv -e ../.env -e .env -- pm2 start index.js --name @arasnet/server --watch --no-daemon",
     "build": "dotenv -e ../.env -e .env -c production -- esbuild index.js --platform=node --format=esm --packages=external --bundle --minify --outfile=dist/index.js",
     "serve": "dotenv -e ../.env -e .env -c production -- pm2 start dist/index.js --name @arasnet/server",
     "stop": "pm2 delete @arasnet/server"
