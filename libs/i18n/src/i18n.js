@@ -6,14 +6,19 @@ import ro from "./translations/ro.json" with { type: "json" }
 
 const languages = {
   enGB: "en-GB",
+  enUS: "en-US",
   roRo: "ro-RO",
 }
 
-const lng = languages.enGB
 const fallbackLng = languages.enGB
+
+const lng = process.env.LOCALE || process.env.REACT_APP_LOCALE || fallbackLng
 
 const resources = {
   [languages.enGB]: {
+    translation: en,
+  },
+  [languages.enUS]: {
     translation: en,
   },
   [languages.roRo]: {

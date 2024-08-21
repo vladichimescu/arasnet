@@ -1,5 +1,6 @@
 import { ModuleRegistry } from "@ag-grid-community/core"
 import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
+import { AG_GRID_LOCALE_RO } from "@ag-grid-community/locale"
 import { AgGridReact, useGridFilter } from "@ag-grid-community/react"
 import React, { useCallback, useEffect, useState } from "react"
 
@@ -122,7 +123,14 @@ function DataGrid({
       onBodyScrollEnd={({ api }) => {
         api.autoSizeAllColumns()
       }}
-      reactiveCustomComponents
+      localeText={
+        i18n.resolvedLanguage === "ro-RO"
+          ? {
+              ...AG_GRID_LOCALE_RO,
+              noRowsToShow: "Nu există înregistrări",
+            }
+          : null
+      }
     />
   )
 }

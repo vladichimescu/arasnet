@@ -25,6 +25,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ag-grid-community/locale@npm:^32.1.0":
+  version: 32.1.0
+  resolution: "@ag-grid-community/locale@npm:32.1.0"
+  checksum: 10c0/35861227ca88089e1cd3d2a507ade3de2fca2b52089e32207c3016b7de4f37e8c6270859bcad27512bbbadb0f5b52cc508bfe5eea9a673bb31aa8682f0d21eee
+  languageName: node
+  linkType: hard
+
 "@ag-grid-community/react@npm:^32.1.0":
   version: 32.1.0
   resolution: "@ag-grid-community/react@npm:32.1.0"
@@ -97,6 +104,7 @@ __metadata:
   dependencies:
     "@ag-grid-community/core": "npm:^32.1.0"
     "@ag-grid-community/infinite-row-model": "npm:^32.1.0"
+    "@ag-grid-community/locale": "npm:^32.1.0"
     "@ag-grid-community/react": "npm:^32.1.0"
     "@ag-grid-community/styles": "npm:^32.1.0"
     "@arasnet/functions": "npm:*"
