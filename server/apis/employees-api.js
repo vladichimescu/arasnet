@@ -50,8 +50,6 @@ async function create({ body: employee = {} }, res, next) {
     )
   }
 
-  employee.password = await encrypt(employee.password)
-
   next()
 }
 

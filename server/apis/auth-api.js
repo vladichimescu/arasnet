@@ -1,11 +1,13 @@
 import jwt from "jsonwebtoken"
 
-import { validateRequiredFields, verify } from "@arasnet/functions"
+import { encrypt, validateRequiredFields, verify } from "@arasnet/functions"
 import { apiConsultationsEndpoint, apiEmployeesEndpoint } from "@arasnet/types"
 
 import jsonServerDB from "../index.js"
 
 const secret = process.env.SECRET
+const url = process.env.BASE_URL
+const port = process.env.SERVER_PORT
 
 const apiEndpoints = [apiConsultationsEndpoint, apiEmployeesEndpoint]
 
@@ -124,12 +126,43 @@ async function login({ body: { email, password } = {} }, res) {
     })
   }
 
-  const isPasswordValid = await verify(dbEmployee.password, password)
+  if (dbEmployee.password) {
+    const isPasswordValid = await verify(dbEmployee.password, password)
 
-  if (!isPasswordValid) {
-    return res.status(400).send({
-      password: "password_invalid",
-    })
+    if (!isPasswordValid) {
+      return res.status(400).send({
+        password: "password_invalid",
+      })
+    }
+  } else {
+    const response = await fetch(
+      `http://${url}:${port}/employees/${dbEmployee.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt.sign(
+            {
+              data: "admin@arasnet.ro",
+            },
+            secret,
+            {
+              expiresIn: "30s",
+            }
+          )}`,
+        },
+        body: JSON.stringify({
+          ...dbEmployee,
+          password: await encrypt(password),
+        }),
+      }
+    )
+
+    if ([4, 5].includes(parseInt(res.statusCode / 100))) {
+      const errors = await response.json()
+
+      return res.status(response.status).send(errors)
+    }
   }
 
   const token = jwt.sign(

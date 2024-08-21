@@ -70,12 +70,6 @@ function CreateEmployee() {
             name: "email",
             required: true,
           },
-          {
-            type: "text",
-            label: i18n.t("entity.field.password"),
-            name: "password",
-            required: true,
-          },
         ]}
       />
     </Modal>
