@@ -60,8 +60,6 @@ function UpdatePermissions({ open, onClose, employee }) {
                   }, {}),
                 }
 
-                console.log(updatedEmployee.permissions)
-
                 await EmployeesApi.update(updatedEmployee)
 
                 EmployeesApi.gridApi
