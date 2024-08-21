@@ -48,8 +48,16 @@ server.listen(port, () => {
   console.log(`ARASnet Server started on port ${port}`)
 })
 
-const jsonServerDB = router.db
-export default jsonServerDB
+const jsonServerDb = {
+  get consultations() {
+    return router.db.getState().consultations
+  },
+  get employees() {
+    return router.db.getState().employees
+  },
+}
+
+export default jsonServerDb
 
 //#region
 function redirect(req, res, next) {

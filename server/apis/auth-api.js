@@ -37,11 +37,9 @@ function authenticate({ headers: { authorization = "" } = {} }, res, next) {
 
     const { data: userEmail } = jwt.decode(token)
 
-    const dbUser = jsonServerDB
-      .getState()
-      .employees.find(
-        ({ email: employeeEmail } = {}) => employeeEmail === userEmail
-      )
+    const dbUser = jsonServerDB.employees.find(
+      ({ email: employeeEmail } = {}) => employeeEmail === userEmail
+    )
 
     if (!dbUser) {
       return res.status(401).send("authentication_failed")
@@ -61,11 +59,9 @@ function authorize(
   jwt.verify(token, secret, function (err) {
     const { data: userEmail } = jwt.decode(token)
 
-    const dbUser = jsonServerDB
-      .getState()
-      .employees.find(
-        ({ email: employeeEmail } = {}) => employeeEmail === userEmail
-      )
+    const dbUser = jsonServerDB.employees.find(
+      ({ email: employeeEmail } = {}) => employeeEmail === userEmail
+    )
 
     const api = apiEndpoints.find((path) => originalUrl.startsWith(`/${path}`))
     const action = actions[method]
@@ -116,9 +112,9 @@ async function login({ body: { email, password } = {} }, res) {
     return res.status(400).send(errors)
   }
 
-  const dbEmployee = jsonServerDB
-    .getState()
-    .employees.find(({ email: employeeEmail } = {}) => employeeEmail === email)
+  const dbEmployee = jsonServerDB.employees.find(
+    ({ email: employeeEmail } = {}) => employeeEmail === email
+  )
 
   if (!dbEmployee) {
     return res.status(400).send({
@@ -217,11 +213,9 @@ function resign({ headers: { authorization = "" } = {} }, res) {
       }
     )
 
-    const dbUser = jsonServerDB
-      .getState()
-      .employees.find(
-        ({ email: employeeEmail } = {}) => employeeEmail === userEmail
-      )
+    const dbUser = jsonServerDB.employees.find(
+      ({ email: employeeEmail } = {}) => employeeEmail === userEmail
+    )
 
     return res.status(200).send({
       token: newToken,
@@ -236,11 +230,9 @@ function restart({ headers: { authorization = "" } = {} }, res) {
   jwt.verify(token, secret, function (err) {
     const { data: userEmail } = jwt.decode(token)
 
-    const dbUser = jsonServerDB
-      .getState()
-      .employees.find(
-        ({ email: employeeEmail } = {}) => employeeEmail === userEmail
-      )
+    const dbUser = jsonServerDB.employees.find(
+      ({ email: employeeEmail } = {}) => employeeEmail === userEmail
+    )
 
     if (dbUser?.createdBy !== "SYSTEM") {
       return res.status(403).send("authorization_failed")

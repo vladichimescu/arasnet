@@ -18,11 +18,9 @@ async function create({ body: employee = {} }, res, next) {
     return res.status(400).send(errors)
   }
 
-  const dbEmployeeByEmail = jsonServerDB
-    .getState()
-    .employees.find(
-      ({ email: employeeEmail } = {}) => employeeEmail === employee.email
-    )
+  const dbEmployeeByEmail = jsonServerDB.employees.find(
+    ({ email: employeeEmail } = {}) => employeeEmail === employee.email
+  )
 
   if (dbEmployeeByEmail) {
     return res.status(400).send({
@@ -30,9 +28,9 @@ async function create({ body: employee = {} }, res, next) {
     })
   }
 
-  const dbEmployeeByPhone = jsonServerDB
-    .getState()
-    .employees.find(({ phone } = {}) => phone === employee.phone)
+  const dbEmployeeByPhone = jsonServerDB.employees.find(
+    ({ phone } = {}) => phone === employee.phone
+  )
 
   if (dbEmployeeByPhone) {
     return res.status(400).send({
@@ -71,19 +69,16 @@ function update(
   const token = authorization.split(" ")[1]
   const { data: userEmail } = jwt.decode(token)
 
-  const { createdBy, permissions: employeePermissions } = jsonServerDB
-    .getState()
-    .employees.find(({ id } = {}) => id === employee.id)
+  const { createdBy, permissions: employeePermissions } =
+    jsonServerDB.employees.find(({ id } = {}) => id === employee.id)
 
   if (createdBy === "SYSTEM") {
     return res.status(403).send("authorization_failed")
   }
 
-  const { permissions: userPermissions } = jsonServerDB
-    .getState()
-    .employees.find(
-      ({ email: employeeEmail } = {}) => employeeEmail === userEmail
-    )
+  const { permissions: userPermissions } = jsonServerDB.employees.find(
+    ({ email: employeeEmail } = {}) => employeeEmail === userEmail
+  )
 
   const { permissions } = employee
 
