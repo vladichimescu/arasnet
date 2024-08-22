@@ -137,6 +137,7 @@ __metadata:
     "@faker-js/faker": "npm:^8.4.1"
     dotenv-cli: "npm:^7.4.2"
     esbuild: "npm:^0.23.1"
+    esbuild-plugin-noexternal: "npm:^0.1.6"
     json-server: "npm:^0.17.4"
     jsonwebtoken: "npm:^9.0.2"
     pm2: "npm:^5.4.2"
@@ -3387,11 +3388,11 @@ __metadata:
   linkType: hard
 
 "@types/node@npm:*":
-  version: 22.4.2
-  resolution: "@types/node@npm:22.4.2"
+  version: 22.5.0
+  resolution: "@types/node@npm:22.5.0"
   dependencies:
     undici-types: "npm:~6.19.2"
-  checksum: 10c0/db583e83230eed29eb73e24cc03637f5bdc8c01883ae0ba0a6ab9356065f93d0355a91ad1c89b985631006bd77c529d6a3ce042b3667b69c8851d05e1f965db1
+  checksum: 10c0/45aa75c5e71645fac42dced4eff7f197c3fdfff6e8a9fdacd0eb2e748ff21ee70ffb73982f068a58e8d73b2c088a63613142c125236cdcf3c072ea97eada1559
   languageName: node
   linkType: hard
 
@@ -6518,6 +6519,13 @@ __metadata:
     is-date-object: "npm:^1.0.1"
     is-symbol: "npm:^1.0.2"
   checksum: 10c0/0886572b8dc075cb10e50c0af62a03d03a68e1e69c388bd4f10c0649ee41b1fbb24840a1b7e590b393011b5cdbe0144b776da316762653685432df37d6de60f1
+  languageName: node
+  linkType: hard
+
+"esbuild-plugin-noexternal@npm:^0.1.6":
+  version: 0.1.6
+  resolution: "esbuild-plugin-noexternal@npm:0.1.6"
+  checksum: 10c0/0aeec02fed4c4e2814947233236c76114658b68973492ebd80f761d217cc9b35e6e4a418cabd75f963eec2b3fff60fc5f7c3b2078a0fc6a504979b69fb72a221
   languageName: node
   linkType: hard
 
@@ -14026,8 +14034,8 @@ __metadata:
   linkType: hard
 
 "systeminformation@npm:^5.7":
-  version: 5.23.4
-  resolution: "systeminformation@npm:5.23.4"
+  version: 5.23.5
+  resolution: "systeminformation@npm:5.23.5"
   bin:
     systeminformation: lib/cli.js
   conditions: (os=darwin | os=linux | os=win32 | os=freebsd | os=openbsd | os=netbsd | os=sunos | os=android)

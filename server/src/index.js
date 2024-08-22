@@ -11,8 +11,8 @@ import AuthApi from "./apis/auth-api.js"
 import ConsultationsApi from "./apis/consultations-api.js"
 import EmployeesApi from "./apis/employees-api.js"
 
-const port = process.env.SERVER_PORT
-const file = process.env.DB_FILE
+const port = process.env.ARASNET_SERVER_PORT
+const file = process.env.ARASNET_DB_FILE
 
 const server = jsonServer.create()
 const middlewares = jsonServer.defaults()

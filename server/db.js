@@ -8,6 +8,7 @@ import {
   consultationStatuses,
 } from "@arasnet/types"
 
+const file = process.env.ARASNET_DB_FILE
 const password = await encrypt("pass")
 
 const data = {
@@ -122,7 +123,7 @@ const data = {
   consultations: [...Array(135)].map(mockConsultation),
 }
 
-fs.writeFileSync(process.env.DB_FILE, JSON.stringify(data, null, 2), "utf-8")
+fs.writeFileSync(file, JSON.stringify(data, null, 2), "utf-8")
 
 //#region
 function mockEmployee(_, index) {

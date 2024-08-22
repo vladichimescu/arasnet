@@ -5,10 +5,10 @@
   "private": true,
   "scripts": {
     "postinstall": "dotenv -e ../.env -e .env -- node db",
-    "debug": "dotenv -e ../.env -e .env -- pm2 start index.js --name @arasnet/server --watch --no-daemon --node-args='--inspect'",
-    "start": "dotenv -e ../.env -e .env -- pm2 start index.js --name @arasnet/server --watch --no-daemon",
-    "build": "dotenv -e ../.env -e .env -c production -- esbuild index.js --platform=node --format=esm --packages=external --bundle --minify --outfile=dist/index.js",
-    "serve": "dotenv -e ../.env -e .env -c production -- pm2 start dist/index.js --name @arasnet/server",
+    "debug": "dotenv -e ../.env -e .env -- node src/index.js --inspect",
+    "start": "dotenv -e ../.env -e .env -- node src/index.js",
+    "build": "dotenv -e ../.env -e .env -c production -- node esbuild",
+    "serve": "pm2 start dist/index.js --name @arasnet/server",
     "stop": "pm2 delete @arasnet/server"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "@faker-js/faker": "^8.4.1",
     "dotenv-cli": "^7.4.2",
     "esbuild": "^0.23.1",
+    "esbuild-plugin-noexternal": "^0.1.6",
     "pm2": "^5.4.2"
   },
   "volta": {

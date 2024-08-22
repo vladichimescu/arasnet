@@ -32,7 +32,7 @@
   "scripts": {
     "start": "dotenv -e ../.env -e .env -- craco start",
     "build": "dotenv -e ../.env -e .env -c production -v BUILD_PATH='dist' -- craco build",
-    "serve": "dotenv -e ../.env -e .env -c production -- pm2 serve dist --name @arasnet/portal --spa",
+    "serve": "pm2 serve dist --name @arasnet/portal --spa",
     "stop": "pm2 delete @arasnet/portal"
   },
   "eslintConfig": {

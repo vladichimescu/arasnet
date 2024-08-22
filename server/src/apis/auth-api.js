@@ -5,9 +5,9 @@ import { apiConsultationsEndpoint, apiEmployeesEndpoint } from "@arasnet/types"
 
 import jsonServerDB from "../index.js"
 
-const secret = process.env.SECRET
-const url = process.env.BASE_URL
-const port = process.env.SERVER_PORT
+const secret = process.env.ARASNET_SECRET
+const url = process.env.ARASNET_BASE_URL
+const port = process.env.ARASNET_SERVER_PORT
 
 const apiEndpoints = [apiConsultationsEndpoint, apiEmployeesEndpoint]
 
