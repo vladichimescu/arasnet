@@ -12,7 +12,11 @@ const languages = {
 
 const fallbackLng = languages.enGB
 
-const lng = process.env.LOCALE || process.env.REACT_APP_LOCALE || fallbackLng
+const lng =
+  (typeof window !== "undefined" && localStorage.locale) ||
+  process.env.LOCALE ||
+  process.env.REACT_APP_LOCALE ||
+  fallbackLng
 
 const resources = {
   [languages.enGB]: {
