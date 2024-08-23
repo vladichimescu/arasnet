@@ -18,8 +18,8 @@
     "format": "prettier --write \"**/*.{css,scss,js,jsx,json,md}\"",
     "start": "yarn workspaces foreach --all --parallel run start",
     "build": "yarn workspaces foreach --all --parallel run build",
-    "serve": "yarn workspaces foreach --all --parallel run serve",
-    "stop": "yarn workspaces foreach --all --parallel run stop",
+    "serve": "yarn workspaces foreach --all run serve",
+    "stop": "yarn workspaces foreach --all run stop",
     "prepare": "rm -rf dist && mkdir -p dist && mv portal/dist dist/portal && mv server/dist dist/server",
     "deploy": "scp -r dist/* admin@arasnet.redirectme.net:/home/admin/arasnet/"
   },
