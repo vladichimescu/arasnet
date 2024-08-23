@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "postinstall": "dotenv -e ../.env -e .env -- node db",
-    "debug": "dotenv -e ../.env -e .env -- node src/index.js --inspect",
+    "debug": "dotenv -e ../.env -e .env -- node --inspect src/index.js",
     "start": "dotenv -e ../.env -e .env -- node src/index.js",
     "build": "dotenv -e ../.env -e .env -c production -- node esbuild",
     "serve": "pm2 start dist/index.js --name @arasnet/server",
