@@ -26,13 +26,17 @@
     "@babel/plugin-syntax-import-attributes": "^7.24.7",
     "@craco/craco": "^7.1.0",
     "dotenv-cli": "^7.4.2",
+    "esbuild": "^0.23.1",
+    "http-server": "^14.1.1",
     "pm2": "^5.4.2",
     "sass": "^1.77.8"
   },
   "scripts": {
     "start": "dotenv -e ../.env -e .env -- craco start",
-    "build": "dotenv -e ../.env -e .env -c production -v BUILD_PATH='dist' -- craco build",
-    "serve": "pm2 serve dist --name @arasnet/portal --spa",
+    "build": "yarn build:react && yarn build:serve",
+    "build:react": "dotenv -e ../.env -e .env -c production -v BUILD_PATH='dist' -- craco build && node esbuild.mjs",
+    "build:serve": "dotenv -e ../.env -e .env -c production -- node esbuild.mjs",
+    "serve": "pm2 start dist/index.mjs --name @arasnet/portal",
     "stop": "pm2 delete @arasnet/portal"
   },
   "eslintConfig": {

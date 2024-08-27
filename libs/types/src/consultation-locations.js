@@ -1,7 +1,7 @@
 import locations from "./locations.js"
 
 const configured = (
-  process.env.ARASNET_CONSULTATION_LOCATIONS ||
+  process.env.CONSULTATION_LOCATIONS ||
   process.env.REACT_APP_CONSULTATION_LOCATIONS
 )?.split(",")
 

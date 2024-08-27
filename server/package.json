@@ -8,7 +8,7 @@
     "debug": "dotenv -e ../.env -e .env -- node --inspect src/index.js",
     "start": "dotenv -e ../.env -e .env -- node src/index.js",
     "build": "dotenv -e ../.env -e .env -c production -- node esbuild",
-    "serve": "pm2 start dist/index.js --name @arasnet/server",
+    "serve": "pm2 start dist/server.js --name @arasnet/server",
     "stop": "pm2 delete @arasnet/server"
   },
   "dependencies": {

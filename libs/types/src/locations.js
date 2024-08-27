@@ -1,5 +1,5 @@
 const configured = (
-  process.env.ARASNET_LOCATIONS || process.env.REACT_APP_LOCATIONS
+  process.env.LOCATIONS || process.env.REACT_APP_LOCATIONS
 )?.split(",")
 
 const data = {

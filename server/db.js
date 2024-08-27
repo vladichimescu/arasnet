@@ -8,7 +8,7 @@ import {
   consultationStatuses,
 } from "@arasnet/types"
 
-const file = process.env.ARASNET_DB_FILE
+const file = process.env.DB_FILE
 const password = await encrypt("pass")
 
 const data = {

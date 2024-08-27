@@ -4,13 +4,13 @@
 node_modules
 .yarn
 
-# local
-db-local.json
-
-# production
+# configs
 dist
+db-local.json
 db.json
 .env.production
+cert.pem
+key.pem
 
 # misc
 .DS_Store

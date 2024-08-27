@@ -5,9 +5,10 @@ import { apiConsultationsEndpoint, apiEmployeesEndpoint } from "@arasnet/types"
 
 import jsonServerDB from "../index.js"
 
-const secret = process.env.ARASNET_SECRET
-const url = process.env.ARASNET_BASE_URL
-const port = process.env.ARASNET_SERVER_PORT
+const secret = process.env.SECRET
+const serverHostname = process.env.SERVER_HOSTNAME
+const port = process.env.SERVER_PORT
+const isHttps = process.env.HTTPS
 
 const apiEndpoints = [apiConsultationsEndpoint, apiEmployeesEndpoint]
 
@@ -132,7 +133,7 @@ async function login({ body: { email, password } = {} }, res) {
     }
   } else {
     const response = await fetch(
-      `http://${url}:${port}/employees/${dbEmployee.id}`,
+      `${isHttps ? "https" : "http"}://${serverHostname}:${port}/employees/${dbEmployee.id}`,
       {
         method: "PUT",
         headers: {

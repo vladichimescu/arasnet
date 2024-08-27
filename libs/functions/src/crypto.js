@@ -1,6 +1,6 @@
 const algorithm = "AES-GCM"
 
-const secret = process.env.ARASNET_SECRET
+const secret = process.env.SECRET
 
 const masterKey = await crypto.subtle.digest(
   "SHA-256",

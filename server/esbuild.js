@@ -3,14 +3,12 @@ import esbuildPluginNoexternal from "esbuild-plugin-noexternal"
 
 const define = {}
 for (const env in process.env) {
-  if (env.startsWith("ARASNET_")) {
-    define[`process.env.${env}`] = JSON.stringify(process.env[env])
-  }
+  define[`process.env.${env}`] = JSON.stringify(process.env[env])
 }
 
 esbuild.build({
   entryPoints: ["src/index.js"],
-  outfile: "dist/index.js",
+  outfile: "dist/server.js",
   platform: "node",
   format: "esm",
   bundle: true,

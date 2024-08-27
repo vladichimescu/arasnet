@@ -1,7 +1,7 @@
 import { i18n } from "@arasnet/i18n"
 
 const configured = (
-  process.env.ARASNET_CONSULTATION_STATUSES ||
+  process.env.CONSULTATION_STATUSES ||
   process.env.REACT_APP_CONSULTATION_STATUSES
 )?.split(",")
 

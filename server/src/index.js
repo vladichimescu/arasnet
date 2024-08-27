@@ -1,3 +1,5 @@
+import fs from "fs"
+import https from "https"
 import jsonServer from "json-server"
 
 import { i18n } from "@arasnet/i18n"
@@ -11,8 +13,10 @@ import AuthApi from "./apis/auth-api.js"
 import ConsultationsApi from "./apis/consultations-api.js"
 import EmployeesApi from "./apis/employees-api.js"
 
-const port = process.env.ARASNET_SERVER_PORT
-const file = process.env.ARASNET_DB_FILE
+const hostname = process.env.SERVER_HOSTNAME
+const port = process.env.SERVER_PORT
+const file = process.env.DB_FILE
+const isHttps = process.env.HTTPS
 
 const server = jsonServer.create()
 const middlewares = jsonServer.defaults()
@@ -44,9 +48,23 @@ server.use(router)
 
 server.use(errors)
 
-server.listen(port, () => {
-  console.log(`ARASnet Server started on port ${port}`)
-})
+if (isHttps) {
+  https
+    .createServer(
+      {
+        cert: fs.readFileSync("cert.pem"),
+        key: fs.readFileSync("key.pem"),
+      },
+      server
+    )
+    .listen(port, () => {
+      console.log(`ARASnet Server available at: https://${hostname}:${port}`)
+    })
+} else {
+  server.listen(port, () => {
+    console.log(`ARASnet Server available at: http://${hostname}:${port}`)
+  })
+}
 
 const jsonServerDb = {
   get consultations() {
