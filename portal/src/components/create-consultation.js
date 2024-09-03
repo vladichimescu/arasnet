@@ -87,6 +87,12 @@ function CreateConsultation() {
             name: "phone",
             required: true,
           },
+          {
+            type: "text",
+            label: i18n.t("entity.field.name"),
+            name: "name",
+            required: true,
+          },
         ]}
       />
     </Modal>

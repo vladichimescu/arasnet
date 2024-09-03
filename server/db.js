@@ -173,6 +173,7 @@ function mockConsultation(_, index) {
     location: Object.keys(consultationLocations)[
       Math.floor(Math.random() * Object.keys(consultationLocations).length)
     ],
+    name: faker.person.firstName(),
     createdAt: new Date().toISOString(),
     status:
       Object.keys(consultationStatuses)[

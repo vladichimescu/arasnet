@@ -36,6 +36,10 @@ const columnDefs = [
     sortable: true,
   },
   {
+    field: "name",
+    headerName: i18n.t("entity.field.name"),
+  },
+  {
     field: "phone",
     headerName: i18n.t("entity.field.phone"),
     filter: "agNumberColumnFilter",
@@ -151,7 +155,7 @@ function ConfirmationButtons({ data }) {
           paddingLeft: "12px",
           paddingRight: "12px",
         }}
-        href={`tel:${data.phone}`}
+        href={`tel:#31#${data.phone}`}
         target="_blank"
         rel="noreferrer"
       >
