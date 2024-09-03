@@ -1,6 +1,8 @@
 import { validateRequiredFields } from "@arasnet/functions"
 import { testingRequiredFields } from "@arasnet/types"
 
+import jsonServerDb from "../index.js"
+
 function create({ body: testing = {} }, res, next) {
   const errors = validateRequiredFields(testing, testingRequiredFields)
 
@@ -13,6 +15,17 @@ function create({ body: testing = {} }, res, next) {
   if (new Date() > testingDate) {
     return res.status(400).send({
       date: "date_past",
+    })
+  }
+
+  const dbTesting = jsonServerDb.testing.find(
+    ({ location, date } = {}) =>
+      location === testing.location && date === testing.date
+  )
+
+  if (dbTesting) {
+    return res.status(400).send({
+      date: "date_unavailable",
     })
   }
 

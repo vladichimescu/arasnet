@@ -65,6 +65,10 @@
         "code": "dată invalidă",
         "message": "Data nu poate fi în trecut"
       },
+      "date_unavailable": {
+        "code": "dată invalidă",
+        "message": "Data nu este disponibilă"
+      },
       "phone_required": {
         "code": "telefon necesar",
         "message": "Numărul de telefon este necesar"

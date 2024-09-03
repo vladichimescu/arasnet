@@ -65,6 +65,10 @@
         "code": "date invalid",
         "message": "Date cannot be in the past"
       },
+      "date_unavailable": {
+        "code": "date invalid",
+        "message": "Date is not available"
+      },
       "phone_required": {
         "code": "phone required",
         "message": "Phone number is required"
