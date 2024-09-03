@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 
-import { encrypt, validateRequiredFields } from "@arasnet/functions"
+import { validateRequiredFields } from "@arasnet/functions"
 import {
   apiEmployeesEndpoint,
   apiTestingEndpoint,
