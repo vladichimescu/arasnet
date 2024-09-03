@@ -93,6 +93,11 @@ function CreateTesting() {
             name: "name",
             required: true,
           },
+          {
+            type: "bool",
+            label: i18n.t("entity.field.firstTime"),
+            name: "firstTime",
+          },
         ]}
       />
     </Modal>

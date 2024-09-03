@@ -138,6 +138,7 @@ function DataGrid({
 export default DataGrid
 export {
   dateFormatter,
+  boolFormatter,
   statusFormatter,
   locationFormatter,
   onCellValueChanged,
@@ -305,6 +306,16 @@ function dateFormatter({ value }) {
 
 function statusFormatter({ value }) {
   return value ? testingStatuses[value].label : value
+}
+
+function boolFormatter({ value }) {
+  if (typeof value !== "boolean") {
+    return value
+  }
+
+  return value
+    ? i18n.t("generic.boolean.yes").toUpperCase()
+    : i18n.t("generic.boolean.no").toUpperCase()
 }
 
 function locationFormatter({ value }) {

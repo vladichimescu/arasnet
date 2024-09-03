@@ -10,6 +10,7 @@ import { useAuth } from "../components/auth-provider"
 import CreateTesting from "../components/create-testing"
 import DataGrid, {
   DropdownColumnFilter,
+  boolFormatter,
   dateFormatter,
   locationFormatter,
   onCellValueChanged,
@@ -46,6 +47,11 @@ const columnDefs = [
     filterParams: {
       filterOptions: ["contains"],
     },
+  },
+  {
+    field: "firstTime",
+    headerName: i18n.t("entity.field.firstTime"),
+    valueFormatter: boolFormatter,
   },
   {
     field: "status",

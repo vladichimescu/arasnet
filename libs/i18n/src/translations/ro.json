@@ -90,6 +90,10 @@
     },
     "plural": {
       "all": "toate"
+    },
+    "boolean": {
+      "yes": "da",
+      "no": "nu"
     }
   },
   "entity": {
@@ -116,7 +120,8 @@
       "password": "Parolă",
       "permissions": "Permisiuni",
       "phone": "Telefon",
-      "status": "Status"
+      "status": "Status",
+      "firstTime": "Prima testare în locațiile noastre"
     }
   },
   "page": {

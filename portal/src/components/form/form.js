@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { Fragment, useEffect, useRef, useState } from "react"
 import PhoneInput from "react-phone-input-2"
 import { toast } from "react-toastify"
 
@@ -52,7 +52,7 @@ function Form({
     >
       {heading}
 
-      {inputs?.map(({ type, label, name, list, ...props }) => (
+      {inputs?.map(({ type, name, label, valueLabel, list, ...props }) => (
         <fieldset key={name}>
           <label htmlFor={name}>{label}</label>
           {type === "phone-input" ? (
@@ -82,8 +82,35 @@ function Form({
                 )
               )}
             </select>
+          ) : type === "bool" ? (
+            <Fragment>
+              <input
+                id={`${name}-true`}
+                name={name}
+                type="radio"
+                value={true}
+                {...props}
+              />
+              <label htmlFor={`${name}-true`}>
+                {i18n.t("generic.boolean.yes")}
+              </label>
+
+              <input
+                id={`${name}-false`}
+                name={name}
+                type="radio"
+                value={false}
+                {...props}
+              />
+              <label htmlFor={`${name}-false`}>
+                {i18n.t("generic.boolean.no")}
+              </label>
+            </Fragment>
           ) : (
-            <input id={name} name={name} type={type} {...props} />
+            <Fragment>
+              <input id={name} name={name} type={type} {...props} />
+              {valueLabel ? <label htmlFor={name}>{valueLabel}</label> : null}
+            </Fragment>
           )}
 
           <small>{errors?.[name]?.code}</small>

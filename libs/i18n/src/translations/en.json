@@ -90,6 +90,10 @@
     },
     "plural": {
       "all": "all"
+    },
+    "boolean": {
+      "yes": "yes",
+      "no": "no"
     }
   },
   "entity": {
@@ -116,7 +120,8 @@
       "password": "Password",
       "permissions": "Permissions",
       "phone": "Phone",
-      "status": "Status"
+      "status": "Status",
+      "firstTime": "First time testing on our locations"
     }
   },
   "page": {

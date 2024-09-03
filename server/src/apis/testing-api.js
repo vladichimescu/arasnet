@@ -29,6 +29,8 @@ function create({ body: testing = {} }, res, next) {
     })
   }
 
+  testing.firstTime = testing.firstTime === "true"
+
   if (!testing.status) {
     testing.status = "acffc089-0508-4c3f-945b-afd74376df92"
   }

@@ -174,6 +174,7 @@ function mockTesting(_, index) {
       Object.keys(testingStatuses)[
         Math.floor(Math.random() * Object.keys(testingStatuses).length)
       ],
+    firstTime: faker.datatype.boolean(),
   }
 }
 //#endregion

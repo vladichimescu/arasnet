@@ -25,6 +25,16 @@
       font-weight: bold;
     }
 
+    input + label {
+      display: inline-block;
+      text-transform: uppercase;
+      margin-left: 8px;
+    }
+
+    input + label:not(:last-of-type) {
+      margin-right: 24px;
+    }
+
     button[type="submit"] {
       width: 100%;
 
