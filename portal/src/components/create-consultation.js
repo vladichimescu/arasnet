@@ -56,19 +56,6 @@ function CreateConsultation() {
         }}
         inputs={[
           {
-            type: "phone-input",
-            label: i18n.t("entity.field.phone"),
-            name: "phone",
-            required: true,
-          },
-          {
-            type: "datetime-local",
-            label: i18n.t("entity.field.date"),
-            name: "date",
-            required: true,
-            min: `${minDatetimeLocal.toISOString().slice(0, -8)}`,
-          },
-          {
             type: "select",
             label: i18n.t("entity.field.location"),
             name: "location",
@@ -86,6 +73,19 @@ function CreateConsultation() {
                       ))
               )
             ),
+          },
+          {
+            type: "datetime-local",
+            label: i18n.t("entity.field.date"),
+            name: "date",
+            required: true,
+            min: `${minDatetimeLocal.toISOString().slice(0, -8)}`,
+          },
+          {
+            type: "phone-input",
+            label: i18n.t("entity.field.phone"),
+            name: "phone",
+            required: true,
           },
         ]}
       />

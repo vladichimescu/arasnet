@@ -20,12 +20,10 @@ ModuleRegistry.registerModules([InfiniteRowModelModule])
 
 const columnDefs = [
   {
-    field: "phone",
-    headerName: i18n.t("entity.field.phone"),
-    filter: "agNumberColumnFilter",
-    filterParams: {
-      filterOptions: ["contains"],
-    },
+    field: "location",
+    headerName: i18n.t("entity.field.location"),
+    valueFormatter: locationFormatter,
+    filter: LocationColumnFilter,
   },
   {
     field: "date",
@@ -36,6 +34,14 @@ const columnDefs = [
       filterOptions: ["greaterThan", "lessThan", "inRange"],
     },
     sortable: true,
+  },
+  {
+    field: "phone",
+    headerName: i18n.t("entity.field.phone"),
+    filter: "agNumberColumnFilter",
+    filterParams: {
+      filterOptions: ["contains"],
+    },
   },
   {
     field: "status",
@@ -56,12 +62,6 @@ const columnDefs = [
     field: "confirmation",
     headerName: i18n.t("entity.field.confirmation"),
     cellRenderer: ConfirmationButtons,
-  },
-  {
-    field: "location",
-    headerName: i18n.t("entity.field.location"),
-    valueFormatter: locationFormatter,
-    filter: LocationColumnFilter,
   },
   {
     field: "createdAt",

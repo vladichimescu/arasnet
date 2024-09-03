@@ -247,9 +247,9 @@ function DropdownColumnFilter({ options, model, onModelChange }) {
   )
 }
 
-function LoadingCell({ value, api }) {
-  if (value) {
-    return value
+function LoadingCell({ valueFormatted, value, api }) {
+  if (valueFormatted || value) {
+    return valueFormatted || value
   }
 
   if (api.getCacheBlockState()[0].pageStatus === "loading") {
