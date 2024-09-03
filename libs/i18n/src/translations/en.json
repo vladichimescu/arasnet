@@ -89,7 +89,7 @@
     }
   },
   "entity": {
-    "consultation": {
+    "testing": {
       "status": {
         "canceled": "canceled",
         "confirmed": "confirmed",
@@ -116,8 +116,8 @@
     }
   },
   "page": {
-    "consultations": {
-      "title": "Consultations",
+    "testing": {
+      "title": "Testing",
       "dataGrid": {
         "action": {
           "whatsapp": "Whatsapp",
@@ -126,7 +126,7 @@
         }
       },
       "action": {
-        "addConsultation": "Add Consultation"
+        "addTesting": "Add Testing"
       }
     },
     "employees": {

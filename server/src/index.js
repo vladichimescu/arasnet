@@ -5,13 +5,13 @@ import jsonServer from "json-server"
 import { i18n } from "@arasnet/i18n"
 import {
   apiAuthEndpoint,
-  apiConsultationsEndpoint,
   apiEmployeesEndpoint,
+  apiTestingEndpoint,
 } from "@arasnet/types"
 
 import AuthApi from "./apis/auth-api.js"
-import ConsultationsApi from "./apis/consultations-api.js"
 import EmployeesApi from "./apis/employees-api.js"
+import TestingApi from "./apis/testing-api.js"
 
 const hostname = process.env.SERVER_HOSTNAME
 const port = process.env.SERVER_PORT
@@ -41,7 +41,7 @@ server.delete(`/${apiAuthEndpoint}/undefined`, AuthApi.restart)
 server.use(AuthApi.authorize)
 
 server.use(`/${apiEmployeesEndpoint}`, EmployeesApi.middleware)
-server.use(`/${apiConsultationsEndpoint}`, ConsultationsApi.middleware)
+server.use(`/${apiTestingEndpoint}`, TestingApi.middleware)
 //#endregion
 
 server.use(router)
@@ -67,8 +67,8 @@ if (isHttps) {
 }
 
 const jsonServerDb = {
-  get consultations() {
-    return router.db.getState().consultations
+  get testing() {
+    return router.db.getState().testing
   },
   get employees() {
     return router.db.getState().employees

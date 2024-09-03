@@ -5,7 +5,7 @@ import { AgGridReact, useGridFilter } from "@ag-grid-community/react"
 import React, { useCallback, useEffect, useState } from "react"
 
 import { i18n } from "@arasnet/i18n"
-import { consultationLocations, consultationStatuses } from "@arasnet/types"
+import { testingLocations, testingStatuses } from "@arasnet/types"
 
 import ActionService from "../services/action-service"
 import EventService from "../services/event-service"
@@ -304,11 +304,11 @@ function dateFormatter({ value }) {
 }
 
 function statusFormatter({ value }) {
-  return value ? consultationStatuses[value].label : value
+  return value ? testingStatuses[value].label : value
 }
 
 function locationFormatter({ value }) {
-  return value ? consultationLocations[value].label : value
+  return value ? testingLocations[value].label : value
 }
 
 async function onCellValueChanged({ api, data, oldValue, context }) {

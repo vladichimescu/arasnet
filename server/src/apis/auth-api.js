@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken"
 
 import { encrypt, validateRequiredFields, verify } from "@arasnet/functions"
-import { apiConsultationsEndpoint, apiEmployeesEndpoint } from "@arasnet/types"
+import { apiEmployeesEndpoint, apiTestingEndpoint } from "@arasnet/types"
 
 import jsonServerDB from "../index.js"
 
@@ -10,7 +10,7 @@ const serverHostname = process.env.SERVER_HOSTNAME
 const port = process.env.SERVER_PORT
 const isHttps = process.env.HTTPS
 
-const apiEndpoints = [apiConsultationsEndpoint, apiEmployeesEndpoint]
+const apiEndpoints = [apiTestingEndpoint, apiEmployeesEndpoint]
 
 const actions = {
   POST: "create",

@@ -1,6 +1,6 @@
-const consultationRequiredFields = (
-  process.env.CONSULTATION_REQUIRED_FIELDS ||
-  process.env.REACT_APP_CONSULTATION_REQUIRED_FIELDS
+const testingRequiredFields = (
+  process.env.TESTING_REQUIRED_FIELDS ||
+  process.env.REACT_APP_TESTING_REQUIRED_FIELDS
 )?.split(",")
 
 const employeeRequiredFields = (
@@ -8,4 +8,4 @@ const employeeRequiredFields = (
   process.env.REACT_APP_EMPLOYEE_REQUIRED_FIELDS
 )?.split(",")
 
-export { consultationRequiredFields, employeeRequiredFields }
+export { testingRequiredFields, employeeRequiredFields }

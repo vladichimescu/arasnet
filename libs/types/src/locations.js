@@ -19,7 +19,7 @@ const data = {
     address: "Bd. Eroii Sanitari nr. 49",
     phone: "+40751010539",
     businessHours: ["1 14:00 18:00", "3 14:00 18:00"],
-    services: ["consultations"],
+    services: ["testing"],
   },
   "8eb5ded5-7694-4783-ad37-bbdb26e0f659": {
     label: "Checkpoint ARAS Cluj",
@@ -27,7 +27,7 @@ const data = {
     address: "Piața Unirii nr. 22",
     phone: "+40751111017",
     businessHours: ["1 14:00 18:00", "3 14:00 18:00"],
-    services: ["consultations"],
+    services: ["testing"],
   },
   "6bec1930-2983-40fb-a4f1-0bed8f4e609e": {
     label: "Checkpoint ARAS Iași",
@@ -35,7 +35,7 @@ const data = {
     address: "Str. Păcurari nr. 66",
     phone: "+40751120708",
     businessHours: ["3 14:00 18:00"],
-    services: ["consultations"],
+    services: ["testing"],
   },
   "c7947f5c-6323-4ef5-81ab-60b1c9e69cf5": {
     label: "Checkpoint ARAS Timișoara",
@@ -43,7 +43,7 @@ const data = {
     address: "Str. Coriolan Brediceanu nr. 13B",
     phone: "+40751120840",
     businessHours: ["3 14:00 18:00"],
-    services: ["consultations"],
+    services: ["testing"],
   },
 }
 

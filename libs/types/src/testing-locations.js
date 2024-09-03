@@ -1,13 +1,12 @@
 import locations from "./locations.js"
 
 const configured = (
-  process.env.CONSULTATION_LOCATIONS ||
-  process.env.REACT_APP_CONSULTATION_LOCATIONS
+  process.env.TESTING_LOCATIONS || process.env.REACT_APP_TESTING_LOCATIONS
 )?.split(",")
 
 const data = Object.entries(locations).reduce(
   (acc, [id, location]) =>
-    location.services.includes("consultations")
+    location.services.includes("testing")
       ? {
           ...acc,
           [id]: location,
@@ -16,7 +15,7 @@ const data = Object.entries(locations).reduce(
   {}
 )
 
-const consultationLocations = configured
+const testingLocations = configured
   ? configured.reduce(
       (acc, id) =>
         data[id]
@@ -29,4 +28,4 @@ const consultationLocations = configured
     )
   : data
 
-export default consultationLocations
+export default testingLocations

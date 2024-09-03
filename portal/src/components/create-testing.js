@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react"
 
 import { i18n } from "@arasnet/i18n"
-import { consultationLocations } from "@arasnet/types"
+import { testingLocations } from "@arasnet/types"
 
-import ConsultationsApi from "../apis/consultations-api"
+import TestingApi from "../apis/testing-api"
 import ActionService from "../services/action-service"
 
 import { useAuth } from "./auth-provider"
@@ -12,7 +12,7 @@ import Modal from "./modal"
 
 const isMobile = navigator.maxTouchPoints > 0
 
-function CreateConsultation() {
+function CreateTesting() {
   const { permissions } = useAuth()
 
   const [isOpened, setIsOpened] = useState(false)
@@ -28,7 +28,7 @@ function CreateConsultation() {
       () => {
         setIsOpened(true)
       },
-      i18n.t("page.consultations.action.addConsultation")
+      i18n.t("page.testing.action.addTesting")
     )
 
     return () => {
@@ -45,9 +45,9 @@ function CreateConsultation() {
     >
       <Form
         onSubmit={async (data) => {
-          await ConsultationsApi.create(data)
+          await TestingApi.create(data)
 
-          ConsultationsApi.gridApi.purgeInfiniteCache()
+          TestingApi.gridApi.purgeInfiniteCache()
 
           setIsOpened(false)
         }}
@@ -60,8 +60,8 @@ function CreateConsultation() {
             label: i18n.t("entity.field.location"),
             name: "location",
             required: true,
-            list: Object.entries(consultationLocations).filter(([locationId]) =>
-              permissions.consultations.find(
+            list: Object.entries(testingLocations).filter(([locationId]) =>
+              permissions.testing.find(
                 ([permittedAction, ...filters]) =>
                   permittedAction === "create" &&
                   (filters.length === 0
@@ -99,4 +99,4 @@ function CreateConsultation() {
   )
 }
 
-export default CreateConsultation
+export default CreateTesting

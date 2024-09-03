@@ -17,7 +17,7 @@ import NotFound from "./pages/not-found"
 import Restart from "./pages/restart"
 import EventService from "./services/event-service"
 
-const Consultations = lazy(() => import("./pages/consultations"))
+const Testing = lazy(() => import("./pages/testing"))
 const Employees = lazy(() => import("./pages/employees"))
 // const Dashboard = lazy(() => import("./pages/dashboard"))
 // const Landing = lazy(() => import("./pages/landing"))
@@ -41,8 +41,8 @@ const router = createBrowserRouter([
       //   element: <Dashboard />,
       // },
       {
-        path: "consultations",
-        element: <Consultations />,
+        path: "testing",
+        element: <Testing />,
       },
       {
         path: "employees",

@@ -2,11 +2,7 @@ import { faker } from "@faker-js/faker"
 import fs from "fs"
 
 import { encrypt } from "@arasnet/functions"
-import {
-  apiActions,
-  consultationLocations,
-  consultationStatuses,
-} from "@arasnet/types"
+import { apiActions, testingLocations, testingStatuses } from "@arasnet/types"
 
 const file = process.env.DB_FILE
 const password = await encrypt("pass")
@@ -22,7 +18,7 @@ const data = {
       password,
       permissions: {
         employees: [["create"], ["read"], ["update"], ["remove"]],
-        consultations: [["create"], ["read"], ["update"], ["remove"]],
+        testing: [["create"], ["read"], ["update"], ["remove"]],
       },
       createdAt: new Date().toISOString(),
       createdBy: "SYSTEM",
@@ -35,7 +31,7 @@ const data = {
       email: "website@arasnet.ro",
       password,
       permissions: {
-        consultations: [["create"]],
+        testing: [["create"]],
       },
       createdAt: new Date().toISOString(),
       createdBy: "SYSTEM",
@@ -49,7 +45,7 @@ const data = {
       password,
       permissions: {
         employees: [["create"], ["read"], ["update"], ["remove"]],
-        consultations: [
+        testing: [
           [
             "create",
             [
@@ -103,7 +99,7 @@ const data = {
       password,
       permissions: {
         employees: [["read"]],
-        consultations: [
+        testing: [
           [
             "read",
             [
@@ -120,7 +116,7 @@ const data = {
     },
     ...[...Array(47)].map(mockEmployee),
   ],
-  consultations: [...Array(135)].map(mockConsultation),
+  testing: [...Array(135)].map(mockTesting),
 }
 
 fs.writeFileSync(file, JSON.stringify(data, null, 2), "utf-8")
@@ -138,17 +134,15 @@ function mockEmployee(_, index) {
       employees: apiActions
         .slice(0, Math.floor(Math.random() * 4))
         .map((action) => [action]),
-      consultations: apiActions
+      testing: apiActions
         .slice(0, Math.floor(Math.random() * 4))
         .map((action) => [
           action,
           [
             "location",
             [
-              Object.keys(consultationLocations)[
-                Math.floor(
-                  Math.random() * Object.keys(consultationLocations).length
-                )
+              Object.keys(testingLocations)[
+                Math.floor(Math.random() * Object.keys(testingLocations).length)
               ],
             ],
           ],
@@ -158,7 +152,7 @@ function mockEmployee(_, index) {
   }
 }
 
-function mockConsultation(_, index) {
+function mockTesting(_, index) {
   return {
     id: index + 1,
     phone: faker.helpers.fromRegExp("[0-9]{10}"),
@@ -170,14 +164,15 @@ function mockConsultation(_, index) {
           : index > 70
             ? faker.date.future()
             : faker.date.soon(),
-    location: Object.keys(consultationLocations)[
-      Math.floor(Math.random() * Object.keys(consultationLocations).length)
-    ],
+    location:
+      Object.keys(testingLocations)[
+        Math.floor(Math.random() * Object.keys(testingLocations).length)
+      ],
     name: faker.person.firstName(),
     createdAt: new Date().toISOString(),
     status:
-      Object.keys(consultationStatuses)[
-        Math.floor(Math.random() * Object.keys(consultationStatuses).length)
+      Object.keys(testingStatuses)[
+        Math.floor(Math.random() * Object.keys(testingStatuses).length)
       ],
   }
 }

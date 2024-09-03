@@ -89,7 +89,7 @@
     }
   },
   "entity": {
-    "consultation": {
+    "testing": {
       "status": {
         "created": "creat",
         "pending": "în aşteptare",
@@ -116,8 +116,8 @@
     }
   },
   "page": {
-    "consultations": {
-      "title": "Consultații",
+    "testing": {
+      "title": "Testări",
       "dataGrid": {
         "action": {
           "whatsapp": "Whatsapp",
@@ -126,7 +126,7 @@
         }
       },
       "action": {
-        "addConsultation": "Adăugare consult"
+        "addTesting": "Adăugare testare"
       }
     },
     "employees": {

@@ -4,15 +4,15 @@ import { Navigate } from "react-router-dom"
 import { useAuth } from "../components/auth-provider"
 
 function Home() {
-  const { isLogged, canReadConsultations, canReadEmployees } = useAuth()
+  const { isLogged, canReadTesting, canReadEmployees } = useAuth()
 
   return (
     <Navigate
       replace
       to={
         isLogged
-          ? canReadConsultations
-            ? "consultations"
+          ? canReadTesting
+            ? "testing"
             : canReadEmployees
               ? "employees"
               : "logout"

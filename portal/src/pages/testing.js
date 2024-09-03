@@ -3,11 +3,11 @@ import { InfiniteRowModelModule } from "@ag-grid-community/infinite-row-model"
 import React, { Fragment } from "react"
 
 import { i18n } from "@arasnet/i18n"
-import { consultationLocations, consultationStatuses } from "@arasnet/types"
+import { testingLocations, testingStatuses } from "@arasnet/types"
 
-import ConsultationsApi from "../apis/consultations-api"
+import TestingApi from "../apis/testing-api"
 import { useAuth } from "../components/auth-provider"
-import CreateConsultation from "../components/create-consultation"
+import CreateTesting from "../components/create-testing"
 import DataGrid, {
   DropdownColumnFilter,
   dateFormatter,
@@ -56,7 +56,7 @@ const columnDefs = [
     cellEditorSelector: () => ({
       component: "agSelectCellEditor",
       params: {
-        values: Object.keys(consultationStatuses),
+        values: Object.keys(testingStatuses),
       },
     }),
     cellClass: "ag-cell-editable",
@@ -83,10 +83,10 @@ const columnDefs = [
   },
 ]
 
-function Consultations() {
-  const { canCreateConsultations, canUpdateConsultations } = useAuth()
+function Testing() {
+  const { canCreateTesting, canUpdateTesting } = useAuth()
 
-  const columnDefsPermitted = canUpdateConsultations
+  const columnDefsPermitted = canUpdateTesting
     ? columnDefs
     : columnDefs
         .filter(({ field }) => field !== "confirmation")
@@ -102,14 +102,14 @@ function Consultations() {
 
   return (
     <Fragment>
-      <DataGrid columnDefs={columnDefsPermitted} context={ConsultationsApi} />
+      <DataGrid columnDefs={columnDefsPermitted} context={TestingApi} />
 
-      {canCreateConsultations ? <CreateConsultation /> : null}
+      {canCreateTesting ? <CreateTesting /> : null}
     </Fragment>
   )
 }
 
-export default Consultations
+export default Testing
 
 //#region
 function ConfirmationButtons({ data }) {
@@ -133,7 +133,7 @@ function ConfirmationButtons({ data }) {
         rel="noreferrer"
       >
         <i className="fa-brands fa-whatsapp" />
-        {i18n.t("page.consultations.dataGrid.action.whatsapp")}
+        {i18n.t("page.testing.dataGrid.action.whatsapp")}
       </a>
 
       <a
@@ -146,7 +146,7 @@ function ConfirmationButtons({ data }) {
         href={`sms:${data.phone}&body=${message.replaceAll("\n", "%0a")}`}
       >
         <i className="fa-solid fa-comment-sms"></i>
-        {i18n.t("page.consultations.dataGrid.action.sms")}
+        {i18n.t("page.testing.dataGrid.action.sms")}
       </a>
 
       <a
@@ -160,17 +160,17 @@ function ConfirmationButtons({ data }) {
         rel="noreferrer"
       >
         <i className="fa-solid fa-phone" />
-        {i18n.t("page.consultations.dataGrid.action.phone")}
+        {i18n.t("page.testing.dataGrid.action.phone")}
       </a>
     </Fragment>
   )
 }
 
 function StatusColumnFilter(props) {
-  return <DropdownColumnFilter options={consultationStatuses} {...props} />
+  return <DropdownColumnFilter options={testingStatuses} {...props} />
 }
 
 function LocationColumnFilter(props) {
-  return <DropdownColumnFilter options={consultationLocations} {...props} />
+  return <DropdownColumnFilter options={testingLocations} {...props} />
 }
 //#endregion
