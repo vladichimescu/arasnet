@@ -8,4 +8,8 @@ const employeeRequiredFields = (
   process.env.REACT_APP_EMPLOYEE_REQUIRED_FIELDS
 )?.split(",")
 
-export { testingRequiredFields, employeeRequiredFields }
+const prepRequiredFields = (
+  process.env.PREP_REQUIRED_FIELDS || process.env.REACT_APP_PREP_REQUIRED_FIELDS
+)?.split(",")
+
+export { testingRequiredFields, employeeRequiredFields, prepRequiredFields }

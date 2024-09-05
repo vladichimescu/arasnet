@@ -17,7 +17,7 @@ function NavBar() {
 
   const ref = useRef()
 
-  const { isLogged, canReadTesting, canReadEmployees } = useAuth()
+  const { isLogged, canReadTesting, canReadPrep, canReadEmployees } = useAuth()
 
   const [actions, setActions] = useState(ActionService.actions)
 
@@ -56,6 +56,10 @@ function NavBar() {
 
           {canReadTesting ? (
             <option value="/testing">{i18n.t("page.testing.title")}</option>
+          ) : null}
+
+          {canReadPrep ? (
+            <option value="/prep">{i18n.t("page.prep.title")}</option>
           ) : null}
 
           {canReadEmployees ? (
@@ -105,6 +109,12 @@ function NavBar() {
       {canReadTesting ? (
         <Link to="testing" className="button button-small">
           {i18n.t("page.testing.title")}
+        </Link>
+      ) : null}
+
+      {canReadPrep ? (
+        <Link to="prep" className="button button-small">
+          {i18n.t("page.prep.title")}
         </Link>
       ) : null}
 

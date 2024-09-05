@@ -2,12 +2,13 @@ import { toCamelCase } from "@arasnet/functions"
 import {
   apiActions,
   apiEmployeesEndpoint,
+  apiPrepEndpoint,
   apiTestingEndpoint,
 } from "@arasnet/types"
 
 import StorageService from "./storage-service"
 
-const apiEndpoints = [apiTestingEndpoint, apiEmployeesEndpoint]
+const apiEndpoints = [apiTestingEndpoint, apiEmployeesEndpoint, apiPrepEndpoint]
 
 function getToken() {
   return StorageService.getItem({

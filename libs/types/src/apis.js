@@ -11,6 +11,9 @@ const apiEmployeesEndpoint =
   process.env.SERVER_EMPLOYEES_ENDPOINT ||
   process.env.REACT_APP_SERVER_EMPLOYEES_ENDPOINT
 
+const apiPrepEndpoint =
+  process.env.SERVER_PREP_ENDPOINT || process.env.REACT_APP_SERVER_PREP_ENDPOINT
+
 const apiActions = ["create", "read", "update", "remove"]
 
 export {
@@ -18,5 +21,6 @@ export {
   apiAuthEndpoint,
   apiTestingEndpoint,
   apiEmployeesEndpoint,
+  apiPrepEndpoint,
   apiActions,
 }

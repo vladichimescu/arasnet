@@ -1,5 +1,8 @@
 export { default as locations } from "./src/locations.js"
 export { default as testingStatuses } from "./src/testing-statuses.js"
 export { default as testingLocations } from "./src/testing-locations.js"
+export { default as prepStatuses } from "./src/prep-statuses.js"
+export { default as prepLocations } from "./src/prep-locations.js"
+export { default as prepCategories } from "./src/prep-categories.js"
 export * from "./src/apis.js"
 export * from "./src/required-fields.js"

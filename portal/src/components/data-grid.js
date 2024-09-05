@@ -5,7 +5,7 @@ import { AgGridReact, useGridFilter } from "@ag-grid-community/react"
 import React, { useCallback, useEffect, useState } from "react"
 
 import { i18n } from "@arasnet/i18n"
-import { testingLocations, testingStatuses } from "@arasnet/types"
+import { locations } from "@arasnet/types"
 
 import ActionService from "../services/action-service"
 import EventService from "../services/event-service"
@@ -139,7 +139,6 @@ export default DataGrid
 export {
   dateFormatter,
   boolFormatter,
-  statusFormatter,
   locationFormatter,
   onCellValueChanged,
   DropdownColumnFilter,
@@ -304,10 +303,6 @@ function dateFormatter({ value }) {
     : value
 }
 
-function statusFormatter({ value }) {
-  return value ? testingStatuses[value].label : value
-}
-
 function boolFormatter({ value }) {
   if (typeof value !== "boolean") {
     return value
@@ -319,7 +314,7 @@ function boolFormatter({ value }) {
 }
 
 function locationFormatter({ value }) {
-  return value ? testingLocations[value].label : value
+  return value ? locations[value].label : value
 }
 
 async function onCellValueChanged({ api, data, oldValue, context }) {

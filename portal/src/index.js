@@ -19,6 +19,7 @@ import EventService from "./services/event-service"
 
 const Testing = lazy(() => import("./pages/testing"))
 const Employees = lazy(() => import("./pages/employees"))
+const Prep = lazy(() => import("./pages/prep"))
 // const Dashboard = lazy(() => import("./pages/dashboard"))
 // const Landing = lazy(() => import("./pages/landing"))
 
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "employees",
         element: <Employees />,
+      },
+      {
+        path: "prep",
+        element: <Prep />,
       },
       {
         path: "login",

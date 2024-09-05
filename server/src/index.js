@@ -6,11 +6,13 @@ import { i18n } from "@arasnet/i18n"
 import {
   apiAuthEndpoint,
   apiEmployeesEndpoint,
+  apiPrepEndpoint,
   apiTestingEndpoint,
 } from "@arasnet/types"
 
 import AuthApi from "./apis/auth-api.js"
 import EmployeesApi from "./apis/employees-api.js"
+import PrepApi from "./apis/prep-api.js"
 import TestingApi from "./apis/testing-api.js"
 
 const hostname = process.env.SERVER_HOSTNAME
@@ -42,6 +44,7 @@ server.use(AuthApi.authorize)
 
 server.use(`/${apiEmployeesEndpoint}`, EmployeesApi.middleware)
 server.use(`/${apiTestingEndpoint}`, TestingApi.middleware)
+server.use(`/${apiPrepEndpoint}`, PrepApi.middleware)
 //#endregion
 
 server.use(router)
@@ -72,6 +75,9 @@ const jsonServerDb = {
   },
   get employees() {
     return router.db.getState().employees
+  },
+  get prep() {
+    return router.db.getState().prep
   },
 }
 

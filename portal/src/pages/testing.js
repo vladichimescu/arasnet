@@ -14,7 +14,6 @@ import DataGrid, {
   dateFormatter,
   locationFormatter,
   onCellValueChanged,
-  statusFormatter,
 } from "../components/data-grid"
 
 ModuleRegistry.registerModules([InfiniteRowModelModule])
@@ -118,6 +117,10 @@ function Testing() {
 export default Testing
 
 //#region
+function statusFormatter({ value }) {
+  return value ? testingStatuses[value].label : value
+}
+
 function ConfirmationButtons({ data }) {
   if (!data) {
     return null
