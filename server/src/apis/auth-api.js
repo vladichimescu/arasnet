@@ -161,7 +161,7 @@ async function login({ body: { email, password } = {} }, res) {
             },
             secret,
             {
-              expiresIn: "30s",
+              expiresIn: "1d",
             }
           )}`,
         },
@@ -194,7 +194,7 @@ async function login({ body: { email, password } = {} }, res) {
     },
     secret,
     {
-      expiresIn: "30s",
+      expiresIn: "1d",
     }
   )
 
@@ -238,7 +238,7 @@ function resign({ headers: { authorization = "" } = {} }, res) {
       },
       secret,
       {
-        expiresIn: "30s",
+        expiresIn: "1d",
       }
     )
 
