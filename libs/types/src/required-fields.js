@@ -12,4 +12,14 @@ const prepRequiredFields = (
   process.env.PREP_REQUIRED_FIELDS || process.env.REACT_APP_PREP_REQUIRED_FIELDS
 )?.split(",")
 
-export { testingRequiredFields, employeeRequiredFields, prepRequiredFields }
+const partnerRequiredFields = (
+  process.env.PARTNER_REQUIRED_FIELDS ||
+  process.env.REACT_APP_PARTNER_REQUIRED_FIELDS
+)?.split(",")
+
+export {
+  testingRequiredFields,
+  employeeRequiredFields,
+  prepRequiredFields,
+  partnerRequiredFields,
+}

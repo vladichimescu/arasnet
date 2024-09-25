@@ -4,6 +4,8 @@ import { toast } from "react-toastify"
 
 import { i18n } from "@arasnet/i18n"
 
+import MultiSelectInput from "../multi-select-input"
+
 import styles from "./form.module.scss"
 
 function Form({
@@ -32,7 +34,16 @@ function Form({
     setIsSubmitting(true)
 
     try {
-      await onSubmit(Object.fromEntries(new FormData(event.target)))
+      const formData = new FormData(event.target)
+
+      const data = {}
+      for (const key of formData.keys()) {
+        const value = formData.getAll(key).filter(Boolean)
+
+        data[key] = value.length > 1 ? value : value[0]
+      }
+
+      await onSubmit(data)
     } catch (err) {
       setErrors(err)
     } finally {
@@ -53,7 +64,12 @@ function Form({
       {heading}
 
       {inputs?.map(({ type, name, label, valueLabel, list, ...props }) => (
-        <fieldset key={name}>
+        <fieldset
+          key={name}
+          style={{
+            display: type === "multi-select-input" ? "contents" : null,
+          }}
+        >
           <label htmlFor={name}>{label}</label>
           {type === "phone-input" ? (
             <PhoneInput
@@ -82,6 +98,8 @@ function Form({
                 )
               )}
             </select>
+          ) : type === "multi-select-input" ? (
+            <MultiSelectInput name={name} list={list} {...props} />
           ) : type === "bool" ? (
             <Fragment>
               <input

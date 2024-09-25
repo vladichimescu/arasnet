@@ -3,6 +3,7 @@ import jwt from "jsonwebtoken"
 import { validateRequiredFields } from "@arasnet/functions"
 import {
   apiEmployeesEndpoint,
+  apiPartnerEndpoint,
   apiPrepEndpoint,
   apiTestingEndpoint,
   employeeRequiredFields,
@@ -10,7 +11,12 @@ import {
 
 import jsonServerDB from "../index.js"
 
-const apiEndpoints = [apiTestingEndpoint, apiEmployeesEndpoint, apiPrepEndpoint]
+const apiEndpoints = [
+  apiTestingEndpoint,
+  apiEmployeesEndpoint,
+  apiPrepEndpoint,
+  apiPartnerEndpoint,
+]
 
 async function create({ body: employee = {} }, res, next) {
   const errors = validateRequiredFields(employee, employeeRequiredFields)

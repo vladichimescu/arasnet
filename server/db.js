@@ -4,6 +4,9 @@ import fs from "fs"
 import { encrypt } from "@arasnet/functions"
 import {
   apiActions,
+  partnerAccounts,
+  partnerStatuses,
+  partnerTests,
   prepCategories,
   prepLocations,
   prepStatuses,
@@ -27,6 +30,7 @@ const data = {
         employees: [["create"], ["read"], ["update"], ["remove"]],
         testing: [["create"], ["read"], ["update"], ["remove"]],
         prep: [["create"], ["read"], ["update"], ["remove"]],
+        partner: [["create"], ["read"], ["update"], ["remove"]],
       },
       createdAt: new Date().toISOString(),
       createdBy: "SYSTEM",
@@ -121,8 +125,9 @@ const data = {
     },
     ...[...Array(47)].map(mockEmployee),
   ],
-  testing: [...Array(135)].map(mockTesting),
-  prep: [...Array(135)].map(mockPrep),
+  testing: [...Array(45)].map(mockTesting),
+  prep: [...Array(45)].map(mockPrep),
+  partner: [...Array(45)].map(mockPartner),
 }
 
 fs.writeFileSync(file, JSON.stringify(data, null, 2), "utf-8")
@@ -138,10 +143,10 @@ function mockEmployee(_, index) {
     password,
     permissions: {
       employees: apiActions
-        .slice(0, Math.floor(Math.random() * 4))
+        .slice(0, Math.floor(Math.random() * apiActions.length))
         .map((action) => [action]),
       testing: apiActions
-        .slice(0, Math.floor(Math.random() * 4))
+        .slice(0, Math.floor(Math.random() * apiActions.length))
         .map((action) => [
           action,
           [
@@ -210,6 +215,32 @@ function mockPrep(_, index) {
       Object.keys(prepStatuses)[
         Math.floor(Math.random() * Object.keys(prepStatuses).length)
       ],
+  }
+}
+
+function mockPartner(_, index) {
+  return {
+    id: index + 1,
+    phone: faker.helpers.fromRegExp("+4[0-9]{10}"),
+    test: Object.keys(partnerTests)[
+      Math.floor(Math.random() * Object.keys(partnerTests).length)
+    ],
+    location:
+      Object.keys(testingLocations)[
+        Math.floor(Math.random() * Object.keys(testingLocations).length)
+      ],
+    confirmation: faker.datatype.boolean(),
+    contacts: Object.keys(partnerAccounts)
+      .slice(
+        0,
+        Math.floor(Math.random() * Object.keys(partnerAccounts).length + 1)
+      )
+      .map((platform) => [platform, faker.internet.userName()]),
+    status:
+      Object.keys(partnerStatuses)[
+        Math.floor(Math.random() * Object.keys(partnerStatuses).length)
+      ],
+    createdAt: new Date().toISOString(),
   }
 }
 //#endregion

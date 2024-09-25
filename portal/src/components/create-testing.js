@@ -97,6 +97,7 @@ function CreateTesting() {
             type: "bool",
             label: i18n.t("entity.field.firstTime"),
             name: "firstTime",
+            required: true,
           },
         ]}
       />

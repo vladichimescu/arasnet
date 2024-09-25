@@ -55,7 +55,7 @@ const columnDefs = [
   },
 ]
 
-function Employees() {
+function Employee() {
   const { canCreateEmployees } = useAuth()
 
   return (
@@ -67,7 +67,7 @@ function Employees() {
   )
 }
 
-export default Employees
+export default Employee
 
 //#region
 function PermissionsButton({ data }) {

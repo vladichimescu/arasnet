@@ -111,8 +111,10 @@
       "permissions": "Permisiuni",
       "phone": "Telefon",
       "status": "Status",
-      "firstTime": "Prima testare în locațiile noastre",
-      "category": "Categorie"
+      "firstTime": "Prima testare",
+      "category": "Categorie",
+      "test": "Test",
+      "contacts": "Contacte"
     },
     "testing": {
       "status": {
@@ -139,6 +141,26 @@
         "onDemand": "on demand",
         "pickUp": "ridicare",
         "vaccination": "vaccinare"
+      }
+    },
+    "partner": {
+      "status": {
+        "created": "creat",
+        "pending": "în aşteptare",
+        "verified": "verificat"
+      },
+      "test": {
+        "hiv": "HIV",
+        "hepatitisB": "Hepatitis B",
+        "hepatitisC": "Hepatitis C",
+        "sifilis": "Sifilis"
+      },
+      "account": {
+        "phone": "telefon",
+        "facebook": "facebook",
+        "instagram": "instagram",
+        "snapchat": "snapchat",
+        "romeo": "romeo"
       }
     }
   },
@@ -171,6 +193,16 @@
       "title": "PrEP",
       "action": {
         "addPrep": "Adăugare programare"
+      }
+    },
+    "partner": {
+      "title": "Parteneri",
+      "action": {
+        "addPartner": "Adăugare înregistrare",
+        "contacts": {
+          "platformChoice": "alegere platformă",
+          "platformRemoval": "eliminare platformă"
+        }
       }
     }
   }

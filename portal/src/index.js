@@ -18,8 +18,9 @@ import Restart from "./pages/restart"
 import EventService from "./services/event-service"
 
 const Testing = lazy(() => import("./pages/testing"))
-const Employees = lazy(() => import("./pages/employees"))
+const Employee = lazy(() => import("./pages/employee"))
 const Prep = lazy(() => import("./pages/prep"))
+const Partner = lazy(() => import("./pages/partner"))
 // const Dashboard = lazy(() => import("./pages/dashboard"))
 // const Landing = lazy(() => import("./pages/landing"))
 
@@ -46,12 +47,16 @@ const router = createBrowserRouter([
         element: <Testing />,
       },
       {
-        path: "employees",
-        element: <Employees />,
+        path: "employee",
+        element: <Employee />,
       },
       {
         path: "prep",
         element: <Prep />,
+      },
+      {
+        path: "partner",
+        element: <Partner />,
       },
       {
         path: "login",

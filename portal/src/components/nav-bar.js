@@ -17,7 +17,13 @@ function NavBar() {
 
   const ref = useRef()
 
-  const { isLogged, canReadTesting, canReadPrep, canReadEmployees } = useAuth()
+  const {
+    isLogged,
+    canReadTesting,
+    canReadPrep,
+    canReadPartner,
+    canReadEmployees,
+  } = useAuth()
 
   const [actions, setActions] = useState(ActionService.actions)
 
@@ -62,8 +68,12 @@ function NavBar() {
             <option value="/prep">{i18n.t("page.prep.title")}</option>
           ) : null}
 
+          {canReadPartner ? (
+            <option value="/partner">{i18n.t("page.partner.title")}</option>
+          ) : null}
+
           {canReadEmployees ? (
-            <option value="/employees">{i18n.t("page.employees.title")}</option>
+            <option value="/employee">{i18n.t("page.employees.title")}</option>
           ) : null}
         </optgroup>
 
@@ -118,8 +128,14 @@ function NavBar() {
         </Link>
       ) : null}
 
+      {canReadPartner ? (
+        <Link to="partner" className="button button-small">
+          {i18n.t("page.partner.title")}
+        </Link>
+      ) : null}
+
       {canReadEmployees ? (
-        <Link to="employees" className="button button-small">
+        <Link to="employee" className="button button-small">
           {i18n.t("page.employees.title")}
         </Link>
       ) : null}

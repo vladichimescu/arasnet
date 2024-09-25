@@ -4,7 +4,13 @@ import { Navigate } from "react-router-dom"
 import { useAuth } from "../components/auth-provider"
 
 function Home() {
-  const { isLogged, canReadTesting, canReadPrep, canReadEmployees } = useAuth()
+  const {
+    isLogged,
+    canReadTesting,
+    canReadPrep,
+    canReadPartner,
+    canReadEmployees,
+  } = useAuth()
 
   return (
     <Navigate
@@ -13,11 +19,13 @@ function Home() {
         isLogged
           ? canReadTesting
             ? "testing"
-            : canReadPrep
-              ? "prep"
-              : canReadEmployees
-                ? "employees"
-                : "logout"
+            : canReadPartner
+              ? "partner"
+              : canReadPrep
+                ? "prep"
+                : canReadEmployees
+                  ? "employee"
+                  : "logout"
           : "login"
       }
     />
