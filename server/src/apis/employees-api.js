@@ -74,7 +74,7 @@ function update(
   }
 
   const token = authorization.split(" ")[1]
-  const { data: userEmail } = jwt.decode(token)
+  const { email: userEmail } = jwt.decode(token)
 
   const { createdBy, permissions: employeePermissions } =
     jsonServerDB.employees.find(({ id } = {}) => id === employee.id)
