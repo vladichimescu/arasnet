@@ -44,6 +44,8 @@ const data = {
       password,
       permissions: {
         testing: [["create"]],
+        prep: [["create"]],
+        partner: [["create"]],
       },
       createdAt: new Date().toISOString(),
       createdBy: "SYSTEM",
