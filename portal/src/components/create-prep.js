@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useMemo, useState } from "react"
 
 import { i18n } from "@arasnet/i18n"
 import { prepCategories, prepLocations } from "@arasnet/types"
@@ -17,10 +17,33 @@ function CreatePrep() {
 
   const [isOpened, setIsOpened] = useState(false)
 
-  const minDatetimeLocal = new Date()
-  minDatetimeLocal.setMinutes(
-    minDatetimeLocal.getMinutes() - minDatetimeLocal.getTimezoneOffset()
+  const locations = useMemo(
+    () =>
+      Object.entries(prepLocations).filter(([locationId]) =>
+        permissions.prep.find(
+          ([permittedAction, ...filters]) =>
+            permittedAction === "create" &&
+            (filters.length === 0
+              ? true
+              : filters.find(([filter, values]) =>
+                  filter === "location" ? values.includes(locationId) : true
+                ))
+        )
+      ),
+    [permissions]
   )
+
+  const [availableDates, setAvailableDates] = useState()
+
+  const [unavailableDates, setUnavailableDates] = useState()
+
+  async function setDates(locationId) {
+    const businessDates = prepLocations[locationId].businessHours
+    const testingDates = await getUnavailableDates(locationId)
+
+    setAvailableDates(businessDates)
+    setUnavailableDates(testingDates)
+  }
 
   useEffect(() => {
     const actionId = ActionService.create(
@@ -36,6 +59,14 @@ function CreatePrep() {
     }
   }, [])
 
+  useEffect(() => {
+    if (!isOpened) {
+      return
+    }
+
+    setDates(locations[0][0])
+  }, [isOpened, locations])
+
   return (
     <Modal
       open={isOpened}
@@ -47,6 +78,7 @@ function CreatePrep() {
         onSubmit={async (data) => {
           await PrepApi.create(data)
 
+          setDates(data.location)
           PrepApi.gridApi.purgeInfiniteCache()
 
           setIsOpened(false)
@@ -60,26 +92,18 @@ function CreatePrep() {
             label: i18n.t("entity.field.location"),
             name: "location",
             required: true,
-            list: Object.entries(prepLocations).filter(([locationId]) =>
-              permissions.prep.find(
-                ([permittedAction, ...filters]) =>
-                  permittedAction === "create" &&
-                  (filters.length === 0
-                    ? true
-                    : filters.find(([filter, values]) =>
-                        filter === "location"
-                          ? values.includes(locationId)
-                          : true
-                      ))
-              )
-            ),
+            list: locations,
+            onChange: async (e) => {
+              setDates(e.target.value)
+            },
           },
           {
-            type: "datetime-local",
+            type: "datetime-input",
             label: i18n.t("entity.field.date"),
             name: "date",
             required: true,
-            min: `${minDatetimeLocal.toISOString().slice(0, -8)}`,
+            availableDates,
+            unavailableDates,
           },
           {
             type: "phone-input",
@@ -107,3 +131,17 @@ function CreatePrep() {
 }
 
 export default CreatePrep
+
+//#region
+async function getUnavailableDates(location) {
+  const date = new Date()
+  date.setHours(0, 0, 0, 0)
+
+  return (
+    await PrepApi.read({
+      date_gte: date.toISOString(),
+      location,
+    })
+  ).map(({ date }) => date)
+}
+//#endregion

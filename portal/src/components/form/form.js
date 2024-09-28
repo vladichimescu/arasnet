@@ -4,6 +4,7 @@ import { toast } from "react-toastify"
 
 import { i18n } from "@arasnet/i18n"
 
+import DateTimeInput from "../date-time-input"
 import MultiSelectInput from "../multi-select-input"
 
 import styles from "./form.module.scss"
@@ -84,6 +85,8 @@ function Form({
                 required: props.required,
               }}
             />
+          ) : type === "datetime-input" ? (
+            <DateTimeInput name={name} {...props} />
           ) : type === "select" ? (
             <select name={name} {...props}>
               {list.map((item) =>

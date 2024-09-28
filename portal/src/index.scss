@@ -9,6 +9,8 @@
 
 @import "react-phone-input-2/lib/style.css";
 
+@import "react-datepicker/dist/react-datepicker.css";
+
 @import "@ag-grid-community/styles/ag-grid.css";
 @import "@ag-grid-community/styles/ag-theme-quartz.css";
 
@@ -54,6 +56,85 @@ form {
     width: 100%;
   }
 }
+//#endregion
+
+//#region react-datepicker
+.react-datepicker {
+  display: flex;
+
+  * {
+    font-size: 1.4rem;
+  }
+
+  .react-datepicker__month-container {
+    flex: 1;
+  }
+
+  h2.react-datepicker__current-month {
+    display: block;
+    font-weight: normal;
+    text-transform: uppercase;
+  }
+
+  .react-datepicker-time__header {
+    font-weight: normal;
+    text-transform: uppercase;
+  }
+
+  .react-datepicker__day-name,
+  .react-datepicker__day,
+  .react-datepicker__time-name {
+    width: 2.5rem;
+    line-height: 2.5rem;
+  }
+
+  .react-datepicker__navigation {
+    line-height: normal;
+    height: 50px;
+  }
+
+  .react-datepicker__day,
+  .react-datepicker__month-text,
+  .react-datepicker__quarter-text,
+  .react-datepicker__year-text {
+    &:not([aria-disabled="true"]):hover {
+      background-color: #606c76;
+    }
+
+    &--selected,
+    &--in-selecting-range,
+    &--in-range {
+      background-color: #9b4dca;
+    }
+  }
+
+  .react-datepicker__time-container
+    .react-datepicker__time
+    .react-datepicker__time-box
+    ul.react-datepicker__time-list
+    li.react-datepicker__time-list-item {
+    height: auto;
+    margin-bottom: 0.2rem;
+
+    &--selected {
+      background-color: #9b4dca;
+
+      &[aria-disabled="true"] {
+        font-weight: 300;
+        background-color: transparent;
+      }
+    }
+
+    &--disabled {
+      display: none;
+    }
+
+    &:not([aria-disabled="true"]):hover {
+      background-color: #606c76;
+    }
+  }
+}
+
 //#endregion
 
 body {

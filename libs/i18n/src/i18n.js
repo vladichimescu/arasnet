@@ -6,7 +6,6 @@ import ro from "./translations/ro.json" with { type: "json" }
 
 const languages = {
   enGB: "en-GB",
-  enUS: "en-US",
   roRo: "ro-RO",
 }
 
@@ -20,9 +19,6 @@ const lng =
 
 const resources = {
   [languages.enGB]: {
-    translation: en,
-  },
-  [languages.enUS]: {
     translation: en,
   },
   [languages.roRo]: {
