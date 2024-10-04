@@ -24,12 +24,12 @@
     "deploy": "scp -r dist admin@arasnet.redirectme.net:/home/admin/arasnet/"
   },
   "engines": {
-    "node": "20.17.0",
-    "yarn": "4.4.1"
+    "node": "20.18.0",
+    "yarn": "4.5.0"
   },
   "volta": {
-    "node": "20.17.0",
-    "yarn": "4.4.1"
+    "node": "20.18.0",
+    "yarn": "4.5.0"
   },
   "prettier": {
     "semi": false,
