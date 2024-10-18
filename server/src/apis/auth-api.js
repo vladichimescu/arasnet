@@ -148,34 +148,40 @@ async function login({ body: { email, password } = {} }, res) {
         ({ email: employeeEmail } = {}) => employeeEmail === "admin@arasnet.ro"
       )
 
-    const response = await fetch(
-      `${isHttps ? "https" : "http"}://${serverHostname}:${port}/employees/${dbEmployee.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${jwt.sign(
-            {
-              email: adminEmail,
-              password: adminPassword,
-            },
-            secret,
-            {
-              expiresIn: "1d",
-            }
-          )}`,
-        },
-        body: JSON.stringify({
-          ...dbEmployee,
-          password: await encrypt(password),
-        }),
+    try {
+      const response = await fetch(
+        `${isHttps ? "https" : "http"}://${serverHostname}:${port}/employees/${dbEmployee.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${jwt.sign(
+              {
+                email: adminEmail,
+                password: adminPassword,
+              },
+              secret,
+              {
+                expiresIn: "1d",
+              }
+            )}`,
+          },
+          body: JSON.stringify({
+            ...dbEmployee,
+            password: await encrypt(password),
+          }),
+        }
+      )
+
+      if ([4, 5].includes(parseInt(res.statusCode / 100))) {
+        const errors = await response.json()
+
+        return res.status(response.status).send(errors)
       }
-    )
-
-    if ([4, 5].includes(parseInt(res.statusCode / 100))) {
-      const errors = await response.json()
-
-      return res.status(response.status).send(errors)
+    } catch (err) {
+      return res
+        .status(500)
+        .send("server_error", err.cause?.message || err.message)
     }
   }
 
