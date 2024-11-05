@@ -5,9 +5,9 @@
   "private": true,
   "main": "./index.js",
   "dependencies": {
-    "i18next": "^23.16.0",
+    "i18next": "^23.16.4",
     "i18next-icu": "^2.3.0",
-    "intl-messageformat": "^10.7.0"
+    "intl-messageformat": "^10.7.6"
   },
   "volta": {
     "extends": "../../package.json"

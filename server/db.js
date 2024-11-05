@@ -237,7 +237,7 @@ function mockPartner(_, index) {
         0,
         Math.floor(Math.random() * Object.keys(partnerAccounts).length + 1)
       )
-      .map((platform) => [platform, faker.internet.userName()]),
+      .map((platform) => [platform, faker.internet.username()]),
     status:
       Object.keys(partnerStatuses)[
         Math.floor(Math.random() * Object.keys(partnerStatuses).length)
