@@ -1,13 +1,13 @@
 {
   "name": "@arasnet/i18n",
   "type": "module",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "main": "./index.js",
   "dependencies": {
-    "i18next": "^23.16.4",
+    "i18next": "^25.0.0",
     "i18next-icu": "^2.3.0",
-    "intl-messageformat": "^10.7.6"
+    "intl-messageformat": "^10.7.16"
   },
   "volta": {
     "extends": "../../package.json"

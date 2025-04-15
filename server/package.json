@@ -1,7 +1,7 @@
 {
   "name": "@arasnet/server",
   "type": "module",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "postinstall": "dotenv -e ../.env -e .env -- node db",
@@ -18,11 +18,11 @@
     "jsonwebtoken": "^9.0.2"
   },
   "devDependencies": {
-    "@faker-js/faker": "^9.2.0",
-    "dotenv-cli": "^7.4.2",
-    "esbuild": "^0.24.0",
+    "@faker-js/faker": "^9.7.0",
+    "dotenv-cli": "^8.0.0",
+    "esbuild": "^0.25.2",
     "esbuild-plugin-noexternal": "^0.1.6",
-    "pm2": "^5.4.2"
+    "pm2": "^6.0.5"
   },
   "volta": {
     "extends": "../package.json"
