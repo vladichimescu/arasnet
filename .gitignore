@@ -9,8 +9,8 @@ dist
 db-local.json
 db.json
 .env.production
-cert.pem
-key.pem
+cert.*
+key.*
 
 # misc
 .DS_Store
