@@ -62,7 +62,7 @@ function Form({
       className={`${styles.form} ${className}`}
       style={style}
     >
-      {heading}
+      <div>{heading}</div>
 
       {inputs?.map(({ type, name, label, valueLabel, list, ...props }) => (
         <fieldset
@@ -138,7 +138,7 @@ function Form({
         </fieldset>
       ))}
 
-      {content}
+      <div>{content}</div>
 
       {onSubmit ? (
         <fieldset style={{ marginBottom: 0 }}>
@@ -168,7 +168,7 @@ function Form({
         </button>
       ) : null}
 
-      {footer}
+      <div>{footer}</div>
     </form>
   )
 }
