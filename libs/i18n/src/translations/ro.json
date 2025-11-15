@@ -80,13 +80,18 @@
       "location_required": {
         "code": "locație necesară",
         "message": "Locația este necesară"
+      },
+      "service_invalid": {
+        "code": "serviciu invalid",
+        "message": "Serviciul este invalid"
       }
     },
     "action": {
       "login": "Conectare",
       "logout": "Deconectare",
       "submit": "Salvează",
-      "cancel": "Anulează"
+      "cancel": "Anulează",
+      "continue": "Continuă"
     },
     "plural": {
       "all": "toate"
@@ -117,6 +122,7 @@
       "contacts": "Contacte"
     },
     "testing": {
+      "denomination": "Testare HIV & ITS-uri",
       "status": {
         "created": "creat",
         "pending": "în aşteptare",
@@ -127,6 +133,7 @@
       }
     },
     "prep": {
+      "denomination": "PrEP",
       "status": {
         "canceled": "anulat",
         "confirmed": "confirmat",
@@ -144,6 +151,7 @@
       }
     },
     "partner": {
+      "denomination": "Index testing",
       "status": {
         "created": "creat",
         "pending": "în aşteptare",
@@ -203,6 +211,15 @@
           "platformChoice": "alegere platformă",
           "platformRemoval": "eliminare platformă"
         }
+      }
+    },
+    "publicForm": {
+      "AvailabilityForm": {
+        "heading": "Serviciile noastre se adresează exclusiv bărbaților gay, bisexuali, queer, alți bărbați care fac sex cu bărbați și persoanelor trans.",
+        "content": "Dacă te încadrezi în aceste categorii, te rugăm să confirmi că ești de acord să continui."
+      },
+      "FormDenied": {
+        "content": "Ne pare rău. Nu te poți testa în centrele Checkpoint ARAS Network.\n\nDacă ești din București, te poți testa la Centrul de Sănătate ARAS (Str. Ocolului 20). Programează-te la 021 210 07 47.\nPentru celelalte orașe te îndrumăm către Direcția de Sănătate Publică de la tine din județ.\n\nÎți reamintim că majoritatea laboratoarelor private oferă contra cost testare pentru HIV și alte infecții cu transmitere sexuală."
       }
     }
   }

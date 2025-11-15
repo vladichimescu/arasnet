@@ -22,6 +22,7 @@ const Testing = lazy(() => import("./pages/testing"))
 const Employee = lazy(() => import("./pages/employee"))
 const Prep = lazy(() => import("./pages/prep"))
 const Partner = lazy(() => import("./pages/partner"))
+const PublicForm = lazy(() => import("./pages/public-form"))
 // const Dashboard = lazy(() => import("./pages/dashboard"))
 // const Landing = lazy(() => import("./pages/landing"))
 
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
       {
         path: "partner",
         element: <Partner />,
+      },
+      {
+        path: "public-form",
+        element: <PublicForm />,
       },
       {
         path: "login",
