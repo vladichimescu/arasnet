@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify"
 
 import AuthProvider from "./components/auth-provider"
 import ErrorBoundary from "./components/error-boundary"
+import ErrorRouteElement from "./components/error-route-element"
 import I18nProvider from "./components/i18n-provider"
 import Loading from "./components/loading"
 import NavBar from "./components/nav-bar"
@@ -29,6 +30,7 @@ NProgress.configure({ showSpinner: false })
 const router = createBrowserRouter([
   {
     element: <Layout />,
+    errorElement: <ErrorRouteElement />,
     children: [
       {
         index: true,
