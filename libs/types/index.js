@@ -1,4 +1,5 @@
 export { default as locations } from "./src/locations.js"
+export { default as services } from "./src/services.js"
 export { default as testingStatuses } from "./src/testing-statuses.js"
 export { default as testingLocations } from "./src/testing-locations.js"
 export { default as prepStatuses } from "./src/prep-statuses.js"

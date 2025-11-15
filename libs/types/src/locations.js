@@ -1,3 +1,5 @@
+import services from "./services.js"
+
 const configured = (
   process.env.LOCATIONS || process.env.REACT_APP_LOCATIONS
 )?.split(",")
@@ -11,7 +13,7 @@ const data = {
     email: "preppoint@arasnet.ro",
     // businessHours: [day, (start)hours:minutes, (end)hours:minutes] UTC
     businessHours: [[3, "14:00", "18:00"]],
-    services: ["prep"],
+    services: [services.PREP],
   },
   "e3a607c9-7bce-459e-9ae2-25d30d8db95c": {
     label: "Checkpoint ARAS București",
@@ -22,7 +24,7 @@ const data = {
       [2, "14:00", "18:00"],
       [4, "14:00", "18:00"],
     ],
-    services: ["testing"],
+    services: [services.TESTING],
   },
   "8eb5ded5-7694-4783-ad37-bbdb26e0f659": {
     label: "Checkpoint ARAS Cluj",
@@ -33,7 +35,7 @@ const data = {
       [2, "14:00", "18:00"],
       [4, "14:00", "18:00"],
     ],
-    services: ["testing"],
+    services: [services.TESTING],
   },
   "6bec1930-2983-40fb-a4f1-0bed8f4e609e": {
     label: "Checkpoint ARAS Iași",
@@ -41,7 +43,7 @@ const data = {
     address: "Str. Păcurari nr. 66",
     phone: "+40751120708",
     businessHours: [[4, "14:00", "18:00"]],
-    services: ["testing"],
+    services: [services.TESTING],
   },
   "c7947f5c-6323-4ef5-81ab-60b1c9e69cf5": {
     label: "Checkpoint ARAS Timișoara",
@@ -49,7 +51,7 @@ const data = {
     address: "Str. Coriolan Brediceanu nr. 13B",
     phone: "+40751120840",
     businessHours: [[4, "14:00", "18:00"]],
-    services: ["testing"],
+    services: [services.TESTING],
   },
 }
 
