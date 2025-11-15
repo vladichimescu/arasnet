@@ -12,8 +12,12 @@ function ErrorFallback({ error }) {
         textAlign: "center",
       }}
     >
-      <h1>Oops, something went wrong!</h1>
-      <small>{`${error?.message || error}`}</small>
+      <h1>Oops!</h1>
+      <small
+        style={{
+          color: "red",
+        }}
+      >{`${error?.message || error}`}</small>
     </div>
   )
 }
