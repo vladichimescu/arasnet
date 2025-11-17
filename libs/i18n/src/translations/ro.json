@@ -159,8 +159,8 @@
       },
       "test": {
         "hiv": "HIV",
-        "hepatitisB": "Hepatitis B",
-        "hepatitisC": "Hepatitis C",
+        "hepatitisB": "Hepatita B",
+        "hepatitisC": "Hepatita C",
         "sifilis": "Sifilis"
       },
       "account": {
