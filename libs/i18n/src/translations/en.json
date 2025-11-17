@@ -91,7 +91,8 @@
       "logout": "Logout",
       "submit": "Submit",
       "cancel": "Cancel",
-      "continue": "Continue"
+      "continue": "Continue",
+      "back": "Back"
     },
     "plural": {
       "all": "all"
