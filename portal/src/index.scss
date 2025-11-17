@@ -15,6 +15,12 @@
 @import "@ag-grid-community/styles/ag-theme-quartz.css";
 
 //#region milligram
+dialog {
+  padding: 0;
+}
+//#endregion
+
+//#region milligram
 form {
   &:last-child {
     margin-bottom: 0;
@@ -95,7 +101,6 @@ input {
 
   .react-datepicker__navigation {
     line-height: normal;
-    height: 50px;
   }
 
   .react-datepicker__day,
