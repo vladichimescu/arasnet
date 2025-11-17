@@ -1,6 +1,7 @@
 import React, { Fragment, useEffect } from "react"
+import { Trans } from "react-i18next"
 
-import { Trans, i18n } from "@arasnet/i18n"
+import { i18n } from "@arasnet/i18n"
 import { services } from "@arasnet/types"
 
 import PartnerApi from "../apis/partner-api"
