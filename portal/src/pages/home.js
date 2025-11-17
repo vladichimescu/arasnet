@@ -10,6 +10,9 @@ function Home() {
     canReadPrep,
     canReadPartner,
     canReadEmployees,
+    canCreatePrep,
+    canCreateTesting,
+    canCreatePartner,
   } = useAuth()
 
   return (
@@ -25,7 +28,9 @@ function Home() {
                 ? "prep"
                 : canReadEmployees
                   ? "employee"
-                  : "logout"
+                  : canCreatePrep || canCreateTesting || canCreatePartner
+                    ? "public-form"
+                    : "logout"
           : "login"
       }
     />
