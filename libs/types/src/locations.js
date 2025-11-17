@@ -51,7 +51,10 @@ const data = {
     city: "Timișoara",
     address: "Str. Coriolan Brediceanu nr. 13B",
     phone: "+40751120840",
-    businessHours: [[4, "15:00", "19:00"]],
+    businessHours: [
+      [2, "15:00", "19:00"],
+      [4, "15:00", "19:00"],
+    ],
     services: [services.TESTING],
   },
 }
