@@ -152,6 +152,7 @@ function FormTesting({ onSubmit: handleSubmit, onCancel: handleCancel }) {
   return (
     <TestingForm
       style={containerStyle}
+      isPublic
       onSubmit={async (data) => {
         await TestingApi.create(data)
 

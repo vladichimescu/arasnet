@@ -43,6 +43,7 @@ server.use(AuthApi.authenticate)
 server.delete(`/${apiAuthEndpoint}/undefined`, AuthApi.restart)
 
 server.use(AuthApi.authorize)
+server.use(publicAuthorizedActions)
 
 server.use(`/${apiEmployeesEndpoint}`, EmployeesApi.middleware)
 server.use(`/${apiTestingEndpoint}`, TestingApi.middleware)
@@ -143,6 +144,28 @@ function i18nErrors(req, res, next) {
             )
 
       return _send.call(this, JSON.stringify(_body))
+    }
+
+    return _send.call(this, body)
+  }
+
+  next()
+}
+
+function publicAuthorizedActions(req, res, next) {
+  const _send = res.send
+
+  res.send = function (body, error) {
+    if (res.locals.isPublicAuthorized) {
+      if (!res.locals.publicAuthorizedActions?.length) {
+        return res.status(403).send("authorization_failed")
+      }
+
+      res.locals.publicAuthorizedActions.forEach((action) => {
+        action()
+      })
+
+      return _send.call(this, JSON.stringify(res.locals.data))
     }
 
     return _send.call(this, body)

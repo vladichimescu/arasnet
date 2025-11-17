@@ -39,6 +39,18 @@ function create({ body: testing = {} }, res, next) {
 }
 
 function read({ body: testing = {}, query }, res, next) {
+  if (res.locals.isPublicAuthorized) {
+    res.locals.publicAuthorizedActions = [
+      ...(res.locals.publicAuthorizedActions || []),
+      () => {
+        res.locals.data.forEach((record) => {
+          delete record.name
+          delete record.phone
+        })
+      },
+    ]
+  }
+
   next()
 }
 

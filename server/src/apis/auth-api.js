@@ -80,12 +80,17 @@ function authorize(
 
     const userApiPermissions = dbUser.permissions[api]
 
-    const [permittedAction, ...filters] = userApiPermissions.find(
-      ([permittedAction]) => permittedAction === action
-    )
+    const [permittedAction, ...filters] =
+      userApiPermissions.find(
+        ([permittedAction]) => permittedAction === action
+      ) || []
 
     if (!permittedAction) {
-      return res.status(403).send("authorization_failed")
+      if (query.isPublic) {
+        res.locals.isPublicAuthorized = true
+      } else {
+        return res.status(403).send("authorization_failed")
+      }
     }
 
     if (action === "read") {
