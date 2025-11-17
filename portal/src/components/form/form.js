@@ -95,7 +95,11 @@ function Form({
                     {item}
                   </option>
                 ) : (
-                  <option key={item[0]} value={item[0]}>
+                  <option
+                    key={item[0]}
+                    value={item[0]}
+                    disabled={item[1].disabled}
+                  >
                     {item[1].label}
                   </option>
                 )
