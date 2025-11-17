@@ -33,7 +33,7 @@ function NavBar() {
     })
   }, [])
 
-  if (pathname === "/") {
+  if (pathname === "/" || pathname === "/public-form") {
     return null
   }
 
