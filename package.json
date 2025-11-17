@@ -21,7 +21,6 @@
     "serve": "yarn workspaces foreach --all run serve",
     "stop": "yarn workspaces foreach --all run stop",
     "prepare": "rm -rf dist && mkdir -p dist && mv portal/dist/* dist && mv server/dist/* dist",
-    "deploy-arasnet": "scp -r dist admin@arasnet.redirectme.net:/home/admin/arasnet/",
     "deploy-checkpointaras": "scp -r dist checkpointaras@vps37023.dreamhostps.com:/home/checkpointaras/admin.checkpointaras.ro/"
   },
   "engines": {
