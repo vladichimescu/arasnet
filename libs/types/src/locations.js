@@ -11,9 +11,7 @@ const data = {
     address: "Str. Ocolului nr. 20",
     phone: "+40751010539",
     email: "preppoint@arasnet.ro",
-    // businessHours: [day, (start)hours:minutes, (end)hours:minutes] UTC
-    businessHours: [[3, "15:00", "19:00"]],
-    // TODO: businessHours: [[3, ["17:00", "ro-RO"], ["21:00", "ro-RO"]]],
+    businessHours: [["ro-RO", 3, "17:00", "21:00"]],
     services: [services.PREP],
   },
   "e3a607c9-7bce-459e-9ae2-25d30d8db95c": {
@@ -22,8 +20,8 @@ const data = {
     address: "Bd. Eroii Sanitari nr. 49",
     phone: "+40751010539",
     businessHours: [
-      [2, "15:00", "19:00"],
-      [4, "15:00", "19:00"],
+      ["ro-RO", 2, "17:00", "21:00"],
+      ["ro-RO", 4, "17:00", "21:00"],
     ],
     services: [services.TESTING],
   },
@@ -33,8 +31,8 @@ const data = {
     address: "Piața Unirii nr. 22",
     phone: "+40751111017",
     businessHours: [
-      [2, "15:00", "19:00"],
-      [4, "15:00", "19:00"],
+      ["ro-RO", 2, "17:00", "21:00"],
+      ["ro-RO", 4, "17:00", "21:00"],
     ],
     services: [services.TESTING],
   },
@@ -43,7 +41,7 @@ const data = {
     city: "Iași",
     address: "Str. Păcurari nr. 66",
     phone: "+40751120708",
-    businessHours: [[4, "15:00", "19:00"]],
+    businessHours: [["ro-RO", 4, "17:00", "21:00"]],
     services: [services.TESTING],
   },
   "c7947f5c-6323-4ef5-81ab-60b1c9e69cf5": {
@@ -52,8 +50,8 @@ const data = {
     address: "Str. Coriolan Brediceanu nr. 13B",
     phone: "+40751120840",
     businessHours: [
-      [2, "15:00", "19:00"],
-      [4, "15:00", "19:00"],
+      ["ro-RO", 2, "17:00", "21:00"],
+      ["ro-RO", 4, "17:00", "21:00"],
     ],
     services: [services.TESTING],
   },
