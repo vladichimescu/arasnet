@@ -1,5 +1,6 @@
 import i18n from "i18next"
 import ICU from "i18next-icu"
+import { Trans, useTranslation } from "react-i18next"
 
 import en from "./translations/en.json" with { type: "json" }
 import ro from "./translations/ro.json" with { type: "json" }
@@ -39,3 +40,4 @@ i18n.use(ICU).init({
 })
 
 export default i18n
+export { Trans, useTranslation }
