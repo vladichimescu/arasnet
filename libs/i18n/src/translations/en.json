@@ -214,12 +214,18 @@
       }
     },
     "publicForm": {
+      "GDPR": "By continuing, I confirm that I agree to the processing of my personal data in accordance with the <gdprLink>Privacy Policy</gdprLink>.",
       "AvailabilityForm": {
         "heading": "Our services are exclusively for gay men, bisexuals, queer, other men who have sex with men and trans people.",
         "content": "If you belong to these categories, please confirm that you agree to continue."
       },
       "FormDenied": {
-        "content": "We're sorry. You can't get tested at Checkpoint ARAS Network centers.\n\nIf you're from Bucharest, you can get tested at the ARAS Health Center (20 Ocolului Street). Make an appointment at 021 210 07 47.\nFor other cities, we direct you to your county's Public Health Directorate.\n\nWe remind you that most private laboratories offer testing for HIV and other sexually transmitted infections for a fee"
+        "heading": "We're sorry",
+        "content": "You can't get tested at Checkpoint ARAS Network centers.\n\nIf you're from Bucharest, you can get tested at the <mapsLink>ARAS Health Center (20 Ocolului Street)</mapsLink>.\nMake an appointment at <phoneLink>+40 212 100 747</phoneLink>.\nFor other cities, we direct you to your county's Public Health Directorate.\n\nWe remind you that most private laboratories offer testing for HIV and other sexually transmitted infections for a fee."
+      },
+      "FormSuccess": {
+        "heading": "Thank you",
+        "content": "Your request has been successfully submitted."
       }
     }
   }
